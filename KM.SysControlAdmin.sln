@@ -3,9 +3,53 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34728.123
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "User Interface - UI", "User Interface - UI", "{70FA8812-65BE-4A03-9C98-C84C5960B204}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Entities - EN", "Entities - EN", "{536BA737-E2DD-4561-A4A0-DECDA2537191}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data Access Layer - DAL", "Data Access Layer - DAL", "{617DAD0B-5AE8-4D6D-82A1-A88D9A284E48}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Business Logic - BL", "Business Logic - BL", "{651F6F0B-F606-462A-9E38-27FA57C5B0C5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KM.SysControlAdmin.WebApp", "KM.SysControlAdmin.WebApp\KM.SysControlAdmin.WebApp.csproj", "{1DBBE969-3094-420A-8D9A-B16BF03ED042}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KM.SysControlAdmin.EN", "KM.SysControlAdmin.EN\KM.SysControlAdmin.EN.csproj", "{CF2550AF-2A46-447B-A948-9A0A7DD17D3C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KM.SysControlAdmin.DAL", "KM.SysControlAdmin.DAL\KM.SysControlAdmin.DAL.csproj", "{7280184F-F557-4CFC-8B53-16218D28181F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KM.SysControlAdmin.BL", "KM.SysControlAdmin.BL\KM.SysControlAdmin.BL.csproj", "{B291087B-C11E-4FB5-AF4F-CCC74723FBBD}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1DBBE969-3094-420A-8D9A-B16BF03ED042}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1DBBE969-3094-420A-8D9A-B16BF03ED042}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1DBBE969-3094-420A-8D9A-B16BF03ED042}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1DBBE969-3094-420A-8D9A-B16BF03ED042}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CF2550AF-2A46-447B-A948-9A0A7DD17D3C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF2550AF-2A46-447B-A948-9A0A7DD17D3C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CF2550AF-2A46-447B-A948-9A0A7DD17D3C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CF2550AF-2A46-447B-A948-9A0A7DD17D3C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7280184F-F557-4CFC-8B53-16218D28181F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7280184F-F557-4CFC-8B53-16218D28181F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7280184F-F557-4CFC-8B53-16218D28181F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7280184F-F557-4CFC-8B53-16218D28181F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B291087B-C11E-4FB5-AF4F-CCC74723FBBD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B291087B-C11E-4FB5-AF4F-CCC74723FBBD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B291087B-C11E-4FB5-AF4F-CCC74723FBBD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B291087B-C11E-4FB5-AF4F-CCC74723FBBD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{1DBBE969-3094-420A-8D9A-B16BF03ED042} = {70FA8812-65BE-4A03-9C98-C84C5960B204}
+		{CF2550AF-2A46-447B-A948-9A0A7DD17D3C} = {536BA737-E2DD-4561-A4A0-DECDA2537191}
+		{7280184F-F557-4CFC-8B53-16218D28181F} = {617DAD0B-5AE8-4D6D-82A1-A88D9A284E48}
+		{B291087B-C11E-4FB5-AF4F-CCC74723FBBD} = {651F6F0B-F606-462A-9E38-27FA57C5B0C5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {38C4CDBC-87EA-4CD6-9A10-76A6F7543DC9}
