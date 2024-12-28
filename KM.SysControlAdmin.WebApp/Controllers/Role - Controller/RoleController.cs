@@ -56,5 +56,15 @@ namespace KM.SysControlAdmin.WebApp.Controllers.Role___Controller
             return View(roles);
         }
         #endregion
+
+        #region METODO PARA DETALLES
+        // Metodo que Muestra La Vista De Detalles
+        //[Authorize(Roles = "Desarrollador")]
+        public async Task<IActionResult> Details(int id)
+        {
+            var role = await roleBL.GetByIdAsync(new Role { Id = id });
+            return View(role);
+        }
+        #endregion
     }
 }
