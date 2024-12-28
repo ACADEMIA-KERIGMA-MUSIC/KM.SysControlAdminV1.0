@@ -66,5 +66,65 @@ namespace KM.SysControlAdmin.WebApp.Controllers.Role___Controller
             return View(role);
         }
         #endregion
+
+        #region METODO PARA MODIFICAR
+        //[Authorize(Roles = "Desarrollador")]
+        // Metodo Para Mostrar La Vista De Modificar
+        public async Task<IActionResult> Edit(int id)
+        {
+            var role = await roleBL.GetByIdAsync(new Role { Id = id });
+            ViewBag.Error = "";
+            return View(role);
+        }
+
+        // Metodo Que Recibe y Envia a La Base De Datos
+        //[Authorize(Roles = "Desarrollador")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(Role role)
+        {
+            try
+            {
+                int result = await roleBL.UpdateAsync(role);
+                TempData["SuccessMessageUpdate"] = "Rol Modificado Exitosamente";
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Error = ex.Message;
+                return View(role);
+            }
+        }
+        #endregion
+
+        #region METODO PARA ELIMINAR
+        // Metodo Para Mostrar La Vista De Eliminar
+        //[Authorize(Roles = "Desarrollador")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var role = await roleBL.GetByIdAsync(new Role { Id = id });
+            ViewBag.Error = "";
+            return View(role);
+        }
+
+        // Metodo Que Recibe y Envia a La Base De Datos
+        //[Authorize(Roles = "Desarrollador")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Delete(int id, Role role)
+        {
+            try
+            {
+                int result = await roleBL.DeleteAsync(role);
+                TempData["SuccessMessageDelete"] = "Rol Eliminado Exitosamente";
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Error = ex.Message;
+                return View(role);
+            }
+        }
+        #endregion
     }
 }
