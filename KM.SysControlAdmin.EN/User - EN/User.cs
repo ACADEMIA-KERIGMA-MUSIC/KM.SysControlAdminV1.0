@@ -22,12 +22,14 @@ namespace KM.SysControlAdmin.EN.User___EN
 
         [Required(ErrorMessage = "El nombre es requerido")]
         [MaxLength(50, ErrorMessage = "Máximo 50 caracteres")]
-        [Display(Name = "Nombres")]
+        [Display(Name = "Nombre")]
+        [RegularExpression("^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+$", ErrorMessage = "El Nombre debe contener solo Letras")]
         public string Name { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "El apellido es requerido")]
         [MaxLength(50, ErrorMessage = "Máximo 50 caracteres")]
-        [Display(Name = "Apellidos")]
+        [Display(Name = "Apellido")]
+        [RegularExpression("^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+$", ErrorMessage = "El Nombre debe contener solo Letras")]
         public string LastName { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "El Correo Electronico es requerido")]
