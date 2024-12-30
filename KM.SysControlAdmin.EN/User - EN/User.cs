@@ -63,6 +63,14 @@ namespace KM.SysControlAdmin.EN.User___EN
         #endregion
 
         [NotMapped]
+        [Required(ErrorMessage = "La confirmación de la contraseña es requerida")]
+        [DataType(DataType.Password)]
+        [Compare("Password", ErrorMessage = "Las contraseñas no coinciden")]
+        [StringLength(32, ErrorMessage = "La contraseña debe tener entre 6 y 32 caracteres", MinimumLength = 6)]
+        [Display(Name = "Confirmar Contraseña")]
+        public string ConfirmPassword_Aux { get; set; } = string.Empty; //propiedad auxiliar
+
+        [NotMapped]
         public int Top_Aux { get; set; } // propiedad auxiliar
 
         public Role? Role { get; set; } //propiedad de navegación
