@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 // Referencias Necesarias Para El Correcto Funcionamiento
 using System.ComponentModel.DataAnnotations;
+using KM.SysControlAdmin.EN.User___EN;
 
 
 #endregion
@@ -24,5 +25,7 @@ namespace KM.SysControlAdmin.EN.Role___EN
         [RegularExpression("^[a-zA-ZáéíóúÁÉÍÓÚñÑ/ ]+$", ErrorMessage = "El Nombre debe contener solo letras")]
         public string Name { get; set; } = string.Empty;
         #endregion
+
+        public List<User>? User { get; set; } // propiedad de navegación
     }
 }
