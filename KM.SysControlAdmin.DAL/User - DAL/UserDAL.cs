@@ -162,5 +162,34 @@ namespace KM.SysControlAdmin.DAL.User___DAL
             return users;
         }
         #endregion
+
+        #region METODO PARA MODIFICAR
+        // Metodo Para Modificar Un Registro Existente De La Base De Datos
+        public static async Task<int> UpdateAsync(User user)
+        {
+            int result = 0;
+            using (var dbContext = new ContextDB())
+            {
+                bool UserExists = await ExistsUser(user, dbContext);
+                if (UserExists == false)
+                {
+                    var userDb = await dbContext.User.FirstOrDefaultAsync(u => u.Id == user.Id);
+                    userDb!.Name = user.Name;
+                    userDb.LastName = user.LastName;
+                    userDb.Email = user.Email;
+                    userDb.Status = user.Status;
+                    userDb.DateModification = DateTime.Now;
+                    userDb.ImageData = user.ImageData;
+                    userDb.IdRole = user.IdRole;
+
+                    dbContext.User.Update(userDb);
+                    result = await dbContext.SaveChangesAsync();
+                }
+                else
+                    throw new Exception("Usuario Ya Existente, Vuelve a Intentarlo.");
+            }
+            return result;
+        }
+        #endregion
     }
 }
