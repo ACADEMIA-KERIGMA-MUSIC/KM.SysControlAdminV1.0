@@ -61,5 +61,27 @@ namespace KM.SysControlAdmin.WebApp.Controllers.User___Controller
             }
         }
         #endregion
+
+        #region METODO PARA INDEX
+        // Metodo Para Mostrar La Vista Index
+        //[Authorize(Roles = "Desarrollador, Administrador, Secretario/a")]
+        public async Task<IActionResult> Index(User user = null!)
+        {
+            if (user == null)
+                user = new User();
+            if (user.Top_Aux == 0)
+                user.Top_Aux = 10; // setear el número de registros a mostrar
+            else if (user.Top_Aux == -1)
+                user.Top_Aux = 0;
+
+            var users = await userBL.SearchIncludeRoleAsync(user);
+            var roles = await roleBL.GetAllAsync();
+
+            ViewBag.Roles = roles;
+            ViewBag.Top = user.Top_Aux;
+
+            return View(users);
+        }
+        #endregion
     }
 }
