@@ -68,6 +68,10 @@
                                     <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
                                     Usuarios
                                 </a>
+                                <a class="nav-link" asp-area="" asp-controller="User" asp-action="ChangePassword">
+                                    <div class="sb-nav-link-icon"><i class="fas fa-key"></i></div>
+                                    Cambiar Contraseña
+                                </a>
                             }
                             else if (User.IsInRole("Administrador"))
                             {
@@ -86,6 +90,10 @@
                                 <a class="nav-link" asp-area="" asp-controller="User" asp-action="Index">
                                     <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
                                     Usuarios
+                                </a>
+                                <a class="nav-link" asp-area="" asp-controller="User" asp-action="ChangePassword">
+                                    <div class="sb-nav-link-icon"><i class="fas fa-key"></i></div>
+                                    Cambiar Contraseña
                                 </a>
                             }
                             else if (User.IsInRole("Secretario/a"))
@@ -106,6 +114,10 @@
                                     <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
                                     Usuarios
                                 </a>
+                                <a class="nav-link" asp-area="" asp-controller="User" asp-action="ChangePassword">
+                                    <div class="sb-nav-link-icon"><i class="fas fa-key"></i></div>
+                                    Cambiar Contraseña
+                                </a>
                             }
                             else if (User.IsInRole("Instructor/Docente"))
                             {
@@ -117,6 +129,10 @@
                                 </a>
                                 <!-- Seccion Seguridad-->
                                 <div class="sb-sidenav-menu-heading">Seguridad</div>
+                                <a class="nav-link" asp-area="" asp-controller="User" asp-action="ChangePassword">
+                                    <div class="sb-nav-link-icon"><i class="fas fa-key"></i></div>
+                                    Cambiar Contraseña
+                                </a>
                             }
                             else if (User.IsInRole("Alumno/a"))
                             {
@@ -128,6 +144,10 @@
                                 </a>
                                 <!-- Seccion Seguridad-->
                                 <div class="sb-sidenav-menu-heading">Seguridad</div>
+                                <a class="nav-link" asp-area="" asp-controller="User" asp-action="ChangePassword">
+                                    <div class="sb-nav-link-icon"><i class="fas fa-key"></i></div>
+                                    Cambiar Contraseña
+                                </a>
                             }
                         </div>
                     </div>
