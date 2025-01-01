@@ -15,6 +15,7 @@ using System.Security.Claims;
 
 namespace KM.SysControlAdmin.WebApp.Controllers.User___Controller
 {
+    [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme, Roles = "Desarrollador, Administrador, Secretario/a, Instructor/Docente, Alumno/a")]
     public class UserController : Controller
     {
         // Creamos Las Instancias Para Acceder a Los Metodos
@@ -23,7 +24,7 @@ namespace KM.SysControlAdmin.WebApp.Controllers.User___Controller
 
         #region METODO PARA GUARDAR
         // Accion Que Muestra El Formulario
-        //[Authorize(Roles = "Desarrollador, Administrador, Secretario/a")]
+        [Authorize(Roles = "Desarrollador, Administrador, Secretario/a")]
         public async Task<IActionResult> Create()
         {
             var roles = await roleBL.GetAllAsync();
@@ -32,7 +33,7 @@ namespace KM.SysControlAdmin.WebApp.Controllers.User___Controller
         }
 
         // Accion Que Recibe Los Datos y Los Envia a La Base De Datos
-        //[Authorize(Roles = "Desarrollador, Administrador, Secretario/a")]
+        [Authorize(Roles = "Desarrollador, Administrador, Secretario/a")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(User user, IFormFile imagen)
@@ -68,7 +69,7 @@ namespace KM.SysControlAdmin.WebApp.Controllers.User___Controller
 
         #region METODO PARA INDEX
         // Metodo Para Mostrar La Vista Index
-        //[Authorize(Roles = "Desarrollador, Administrador, Secretario/a")]
+        [Authorize(Roles = "Desarrollador, Administrador, Secretario/a")]
         public async Task<IActionResult> Index(User user = null!)
         {
             if (user == null)
@@ -90,7 +91,7 @@ namespace KM.SysControlAdmin.WebApp.Controllers.User___Controller
 
         #region METODO PARA MODIFICAR
         // Acción que muestra el formulario
-        //[Authorize(Roles = "Desarrollador, Administrador, Secretario/a")]
+        [Authorize(Roles = "Desarrollador, Administrador, Secretario/a")]
         public async Task<IActionResult> Edit(int id)
         {
             var user = await userBL.GetByIdAsync(new User { Id = id });
@@ -106,7 +107,7 @@ namespace KM.SysControlAdmin.WebApp.Controllers.User___Controller
         }
 
         // Acción que recibe los datos del formulario y los envía a la base de datos
-        //[Authorize(Roles = "Desarrollador, Administrador, Secretario/a")]
+        [Authorize(Roles = "Desarrollador, Administrador, Secretario/a")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, User user, IFormFile imagen)
@@ -153,7 +154,7 @@ namespace KM.SysControlAdmin.WebApp.Controllers.User___Controller
 
         #region METODO PARA ELIMINAR
         // Acción que muestra el formulario de eliminación
-        //[Authorize(Roles = "Desarrollador, Administrador, Secretario/a")]
+        [Authorize(Roles = "Desarrollador, Administrador, Secretario/a")]
         public async Task<IActionResult> Delete(int id)
         {
             try
@@ -181,7 +182,7 @@ namespace KM.SysControlAdmin.WebApp.Controllers.User___Controller
         }
 
         // Acción que recibe los datos del formulario para ser eliminados en la base de datos
-        //[Authorize(Roles = "Desarrollador, Administrador, Secretario/a")]
+        [Authorize(Roles = "Desarrollador, Administrador, Secretario/a")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int id, User user)
@@ -221,7 +222,7 @@ namespace KM.SysControlAdmin.WebApp.Controllers.User___Controller
 
         #region METODO PARA DETALLES
         // Acción que muestra los detalles de un registro
-        //[Authorize(Roles = "Desarrollador, Administrador, Secretario/a")]
+        [Authorize(Roles = "Desarrollador, Administrador, Secretario/a")]
         public async Task<IActionResult> Details(int id)
         {
             try
