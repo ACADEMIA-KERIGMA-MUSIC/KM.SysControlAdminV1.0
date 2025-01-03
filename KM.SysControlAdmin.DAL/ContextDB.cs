@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using KM.SysControlAdmin.EN.Role___EN;
 using KM.SysControlAdmin.EN.User___EN;
 using KM.SysControlAdmin.EN.Schedule___EN;
+using KM.SysControlAdmin.EN.Trainer___EN;
 
 
 #endregion
@@ -23,6 +24,7 @@ namespace KM.SysControlAdmin.DAL
         public DbSet<Role> Role { get; set; }
         public DbSet<User> User { get; set; }
         public DbSet<Schedule> Schedule { get; set; }
+        public DbSet<Trainer> Trainer { get; set; }
         #endregion
 
         #region STRING DE CONEXION
