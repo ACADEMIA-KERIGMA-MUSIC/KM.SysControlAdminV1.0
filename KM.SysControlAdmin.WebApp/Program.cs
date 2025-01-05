@@ -35,4 +35,8 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
+// Configuración para Rotativa(Reportes vista HTML a PDF)
+IWebHostEnvironment env = app.Environment;
+Rotativa.AspNetCore.RotativaConfiguration.Setup(env.WebRootPath, "../wwwroot/lib/Rotativa");
+
 app.Run();
