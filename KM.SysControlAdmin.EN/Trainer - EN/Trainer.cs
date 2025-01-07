@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using KM.SysControlAdmin.EN.User___EN;
+using KM.SysControlAdmin.EN.Course___EN;
 
 #endregion
 
@@ -126,5 +127,7 @@ namespace KM.SysControlAdmin.EN.Trainer___EN
         [NotMapped]
         public User? User { get; set; } //propiedad de navegación
         #endregion
+
+        public List<Course> Course { get; set; } = new List<Course>(); // Propiedad de navegacion
     }
 }
