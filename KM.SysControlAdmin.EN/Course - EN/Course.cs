@@ -31,10 +31,15 @@ namespace KM.SysControlAdmin.EN.Course___EN
         [RegularExpression("^[a-zA-ZáéíóúÁÉÍÓÚñÑ/0123456789 ]+$", ErrorMessage = "El Nombre debe contener solo Letras")]
         public string Name { get; set; } = string.Empty;
 
-        [Required(ErrorMessage = "El precio es requerido")]
+        [Required(ErrorMessage = "La Cuota Externo es requerido")]
         [DataType(DataType.Currency, ErrorMessage = "Por favor, introduce una precio valido")]
-        [Display(Name = "Precio")]
-        public decimal Price { get; set; }
+        [Display(Name = "Cuota Externo")]
+        public decimal ExternalFee { get; set; }
+
+        [Required(ErrorMessage = "La Cuota Becado es requerido")]
+        [DataType(DataType.Currency, ErrorMessage = "Por favor, introduce una precio valido")]
+        [Display(Name = "Cuota Becado")]
+        public decimal ScholarshipFee { get; set; }
 
         [Required(ErrorMessage = "La hora de inicio es requerida")]
         [DataType(DataType.DateTime, ErrorMessage = "Por favor, introduce una fecha válida")]
