@@ -97,7 +97,7 @@ namespace KM.SysControlAdmin.WebApp.Controllers.Student___Controller
         [Authorize(Roles = "Desarrollador, Administrador, Secretario/a")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateCreateExternalFormForm1(Student student, IFormFile imagen)
+        public async Task<IActionResult> CreateExternalForm(Student student, IFormFile imagen)
         {
             try
             {
@@ -114,7 +114,10 @@ namespace KM.SysControlAdmin.WebApp.Controllers.Student___Controller
                 }
                 student.DateCreated = DateTime.Now;
                 student.DateModification = DateTime.Now;
-                int result = await studentBL.CreateAsync(student);
+                if (student.ChurchName != "")
+                {
+                    int result = await studentBL.CreateAsync(student);
+                }
 
                 // Crear un nuevo objeto de tipo User y mapear las propiedades de Trainer con Server
                 var user = new User
@@ -140,6 +143,19 @@ namespace KM.SysControlAdmin.WebApp.Controllers.Student___Controller
                 ViewBag.Error = ex.Message;
                 return View(student);
             }
+        }
+        #endregion
+
+        #region METODO PARA MOSTRAR INDEX
+        // Accion Para Mostrar La Vista Index
+        [Authorize(Roles = "Desarrollador, Administrador, Secretario/a")]
+        public async Task<IActionResult> Index(Student student = null!)
+        {
+            if (student == null)
+                student = new Student();
+
+            var students = await studentBL.SearchAsync(student);
+            return View(students);
         }
         #endregion
     }
