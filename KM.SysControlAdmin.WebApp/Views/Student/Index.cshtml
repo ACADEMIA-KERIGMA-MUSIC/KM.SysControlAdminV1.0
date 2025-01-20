@@ -105,7 +105,11 @@
                     @Html.DisplayFor(modelItem => item.LastName)
                 </td>
                 <td>
-                    @Html.ActionLink("Editar", "Edit", new { id = item.Id }, new { @class = "btn btn-warning m-1" }) |
+                    <form asp-action="RedirectBasedOnValidation" method="post" style="display:inline;">
+                        <input type="hidden" name="id" value="@item.Id" />
+                        <button type="submit" class="btn btn-warning m-1">Editar</button>
+                    </form>
+                    |
                     @Html.ActionLink("Detalle", "Details", new { id = item.Id }, new { @class = "btn btn-outline-info m-1" }) |
                     @Html.ActionLink("Eliminar", "Delete", new { id = item.Id }, new { @class = "btn btn-danger m-1" }) |
                     @Html.ActionLink("PDF", "GeneratePDFfile", new { id = item.Id }, new { @class = "btn btn-outline-info m-1" })
