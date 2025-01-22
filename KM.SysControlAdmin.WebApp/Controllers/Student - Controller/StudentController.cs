@@ -240,8 +240,25 @@ namespace KM.SysControlAdmin.WebApp.Controllers.Student___Controller
                     Student existingStudent = await studentBL.GetByIdAsync(new Student { Id = id });
                     student.ImageData = existingStudent.ImageData;
                 }
-                student.DateModification = DateTime.Now;
-                int result = await studentBL.UpdateAsync(student);
+                
+                if (student.ProjectCode != "" && student.ParticipantCode != "")
+                {
+                    student.DateModification = DateTime.Now;
+                    int result = await studentBL.UpdateAsync(student);
+                }                    
+
+                var user = new User
+                {
+                    Email = student.Email,
+                    DateModification = student.DateModification,
+                    ImageData = student.ImageData,
+                };
+
+                // Guardar en la tabla User
+                if (student.ProjectCode != "" && student.ParticipantCode != "")
+                {
+                    int resultUser = await userBL.UpdateAsync(user);
+                }
                 TempData["SuccessMessageUpdate"] = "Alumno/a Modificado Exitosamente";
                 return RedirectToAction(nameof(Index));
             }
@@ -307,8 +324,24 @@ namespace KM.SysControlAdmin.WebApp.Controllers.Student___Controller
                     Student existingStudent = await studentBL.GetByIdAsync(new Student { Id = id });
                     student.ImageData = existingStudent.ImageData;
                 }
-                student.DateModification = DateTime.Now;
-                int result = await studentBL.UpdateAsync(student);
+                if (student.ProjectCode != "" && student.ParticipantCode != "")
+                {
+                    student.DateModification = DateTime.Now;
+                    int result = await studentBL.UpdateAsync(student);
+                }
+
+                var user = new User
+                {
+                    Email = student.Email,
+                    DateModification = student.DateModification,
+                    ImageData = student.ImageData,
+                };
+
+                // Guardar en la tabla User
+                if (student.ProjectCode != "" && student.ParticipantCode != "")
+                {
+                    int resultUser = await userBL.UpdateAsync(user);
+                }
                 TempData["SuccessMessageUpdate"] = "Alumno/a Modificado Exitosamente";
                 return RedirectToAction(nameof(Index));
             }
