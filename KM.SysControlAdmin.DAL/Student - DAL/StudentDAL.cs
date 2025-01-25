@@ -123,48 +123,7 @@ namespace KM.SysControlAdmin.DAL.Student___DAL
         }
         #endregion
 
-        #region METODO PARA MODIFICAR
-        // Metodo Para Modificar Un Registro Existente De La Base De Datos
-        public static async Task<int> UpdateAsync(Student student)
-        {
-            int result = 0;
-            using (var dbContext = new ContextDB())
-            {
-                var studentDB = await dbContext.Student.FirstOrDefaultAsync(m => m.Id == student.Id);
-                if (studentDB != null)
-                {
-                    bool studentExists = await ExistStudent(student, dbContext);
-                    if (studentExists == false)
-                    {
-                        studentDB.StudentCode = student.StudentCode;
-                        studentDB.ProjectCode = student.ProjectCode;
-                        studentDB.ParticipantCode = student.ParticipantCode;
-                        studentDB.Name = student.Name;
-                        studentDB.LastName = student.LastName;
-                        studentDB.DateOfBirth = student.DateOfBirth;
-                        studentDB.Age = student.Age;
-                        studentDB.ChurchName = student.ChurchName;
-                        studentDB.Status = student.Status;
-                        studentDB.ImageData = student.ImageData;
-                        studentDB.DateCreated = student.DateCreated;
-                        studentDB.DateModification = student.DateModification;
-
-                        dbContext.Update(studentDB);
-                        result = await dbContext.SaveChangesAsync();
-                    }
-                    else
-                    {
-                        throw new Exception("Alumno/a Ya Existente, Vuelve a Intentarlo Nuevamente.");
-                    }
-                }
-                else
-                {
-                    throw new Exception("Alumno/a No Encontrado Para Actualizar.");
-                }
-            }
-            return result;
-        }
-        #endregion
+        
 
         #region METODO PARA ELIMINAR
         // Metodo Para Eliminar Un Registro Existente En La Base De Datos
