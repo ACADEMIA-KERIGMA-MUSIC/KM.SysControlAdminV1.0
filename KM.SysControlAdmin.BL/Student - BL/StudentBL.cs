@@ -56,7 +56,13 @@ namespace KM.SysControlAdmin.BL.Student___BL
         }
         #endregion
 
-        
+        #region METODO PARA MODIFICAR
+        // Metodo Para Guardar Un Nuevo Registro
+        public async Task<int> UpdateAsync(Student student)
+        {
+            return await StudentDAL.UpdateAsync(student);
+        }
+        #endregion
 
         #region METODO PARA ELIMINAR
         // Metodo Para Eliminar Un Registro Existente En La Base De Datos
