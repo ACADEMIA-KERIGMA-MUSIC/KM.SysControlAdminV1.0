@@ -19,11 +19,28 @@ namespace KM.SysControlAdmin.DAL.CourseAssignment___DAL
         // Metodo Para Validar La Unica Existencia De Un Registro y No Haber Duplicidad
         private static async Task<bool> ExistCourseAssignment(CourseAssignment courseAssignment, ContextDB contextDB)
         {
-            bool result = false;
-            var courseAssignments = await contextDB.CourseAssignment.FirstOrDefaultAsync(c => c.IdStudent == courseAssignment.IdStudent && c.IdCourse == courseAssignment.IdCourse && c.Id != courseAssignment.Id);
-            if (courseAssignments != null && courseAssignments.Id > 0 && courseAssignments.IdStudent == courseAssignment.IdStudent && courseAssignments.IdCourse == courseAssignment.IdCourse)
-                result = true;
-            return result;
+            // Verificar si ya existe una asignación con el mismo estudiante y curso
+            var courseAssignments = await contextDB.CourseAssignment.FirstOrDefaultAsync(c =>
+                c.IdStudent == courseAssignment.IdStudent &&
+                c.IdCourse == courseAssignment.IdCourse &&
+                c.Id != courseAssignment.Id);
+
+            if (courseAssignments != null &&
+                courseAssignments.Id > 0 &&
+                courseAssignments.IdStudent == courseAssignment.IdStudent &&
+                courseAssignments.IdCourse == courseAssignment.IdCourse)
+            {
+                return true;
+            }
+
+            // Verificar si el curso está inactivo
+            var course = await contextDB.Course.FirstOrDefaultAsync(c => c.Id == courseAssignment.IdCourse);
+            if (course != null && course.Status == 2)
+            {
+                throw new Exception("No se puede agregar la asignacion ya que el curso no esta activo.");
+            }
+
+            return false;
         }
         #endregion
 
