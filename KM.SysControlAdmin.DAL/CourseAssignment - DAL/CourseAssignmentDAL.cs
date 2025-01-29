@@ -34,6 +34,15 @@ namespace KM.SysControlAdmin.DAL.CourseAssignment___DAL
             }
 
             // Verificar si el curso está inactivo
+            var student = await contextDB.Student.FirstOrDefaultAsync(c => c.Id == courseAssignment.IdStudent);
+            if (student != null && student.Status == 2)
+            {
+                throw new Exception("No se puede agregar la asignacion ya que el Alumno/a no esta activo.");
+            }
+
+            return false;
+            
+            // Verificar si el curso está inactivo
             var course = await contextDB.Course.FirstOrDefaultAsync(c => c.Id == courseAssignment.IdCourse);
             if (course != null && course.Status == 2)
             {
