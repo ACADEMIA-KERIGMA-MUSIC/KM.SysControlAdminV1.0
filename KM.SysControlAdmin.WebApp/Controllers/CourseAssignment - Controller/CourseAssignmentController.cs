@@ -39,7 +39,7 @@ namespace KM.SysControlAdmin.WebApp.Controllers.CourseAssignment___Controller
                 ProjectCode = string.IsNullOrWhiteSpace(student.ProjectCode) ? "NO APLICA" : student.ProjectCode,
                 ParticipantCode = string.IsNullOrWhiteSpace(student.ParticipantCode) ? "NO APLICA" : student.ParticipantCode,
                 DateOfBirth = student.DateOfBirth.ToString("dd/MM/yyyy"),
-                Age = student.Age,
+                Age = student.Age + " Años",
                 ChurchName = string.IsNullOrWhiteSpace(student.ChurchName) ? "NO APLICA" : student.ChurchName,
                 ImageData = student.ImageData
             };
@@ -68,7 +68,7 @@ namespace KM.SysControlAdmin.WebApp.Controllers.CourseAssignment___Controller
                     ? $"{((TimeSpan)course.Schedule.StartTime):hh\\:mm} - {((TimeSpan)course.Schedule.EndTime):hh\\:mm}"
                     : null,
                 Trainer = course.IdTrainer != null
-                    ? $"{course.Trainer.Name} {course.Trainer.LastName}"
+                    ? $"{course.Trainer.Name} {course.Trainer.LastName} - {course.Trainer.Code}"
                     : null,
                 Status = course.Status == 1 ? "Activo" : course.Status == 2 ? "Inactivo" : "Desconocido" // Lógica de validación
             };
