@@ -33,23 +33,21 @@ namespace KM.SysControlAdmin.DAL.CourseAssignment___DAL
                 return true;
             }
 
-            // Verificar si el curso está inactivo
+            // Verificar si el estudiante está inactivo
             var student = await contextDB.Student.FirstOrDefaultAsync(c => c.Id == courseAssignment.IdStudent);
             if (student != null && student.Status == 2)
             {
                 throw new Exception("No se puede agregar la asignacion ya que el Alumno/a no esta activo.");
             }
 
-            return false;
-            
             // Verificar si el curso está inactivo
             var course = await contextDB.Course.FirstOrDefaultAsync(c => c.Id == courseAssignment.IdCourse);
             if (course != null && course.Status == 2)
             {
-                throw new Exception("No se puede agregar la asignacion ya que el curso no esta activo.");
+                throw new Exception("No se puede agregar la asignacion ya que el Curso no esta activo.");
             }
 
-            return false;
+            return false; // Solo devolvemos false si ambas validaciones no fallaron
         }
         #endregion
 
@@ -167,6 +165,40 @@ namespace KM.SysControlAdmin.DAL.CourseAssignment___DAL
                 {
                     dbContext.CourseAssignment.Remove(courseAssignmentDB);
                     result = await dbContext.SaveChangesAsync();
+                }
+            }
+            return result;
+        }
+        #endregion
+
+        #region METODO PARA MODIFICAR
+        // Metodo Para Modificar Un Registro Existente De La Base De Datos
+        public static async Task<int> UpdateAsync(CourseAssignment courseAssignment)
+        {
+            int result = 0;
+            using (var dbContext = new ContextDB())
+            {
+                var courseAssignmentDB = await dbContext.CourseAssignment.FirstOrDefaultAsync(c => c.Id == courseAssignment.Id);
+                if (courseAssignmentDB != null)
+                {
+                    bool courseAssignmentExists = await ExistCourseAssignment(courseAssignment, dbContext);
+                    if (courseAssignmentExists == false)
+                    {
+                        courseAssignmentDB.IdStudent = courseAssignment.IdStudent;
+                        courseAssignmentDB.IdCourse = courseAssignment.IdCourse;
+                        courseAssignmentDB.DateModification = courseAssignment.DateModification;
+
+                        dbContext.Update(courseAssignmentDB);
+                        result = await dbContext.SaveChangesAsync();
+                    }
+                    else
+                    {
+                        throw new Exception("Asignacion Ya Existente, Vuelve a Intentarlo Nuevamente");
+                    }
+                }
+                else
+                {
+                    throw new Exception("Asignacion No Encontrada Para Actualizar.");
                 }
             }
             return result;

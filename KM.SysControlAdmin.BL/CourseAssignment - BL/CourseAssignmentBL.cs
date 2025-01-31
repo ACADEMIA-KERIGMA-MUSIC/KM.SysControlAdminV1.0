@@ -60,5 +60,13 @@ namespace KM.SysControlAdmin.BL.CourseAssignment___BL
             return await CourseAssignmentDAL.DeleteAsync(courseAssignment);
         }
         #endregion
+
+        #region METODO PARA MODIFICAR
+        // Metodo Para Modificar Un Registro Existente
+        public async Task<int> UpdateAsync(CourseAssignment courseAssignment)
+        {
+            return await CourseAssignmentDAL.UpdateAsync(courseAssignment);
+        }
+        #endregion
     }
 }
