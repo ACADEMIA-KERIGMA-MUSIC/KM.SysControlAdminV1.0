@@ -214,5 +214,16 @@ namespace KM.SysControlAdmin.DAL.Course___DAL
             return result;
         }
         #endregion
+
+        #region METODO PARA OBTENER LA CANTIDAD DE CURSOS ACTIVOS
+        // Método para obtener la cantidad de cursos con status "1"
+        public static async Task<int> GetActiveCourseCountAsync()
+        {
+            using (var dbContext = new ContextDB())
+            {
+                return await dbContext.Course.CountAsync(s => s.Status == 1);
+            }
+        }
+        #endregion
     }
 }

@@ -78,5 +78,13 @@ namespace KM.SysControlAdmin.BL.Course___BL
             return await CourseDAL.DeleteAsync(course);
         }
         #endregion
+
+        #region METODO PARA OBTENER LA CANTIDAD DE CURSOS ACTIVOS
+        // Método para obtener la cantidad de cursos activos
+        public async Task<int> GetActiveCourseCountAsync()
+        {
+            return await CourseDAL.GetActiveCourseCountAsync();
+        }
+        #endregion
     }
 }
