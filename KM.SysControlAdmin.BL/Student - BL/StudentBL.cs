@@ -71,5 +71,21 @@ namespace KM.SysControlAdmin.BL.Student___BL
             return await StudentDAL.DeleteAsync(student);
         }
         #endregion
+
+        #region METODO PARA OBTENER LA CANTIDAD DE ESTUDIANTES
+        // Método para obtener la cantidad total de estudiantes
+        public async Task<int> GetTotalCountAsync()
+        {
+            return await StudentDAL.GetTotalCountAsync();
+        }
+        #endregion
+
+        #region METODO PARA OBTENER LA CANTIDAD DE ALUMNOS ACTIVOS
+        // Método para obtener la cantidad de alumnos activos
+        public async Task<int> GetActiveStudentsCountAsync()
+        {
+            return await StudentDAL.GetActiveStudentsCountAsync();
+        }
+        #endregion
     }
 }
