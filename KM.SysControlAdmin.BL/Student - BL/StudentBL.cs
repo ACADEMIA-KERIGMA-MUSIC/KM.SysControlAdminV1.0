@@ -87,5 +87,21 @@ namespace KM.SysControlAdmin.BL.Student___BL
             return await StudentDAL.GetActiveStudentsCountAsync();
         }
         #endregion
+
+        #region METODO PARA OBTENER LA CANTIDAD DE ALUMNOS BECADOS
+        // Método para obtener la cantidad de alumnos becados
+        public async Task<int> GetScholarshipStudentsCountAsync()
+        {
+            return await StudentDAL.GetScholarshipStudentsCountAsync();
+        }
+        #endregion
+
+        #region METODO PARA OBTENER LA CANTIDAD DE ALUMNOS EXTERNOS
+        // Método para obtener la cantidad de alumnos externos
+        public async Task<int> GetExternalStudentsCountAsync()
+        {
+            return await StudentDAL.GetExternalStudentsCountAsync();
+        }
+        #endregion
     }
 }

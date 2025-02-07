@@ -204,5 +204,27 @@ namespace KM.SysControlAdmin.DAL.Student___DAL
             }
         }
         #endregion
+
+        #region METODO PARA OBTENER LA CANTIDAD DE ALUMNOS BECADOS
+        // Método para contar alumnos que son becados
+        public static async Task<int> GetScholarshipStudentsCountAsync()
+        {
+            using (var dbContext = new ContextDB())
+            {
+                return await dbContext.Student.CountAsync(s => s.ProjectCode != "" && s.ParticipantCode != "");
+            }
+        }
+        #endregion
+
+        #region METODO PARA OBTENER LA CANTIDAD DE ALUMNOS EXTERNOS
+        // Método para contar alumnos que son externos
+        public static async Task<int> GetExternalStudentsCountAsync()
+        {
+            using (var dbContext = new ContextDB())
+            {
+                return await dbContext.Student.CountAsync(s => s.ProjectCode == "" && s.ParticipantCode == "");
+            }
+        }
+        #endregion
     }
 }
