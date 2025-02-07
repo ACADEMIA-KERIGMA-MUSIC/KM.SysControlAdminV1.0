@@ -215,6 +215,17 @@ namespace KM.SysControlAdmin.DAL.Course___DAL
         }
         #endregion
 
+        #region METODO PARA OBTENER LA CANTIDAD DE CURSOS
+        // Método para obtener la cantidad de cursos
+        public static async Task<int> GetCourseCountAsync()
+        {
+            using (var dbContext = new ContextDB())
+            {
+                return await dbContext.Course.CountAsync();
+            }
+        }
+        #endregion
+
         #region METODO PARA OBTENER LA CANTIDAD DE CURSOS ACTIVOS
         // Método para obtener la cantidad de cursos con status "1"
         public static async Task<int> GetActiveCourseCountAsync()
@@ -222,6 +233,17 @@ namespace KM.SysControlAdmin.DAL.Course___DAL
             using (var dbContext = new ContextDB())
             {
                 return await dbContext.Course.CountAsync(s => s.Status == 1);
+            }
+        }
+        #endregion
+        
+        #region METODO PARA OBTENER LA CANTIDAD DE CURSOS INACTIVOS
+        // Método para obtener la cantidad de cursos con status "2"
+        public static async Task<int> GetInactiveCourseCountAsync()
+        {
+            using (var dbContext = new ContextDB())
+            {
+                return await dbContext.Course.CountAsync(s => s.Status == 2);
             }
         }
         #endregion
