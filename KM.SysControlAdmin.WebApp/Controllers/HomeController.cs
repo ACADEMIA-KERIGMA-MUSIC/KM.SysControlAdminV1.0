@@ -1,4 +1,5 @@
 using KM.SysControlAdmin.BL.Course___BL;
+using KM.SysControlAdmin.BL.CourseAssignment___BL;
 using KM.SysControlAdmin.BL.Student___BL;
 using KM.SysControlAdmin.BL.Trainer___BL;
 using KM.SysControlAdmin.WebApp.Models;
@@ -16,6 +17,7 @@ namespace KM.SysControlAdmin.WebApp.Controllers
         StudentBL studentBL = new StudentBL();
         CourseBL courseBL = new CourseBL();
         TrainerBL trainerBL = new TrainerBL();
+        CourseAssignmentBL courseAssignmentBL = new CourseAssignmentBL();
 
         [Authorize(Roles = "Desarrollador, Administrador, Secretario/a, Instructor/Docente, Alumno/a")]
         public IActionResult Index()
@@ -34,6 +36,7 @@ namespace KM.SysControlAdmin.WebApp.Controllers
             int totalExternos = await studentBL.GetExternalStudentsCountAsync();
             int totalCursos = await courseBL.GetCourseCountAsync();
             int totalCursosInactivos = await courseBL.GetInactiveCourseCountAsync();
+            var topCourses = await courseAssignmentBL.GetTopCoursesAsync();
 
             ViewData["TotalAlumnos"] = totalAlumnos;
             ViewData["TotalAlumnosActivos"] = totalAlumnosActivos;
@@ -43,6 +46,9 @@ namespace KM.SysControlAdmin.WebApp.Controllers
             ViewData["TotalExternos"] = totalExternos;
             ViewData["TotalCursos"] = totalCursos;
             ViewData["TotalCursosInactivos"] = totalCursosInactivos;
+            // Pasar los datos de los cursos al ViewData para usarlos en la vista
+            ViewData["TopCourses"] = topCourses.Select(c => c.CourseName).ToArray();
+            ViewData["Assignments"] = topCourses.Select(c => c.AssignmentCount).ToArray();
 
             return View();
         }
