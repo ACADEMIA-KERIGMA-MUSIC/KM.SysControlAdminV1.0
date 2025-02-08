@@ -36,8 +36,6 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" asp-area="" asp-controller="User" asp-action="Information">Mi Perfil</a></li>
-                        <li><hr class="dropdown-divider" /></li>
                         <li><a class="dropdown-item" id="logoutLink" href="#!">Cerrar Sesion</a></li>
                     </ul>
                 </li>
@@ -101,6 +99,17 @@
                                     <nav class="sb-sidenav-menu-nested nav">
                                         <a class="nav-link" asp-area="" asp-controller="User" asp-action="ChangePassword">Mi Usuario</a>
                                         <a class="nav-link" asp-area="" asp-controller="Support" asp-action="Index">Usuarios Externos</a>
+                                    </nav>
+                                </div>
+                                <!-- Seccion Mi Información-->
+                                <a class="nav-link collapsed" data-bs-toggle="collapse" data-bs-target="#collapseInfo" aria-expanded="false" aria-controls="collapseInfo">
+                                    <div class="sb-nav-link-icon"><i class="fas fa-info-circle"></i></div>
+                                    Mi Información
+                                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                                </a>
+                                <div class="collapse" id="collapseInfo" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                                    <nav class="sb-sidenav-menu-nested nav">
+                                        <a class="nav-link" asp-area="" asp-controller="User" asp-action="Information">Mi Perfil</a>
                                     </nav>
                                 </div>
                             }
