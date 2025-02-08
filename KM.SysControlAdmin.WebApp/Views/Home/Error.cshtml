@@ -1,0 +1,32 @@
+﻿@{
+    ViewData["Title"] = "Error";
+}
+
+<div class="d-flex flex-column justify-content-center align-items-center vh-100">
+    @if (ViewBag.StatusCode == 404)
+    {
+        <div class="error-container text-center bg-white p-4 rounded shadow mb-3">
+            <div class="lottie-animation"></div>
+            <div class="error-content">
+                <h1 class="text-danger">404</h1>
+                <p>La página que estás buscando no existe o ha sido movida.</p>
+                <a href="@Url.Action("Index", "Home")" class="btn btn-primary">Volver al Inicio</a>
+            </div>
+        </div>
+    }
+    else if (ViewBag.StatusCode == 500)
+    {
+        <div class="error-container text-center bg-white p-4 rounded shadow">
+            <div class="lottie-animation"></div>
+            <div class="error-content">
+                <h1 class="text-danger">500</h1>
+                <p>Parece que hubo un error interno en el servidor</p>
+                <a href="@Url.Action("Index", "Home")" class="btn btn-primary">Volver al Inicio</a>
+            </div>
+        </div>
+    }
+    else
+    {
+        <p>Parece que algo salió mal.</p>
+    }
+</div>
