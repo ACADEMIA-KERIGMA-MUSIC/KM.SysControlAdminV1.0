@@ -37,7 +37,7 @@ namespace KM.SysControlAdmin.DAL
         // Metodo de Conexion a la Base de Datos
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Data Source=192.250.231.31;Initial Catalog=KMSysControlAdminDB;User=eliqsv_asistenciaAdmin;Password=m3929&kDd;Trust Server Certificate=True"); // String de Conexion
+            optionsBuilder.UseSqlServer(@"Data Source=localhost;Initial Catalog=KMSysControlAdminDB;Integrated Security=True;Trust Server Certificate=True"); // String de Conexion
         }
         #endregion
     }
