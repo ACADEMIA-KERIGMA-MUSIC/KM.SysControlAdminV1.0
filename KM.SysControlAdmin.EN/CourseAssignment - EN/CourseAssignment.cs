@@ -37,6 +37,13 @@ namespace KM.SysControlAdmin.EN.CourseAssignment___EN
         public DateTime DateModification { get; set; }
         #endregion
 
+        #region ATRIBUTOS NO MAPEABLES
+        [NotMapped]
+        public string CourseName { get; set; } = string.Empty;
+        [NotMapped]
+        public int AssignmentCount { get; set; }
+        #endregion
+
         public Student? Student { get; set; } // Propiedadd de Navegacion
 
         public Course? Course { get; set; }// Propiedad de Navegacion

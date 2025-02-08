@@ -68,5 +68,12 @@ namespace KM.SysControlAdmin.BL.CourseAssignment___BL
             return await CourseAssignmentDAL.UpdateAsync(courseAssignment);
         }
         #endregion
+
+        #region METODO PARA OBTENER LOS 4 CURSOS CON MAS ASIGNACIONES
+        public async Task<List<CourseAssignment>> GetTopCoursesAsync()
+        {
+            return await CourseAssignmentDAL.GetTopCoursesAsync();
+        }
+        #endregion
     }
 }
