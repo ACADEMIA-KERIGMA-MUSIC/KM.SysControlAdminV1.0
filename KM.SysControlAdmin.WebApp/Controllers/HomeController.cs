@@ -52,18 +52,5 @@ namespace KM.SysControlAdmin.WebApp.Controllers
 
             return View();
         }
-
-        [AllowAnonymous]
-        public IActionResult Error()
-        {
-            return View();
-        }
-
-        [AllowAnonymous]
-        public IActionResult CustomStatusCode(int code)
-        {
-            ViewBag.StatusCode = code;
-            return View("Error");
-        }
     }
 }

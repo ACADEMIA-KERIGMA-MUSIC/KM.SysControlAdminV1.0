@@ -19,7 +19,6 @@ var app = builder.Build();
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    app.UseStatusCodePagesWithRedirects("/Home/CustomStatusCode?code={0}"); // Maneja códigos de error específicos
     app.UseHsts();
 }
 
