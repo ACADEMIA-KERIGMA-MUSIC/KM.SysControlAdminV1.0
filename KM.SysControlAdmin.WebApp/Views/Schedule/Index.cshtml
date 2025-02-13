@@ -5,7 +5,8 @@
 }
 
 <br />
-<h1>Mantenimiento Para Horarios</h1>
+<h1>Mantenimiento De Horarios</h1>
+<div class="alert alert-warning"><strong>Datos a tomar en cuenta:</strong> El Formato de hora a usar para los horarios es de "24 Horas."</div>
 <hr />
 <div>
     <form asp-action="Index">
@@ -55,20 +56,26 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.StartTime)
+                    @Html.DisplayFor(modelItem => item.StartTimeFormatted)
+                    @(item.StartTime.Hours >= 12 ? "PM" : "AM")
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.EndTime)
+                    @Html.DisplayFor(modelItem => item.EndTimeFormatted)
+                    @(item.EndTime.Hours >= 12 ? "PM" : "AM")
                 </td>
                 <td>
-                    @Html.ActionLink("Modificar", "Edit", new { id = item.Id }, new { @class = "btn btn-warning m-1" }) |
-                    @Html.ActionLink("Detalles", "Details", new { id = item.Id }, new { @class = "btn btn-outline-info m-1" }) |
-                    @Html.ActionLink("Eliminar", "Delete", new { id = item.Id }, new { @class = "btn btn-danger m-1" })
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning m-1">
+                        <i class="fas fa-edit"></i>
+                    </a>
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger m-1">
+                        <i class="fas fa-trash-alt"></i>
+                    </a>
                 </td>
             </tr>
         }
     </tbody>
 </table>
+<br />
 
 @section Scripts {
     <script>
