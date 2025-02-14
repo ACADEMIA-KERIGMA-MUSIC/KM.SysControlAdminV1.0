@@ -117,15 +117,5 @@ namespace KM.SysControlAdmin.WebApp.Controllers.Schedule___Controller
             }
         }
         #endregion
-
-        #region METODO PARA DETALLES
-        // Metodo que Muestra La Vista De Detalles
-        [Authorize(Roles = "Desarrollador, Administrador, Secretario/a")]
-        public async Task<IActionResult> Details(int id)
-        {
-            var schedule = await scheduleBL.GetByIdAsync(new Schedule { Id = id });
-            return View(schedule);
-        }
-        #endregion
     }
 }
