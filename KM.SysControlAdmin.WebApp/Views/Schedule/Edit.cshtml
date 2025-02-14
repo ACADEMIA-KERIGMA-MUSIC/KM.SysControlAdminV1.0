@@ -4,85 +4,84 @@
     ViewData["Title"] = "Modificar Horario";
 }
 
-@section Styles {
-    <link href="/css/Schedule/DesignCreateAndEdit.css" rel="stylesheet" />
-}
-
 <br />
-<h1>Modificar Horario Existente</h1>
+<h1>Formulario - Modificar Horario</h1>
+<div class="alert alert-warning"><strong>Datos a tomar en cuenta:</strong> El Formato de hora a usar para los horarios es de "24 Horas."</div>
 <span>@ViewBag.Error</span>
 <hr />
-<br />
-<div class="row">
-    <div class="col-md-12">
-        <form id="Form" asp-action="Edit" onsubmit="CreateRecord(event)">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group-row">
-                <div class="form-group">
-                    <label asp-for="StartTime" class="control-label"></label>
-                    <input asp-for="StartTime" class="form-control" required />
-                    <span asp-validation-for="StartTime" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="EndTime" class="control-label"></label>
-                    <input asp-for="EndTime" class="form-control" required />
-                    <span asp-validation-for="EndTime" class="text-danger"></span>
-                </div>
-            </div>
-            <br />
-            <div class="form-group">
-                <input type="submit" value="Modificar Horario" class="btn btn-primary" /> |
-                <a class="btn btn-outline-secondary" asp-action="Index">Regresar a La Lista</a>
-            </div>
-        </form>
-    </div>
-</div>
 
-@section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+<script>
+    async function ShowEditPrompt() {
+        const { value: formValues } = await Swal.fire({
+            title: 'Horario a Modificar',
+            html: `
+                    <label for="startTime"><strong>Hora de Inicio:</strong></label>
+                    <input type="time" id="startTime" class="swal2-input" value="@Model.StartTime">
+                    <br />
+                    <label for="endTime"><strong>Hora de Fin:</strong></label>
+                    <input type="time" id="endTime" class="swal2-input" value="@Model.EndTime">
+                `,
+                focusConfirm: true,
+                showCancelButton: true,
+                confirmButtonText: 'Modificar Horario',
+                cancelButtonText: 'Cancelar',
+                reverseButtons: true,
+                preConfirm: () => {
+                const startTime = document.getElementById('startTime').value;
+                const endTime = document.getElementById('endTime').value;
+
+                if (!startTime || startTime === "00:00" || !endTime || endTime === "00:00") {
+                    Swal.showValidationMessage('Por favor, ingrese una hora válida para ambos campos.');
+                }
+
+                return { startTime, endTime };
+            }
+        });
+
+        if (!formValues) {
+            window.location.href = '@Url.Action("Index", "Schedule")'; // Si el usuario cancela, redirige a la lista
+            return;
+        }
+
+        // Confirmación antes de enviar
+        Swal.fire({
+            title: '¿Guardar Cambios?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Sí, Modificar Horario',
+            cancelButtonText: 'Cancelar',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById('StartTime').value = formValues.startTime;
+                document.getElementById('EndTime').value = formValues.endTime;
+                document.getElementById('Form').submit();
+            } else {
+                window.location.href = '@Url.Action("Index", "Schedule")';
+            }
+        });
     }
 
-    <script>
-        function showErrorAlert(message) {
-            Swal.fire({
-                title: 'Error',
-                text: message,
-                icon: 'error'
-            });
-        }
+    window.onload = ShowEditPrompt;
 
-        // Mostrar alerta de ViewBag.Error si es necesario
-        @if (!string.IsNullOrEmpty(ViewBag.Error))
-        {
-            @:showErrorAlert('@ViewBag.Error');
-        }
+    function showErrorAlert(message) {
+        Swal.fire({
+            title: 'Error',
+            text: message,
+            icon: 'error'
+        });
+    }
 
-        // Alerta con SweetAlert2
-        function CreateRecord(e) {
-            e.preventDefault();
-            const form = document.getElementById('Form');
-            const startTime = document.getElementById('StartTime').value;
-            const endTime = document.getElementById('EndTime').value;
+    // Mostrar alerta de ViewBag.Error si es necesario
+    @if (!string.IsNullOrEmpty(ViewBag.Error))
+    {
+        @:showErrorAlert('@ViewBag.Error');
+    }
+</script>
 
-            // Validar que los campos no estén vacíos (00:00) y que no estén vacíos
-            if (!startTime || startTime === "00:00" || !endTime || endTime === "00:00") {
-                showErrorAlert("Por favor, ingrese una hora válida para ambos campos.");
-                return;
-            }
-
-            // Si todos los campos son válidos, muestra la alerta de confirmación
-            Swal.fire({
-                title: '¿Modificar Hoario Existente?',
-                icon: 'question',
-                showCancelButton: true,
-                confirmButtonText: 'Sí, Modificar Horario',
-                cancelButtonText: 'Cancelar'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    form.submit();
-                }
-            });
-        }
-    </script>
-}
+<form asp-action="Edit" id="Form">
+    <div asp-validation-summary="ModelOnly"></div>
+    <input type="hidden" asp-for="Id" />
+    <input type="hidden" id="StartTime" name="StartTime" />
+    <input type="hidden" id="EndTime" name="EndTime" />
+</form>
