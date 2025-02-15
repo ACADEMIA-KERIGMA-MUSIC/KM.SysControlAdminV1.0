@@ -5,67 +5,72 @@
 }
 
 <br />
-<h1>Eliminar Horario Existente</h1>
-<p class="alert alert-danger">¿Estas Seguro De Eliminar el Siguiente Registro? Recuerda No Podras Revertir Los Cambios.</p>
-<div>
-    <hr />
-    <h3>Información Del Horario</h3>
-    <br />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.StartTime)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.StartTime)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.EndTime)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.EndTime)
-        </dd>
-    </dl>
-    <br />
-    <form id="Form" asp-action="Delete" onsubmit="CreateRecord(event)">
-        <input type="hidden" asp-for="Id" />
-        <input type="submit" value="Eliminar Horario" class="btn btn-danger" /> |
-        <a class="btn btn-outline-secondary" asp-action="Index">Regresar a La Lista</a>
-    </form>
-</div>
+<h1>Formulario - Eliminar Horario</h1>
+<p class="alert alert-danger">
+    <strong>Recuerda:</strong> No podrás revertir los cambios. <br />
+    <strong>Datos a tomar en cuenta:</strong> El Formato de hora a usar para los horarios es de "24 Horas."
+</p>
+<span>@ViewBag.Error</span>
+<hr />
+<script>
+    async function ShowDeletePrompt() {
+        const result = await Swal.fire({
+            title: 'Información Del Horario',
+            html: `
+                    <div style="text-align: center;">
+                        <p><strong>Hora de Inicio:</strong> @Model.StartTimeFormatted @(Model.StartTime.Hours >= 12 ? "PM" : "AM")</p>
+                        <p><strong>Hora de Fin:</strong> @Model.EndTimeFormatted @(Model.EndTime.Hours >= 12 ? "PM" : "AM")</p>
+                    </div>
+                `,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Sí, Eliminar Horario',
+            cancelButtonText: 'Cancelar',
+            reverseButtons: true
+        });
 
-@section Scripts {
-    <script>
-        // Funcion para estructura de alerta para Error
-        function showErrorAlert(message) {
-            Swal.fire({
-                title: 'Error',
-                text: message,
-                icon: 'error'
-            });
+        if (result.isConfirmed) {
+            ConfirmFinalDeletion();
+        } else {
+            window.location.href = '@Url.Action("Index", "Schedule")';
         }
-        // Mostrar alerta de ViewBag.Error si es necesario
-        @if (!string.IsNullOrEmpty(ViewBag.Error))
-        {
-            @:showErrorAlert('@ViewBag.Error');
-        }
-        // Funcion para la alerta
-        function CreateRecord(e) {
-            e.preventDefault();
-            const form = document.getElementById('Form');
+    }
 
-            Swal.fire({
-                title: '¿Eliminar Este Horario?',
-                text: '¿Estas Seguro De Eliminar el Siguiente Horario? Recuerda No Puedes Revertir Los Cambios',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonText: 'Si, Eliminar Horario',
-                cancelButtonText: 'Cancelar'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    form.submit();
-                }
-            });
-        }
-    </script>
+    async function ConfirmFinalDeletion() {
+        const confirmation = await Swal.fire({
+            title: '¿Estás seguro de Eliminar este Horario?',
+            text: 'Recuerda: No podrás revertir los cambios.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Sí, Eliminar Horario',
+            cancelButtonText: 'Cancelar',
+            reverseButtons: true
+        });
 
-}
+        if (confirmation.isConfirmed) {
+            document.getElementById('Form').submit();
+        } else {
+            window.location.href = '@Url.Action("Index", "Schedule")';
+        }
+    }
+
+    window.onload = ShowDeletePrompt;
+
+    function showErrorAlert(message) {
+        Swal.fire({
+            title: 'Error',
+            text: message,
+            icon: 'error'
+        });
+    }
+
+    // Mostrar alerta de ViewBag.Error si es necesario
+    @if (!string.IsNullOrEmpty(ViewBag.Error))
+    {
+        @:showErrorAlert('@ViewBag.Error');
+    }
+</script>
+
+<form asp-action="Delete" id="Form">
+    <input type="hidden" asp-for="Id" />
+</form>
