@@ -96,6 +96,22 @@ namespace KM.SysControlAdmin.EN.Trainer___EN
 
         #endregion
 
+        #region Atributos No Mapeables
+        // Propiedad para formatear la fecha automáticamente
+        [NotMapped]
+        public string DateOfBirthFormatted => DateOfBirth.ToString(@"dd/MM/yyyy");
+        [NotMapped]
+        public string DateCreatedFormatted => DateCreated.ToString(@"dd/MM/yyyy");
+        [NotMapped]
+        public string DateModificationFormatted => DateModification.ToString(@"dd/MM/yyyy");
+
+        // Propiedad para formatear la hora con AM/PM
+        [NotMapped]
+        public string TimeCreatedFormatted => DateCreated.ToString("hh:mm tt");
+        [NotMapped]
+        public string TimeModificationFormatted => DateModification.ToString("hh:mm tt");
+        #endregion
+
         #region Atributos No Mapeables Externos
         [NotMapped]
         [Required(ErrorMessage = "El Correo Electronico es requerido")]
