@@ -1,15 +1,13 @@
 ﻿@model KM.SysControlAdmin.EN.Trainer___EN.Trainer
 
 @{
-    ViewData["Title"] = "Crear Instructor/Docente";
+    ViewData["Title"] = "Crear Instructor   ";
 }
 
-@section Styles {
-    <link href="/css/Trainer/DesignCreateAndEdit.css" rel="stylesheet" />
-}
+<link href="/css/Trainer/DesignCreateAndEdit.css" rel="stylesheet" />
 
 <br />
-<h1>Crear Nuevo Instructor/Docente</h1>
+<h1>Formulario - Crear Nuevo Instructor</h1>
 <span>@ViewBag.Error</span>
 <hr />
 <br />
@@ -31,7 +29,7 @@
                 </div>
                 <div class="form-group">
                     <label asp-for="Dui" class="control-label"></label>
-                    <input asp-for="Dui" class="form-control" id="inputDui" required placeholder="Ingresar" />
+                    <input asp-for="Dui" class="form-control" id="inputDui" required placeholder="00000000-0" />
                     <span asp-validation-for="Dui" class="text-danger"></span>
                 </div>
             </div>
@@ -43,13 +41,13 @@
                 </div>
                 <div class="form-group">
                     <label asp-for="Age" class="control-label"></label>
-                    <input asp-for="Age" class="form-control" readonly required placeholder="Ingresar" />
+                    <input asp-for="Age" class="form-control" readonly required placeholder="*Se auto-calcula*" />
                     <span asp-validation-for="Age" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="Gender" class="control-label"></label>
                     <select name="Gender" class="form-select" required>
-                        <option value="" selected>Seleccionar</option>
+                        <option selected>Seleccionar</option>
                         <option value="Masculino">Masculino</option>
                         <option value="Femenino">Femenino</option>
                     </select>
@@ -58,7 +56,7 @@
                 <div class="form-group">
                     <label asp-for="CivilStatus" class="control-label"></label>
                     <select name="CivilStatus" class="form-select" required>
-                        <option value="" selected>Seleccionar</option>
+                        <option selected>Seleccionar</option>
                         <option value="Soltero/a">Soltero/a</option>
                         <option value="Casado/a">Casado/a</option>
                         <option value="Divorciado/a">Divorciado/a</option>
@@ -70,21 +68,21 @@
             <div class="form-group-row">
                 <div class="form-group">
                     <label asp-for="Phone" class="control-label"></label>
-                    <input asp-for="Phone" class="form-control" id="inputPhone" required placeholder="Ingresar" />
+                    <input asp-for="Phone" class="form-control" id="inputPhone" required placeholder="0000-0000" />
                     <span asp-validation-for="Phone" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="Status" class="control-label"></label>
                     <select name="Status" class="form-select" required>
-                        <option value="">Seleccionar</option>
-                        <option value="1">Activo</option>
+                        <option>Seleccionar</option>
+                        <option value="1" selected>Activo</option>
                         <option value="2">Inactivo</option>
                     </select>
                     <span asp-validation-for="Status" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="Code" class="control-label"></label>
-                    <input asp-for="Code" class="form-control" required placeholder="Ingresar" readonly id="Code" />
+                    <input asp-for="Code" class="form-control" required placeholder="Se auto-genera" readonly id="Code" />
                     <span asp-validation-for="Code" class="text-danger"></span>
                 </div>
                 <div class="form-group">
@@ -95,12 +93,12 @@
             <div class="form-group-row">
                 <div class="form-group">
                     <label asp-for="Address" class="control-label"></label>
-                    <input asp-for="Address" class="form-control" required placeholder="Ingresar" />
+                    <input asp-for="Address" class="form-control" required placeholder="Residencial - Colonia, Canton - Caserio, Pol. Pasaje - Casa #0" />
                     <span asp-validation-for="Address" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="CommentsOrObservations" class="control-label"></label>
-                    <input asp-for="CommentsOrObservations" class="form-control" required placeholder="Ingresar" />
+                    <input asp-for="CommentsOrObservations" class="form-control" placeholder="Opcional" />
                     <span asp-validation-for="CommentsOrObservations" class="text-danger"></span>
                 </div>
             </div>
@@ -110,7 +108,7 @@
                 <div class="form-group">
                     <label asp-for="IdRole" class="control-label"></label>
                     <select class="form-select">
-                        <option selected value="">Instructor/Docente</option>
+                        <option selected>Instructor/Docente</option>
                     </select>
                 </div>
                 <div class="form-group">
@@ -124,16 +122,18 @@
             </div>
             <br />
             <div>
+                <p>Vista Previa de Fotografia:</p>
                 <img id="imagenPreview" src="#" alt="Vista previa de la imagen" style="max-width: 100%; max-height: 200px; display: none; border: 1px solid #d3d3d3;" />
             </div>
             <br />
             <div class="form-group">
-                <input type="submit" value="Crear Instructor/Docente" class="btn btn-primary" /> |
-                <a class="btn btn-outline-secondary" asp-action="Index">Regresar a La Lista</a>
+                <a class="btn btn-outline-secondary" asp-action="Index">Regresar a La Lista</a> |
+                <input type="submit" value="Crear Instructor" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
+<br />
 
 @section Scripts {
     @{
