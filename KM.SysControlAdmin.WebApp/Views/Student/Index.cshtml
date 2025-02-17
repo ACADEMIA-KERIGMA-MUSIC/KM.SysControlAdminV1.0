@@ -5,7 +5,7 @@
 }
 
 <br />
-<h1>Mantenimiento Para Alumnos/as</h1>
+<h1>Mantenimiento De Alumnos/as</h1>
 <hr />
 <div>
     <form asp-action="Index">
@@ -107,17 +107,23 @@
                 <td>
                     <form asp-action="RedirectBasedOnValidation" method="post" style="display:inline;">
                         <input type="hidden" name="id" value="@item.Id" />
-                        <button type="submit" class="btn btn-warning m-1">Editar</button>
+                        <button type="submit" class="btn btn-warning m-1"><i class="fas fa-edit"></i></button>
                     </form>
-                    |
-                    @Html.ActionLink("Detalle", "Details", new { id = item.Id }, new { @class = "btn btn-outline-info m-1" }) |
-                    @Html.ActionLink("Eliminar", "Delete", new { id = item.Id }, new { @class = "btn btn-danger m-1" }) |
-                    @Html.ActionLink("PDF", "GeneratePDFfile", new { id = item.Id }, new { @class = "btn btn-outline-info m-1" })
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-info m-1">
+                        <i class="fas fa-info-circle"></i>
+                    </a>
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger m-1">
+                        <i class="fas fa-trash-alt"></i>
+                    </a>
+                    <a asp-action="GeneratePDFfile" asp-route-id="@item.Id" class="btn btn-primary">
+                        <i class="fas fa-file-pdf"></i>
+                    </a>
                 </td>
             </tr>
         }
     </tbody>
 </table>
+<br />
 
 @section Scripts {
     <script>
