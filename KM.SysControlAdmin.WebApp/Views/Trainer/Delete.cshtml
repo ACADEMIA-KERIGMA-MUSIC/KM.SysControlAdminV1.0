@@ -2,12 +2,12 @@
 
 @{
     // Titulo De La Pestaña
-    ViewData["Title"] = "Eliminar Instructor/Docente Existente";
+    ViewData["Title"] = "Eliminar Instructor";
 }
 
 <br />
-<h1>Eliminar Instructor/Docente Existente</h1>
-<p class="alert alert-danger">¿Estas Seguro De Eliminar el Siguiente Registro? Recuerda No Puedes Revertir Los Cambios.</p>
+<h1>Formulario - Eliminar Instructor</h1>
+<p class="alert alert-danger">¿Estas Seguro De Eliminar el Siguiente Instructor? Recuerda No Puedes Revertir Los Cambios.</p>
 <hr />
 <br />
 <div>
@@ -29,7 +29,7 @@
                 <dd class="col-sm-8">@Html.DisplayFor(model => model.Dui)</dd>
 
                 <dt class="col-sm-4">@Html.DisplayNameFor(model => model.DateOfBirth)</dt>
-                <dd class="col-sm-8">@Html.DisplayFor(model => model.DateOfBirth)</dd>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.DateOfBirthFormatted)</dd>
 
                 <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Age)</dt>
                 <dd class="col-sm-8">@Html.DisplayFor(model => model.Age) Años</dd>
@@ -60,15 +60,21 @@
                 <dd class="col-sm-8">@Html.DisplayFor(model => model.CommentsOrObservations)</dd>
 
                 <dt class="col-sm-4">@Html.DisplayNameFor(model => model.DateCreated)</dt>
-                <dd class="col-sm-8">@Html.DisplayFor(model => model.DateCreated)</dd>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.DateCreatedFormatted) - @Html.DisplayFor(model => model.TimeCreatedFormatted)
+                </dd>
 
                 <dt class="col-sm-4">@Html.DisplayNameFor(model => model.DateModification)</dt>
-                <dd class="col-sm-8">@Html.DisplayFor(model => model.DateModification)</dd>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.DateModificationFormatted) - @Html.DisplayFor(model => model.TimeModificationFormatted)
+                </dd>
+
             </dl>
         </div>
         <div class="col-md-6">
             <dl class="row">
                 <dd class="col-sm-8">
+                    <p><strong>Fotografia:</strong></p>
                     <img id="imagenPreview" src="@(ViewBag.ImageUrl != null ? "data:image/jpeg;base64," + ViewBag.ImageUrl : "")" alt="Vista previa de la imagen" style="max-width: 100%; max-height: 200px;" />
                 </dd>
             </dl>
@@ -78,9 +84,10 @@
 <br />
 <form id="Form" asp-action="Delete" onsubmit="CreateRecord(event)">
     <input type="hidden" asp-for="Id" />
-    <input type="submit" value="Eliminar Instructor/Docente" class="btn btn-danger" /> |
-    <a class="btn btn-outline-secondary" asp-action="Index">Regresar a La Lista</a>
+    <a class="btn btn-outline-secondary" asp-action="Index">Regresar a La Lista</a> |
+    <input type="submit" value="Eliminar Instructor" class="btn btn-danger" />
 </form>
+<br />
 
 @section Scripts {
     @{
