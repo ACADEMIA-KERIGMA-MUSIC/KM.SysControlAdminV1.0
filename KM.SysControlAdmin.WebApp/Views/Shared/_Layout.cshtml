@@ -66,7 +66,7 @@
                                 </a>
                                 <a class="nav-link" asp-area="" asp-controller="Trainer" asp-action="Index">
                                     <div class="sb-nav-link-icon"><i class="fas fa-user-tie"></i></div>
-                                    Instructores/Docentes
+                                    Instructores
                                 </a>
                                 <a class="nav-link" asp-area="" asp-controller="Course" asp-action="Index">
                                     <div class="sb-nav-link-icon"><i class="fas fa-chalkboard-teacher"></i></div>
@@ -133,7 +133,7 @@
                                 </a>
                                 <a class="nav-link" asp-area="" asp-controller="Trainer" asp-action="Index">
                                     <div class="sb-nav-link-icon"><i class="fas fa-user-tie"></i></div>
-                                    Instructores/Docentes
+                                    Instructores
                                 </a>
                                 <a class="nav-link" asp-area="" asp-controller="Course" asp-action="Index">
                                     <div class="sb-nav-link-icon"><i class="fas fa-chalkboard-teacher"></i></div>
@@ -164,6 +164,17 @@
                                         <a class="nav-link" asp-area="" asp-controller="Support" asp-action="Index">Usuarios Externos</a>
                                     </nav>
                                 </div>
+                                <!-- Seccion Mi Información-->
+                                <a class="nav-link collapsed" data-bs-toggle="collapse" data-bs-target="#collapseInfo" aria-expanded="false" aria-controls="collapseInfo">
+                                    <div class="sb-nav-link-icon"><i class="fas fa-info-circle"></i></div>
+                                    Mi Información
+                                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                                </a>
+                                <div class="collapse" id="collapseInfo" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                                    <nav class="sb-sidenav-menu-nested nav">
+                                        <a class="nav-link" asp-area="" asp-controller="User" asp-action="Information">Mi Perfil</a>
+                                    </nav>
+                                </div>
                             }
                             else if (User.IsInRole("Secretario/a"))
                             {
@@ -181,7 +192,7 @@
                                 </a>
                                 <a class="nav-link" asp-area="" asp-controller="Trainer" asp-action="Index">
                                     <div class="sb-nav-link-icon"><i class="fas fa-user-tie"></i></div>
-                                    Instructores/Docentes
+                                    Instructores
                                 </a>
                                 <a class="nav-link" asp-area="" asp-controller="Course" asp-action="Index">
                                     <div class="sb-nav-link-icon"><i class="fas fa-chalkboard-teacher"></i></div>
@@ -205,6 +216,17 @@
                                     <div class="sb-nav-link-icon"><i class="fas fa-key"></i></div>
                                     Cambiar Contraseña
                                 </a>
+                                <!-- Seccion Mi Información-->
+                                <a class="nav-link collapsed" data-bs-toggle="collapse" data-bs-target="#collapseInfo" aria-expanded="false" aria-controls="collapseInfo">
+                                    <div class="sb-nav-link-icon"><i class="fas fa-info-circle"></i></div>
+                                    Mi Información
+                                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                                </a>
+                                <div class="collapse" id="collapseInfo" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                                    <nav class="sb-sidenav-menu-nested nav">
+                                        <a class="nav-link" asp-area="" asp-controller="User" asp-action="Information">Mi Perfil</a>
+                                    </nav>
+                                </div>
                             }
                             else if (User.IsInRole("Instructor/Docente"))
                             {
@@ -220,6 +242,17 @@
                                     <div class="sb-nav-link-icon"><i class="fas fa-key"></i></div>
                                     Cambiar Contraseña
                                 </a>
+                                <!-- Seccion Mi Información-->
+                                <a class="nav-link collapsed" data-bs-toggle="collapse" data-bs-target="#collapseInfo" aria-expanded="false" aria-controls="collapseInfo">
+                                    <div class="sb-nav-link-icon"><i class="fas fa-info-circle"></i></div>
+                                    Mi Información
+                                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                                </a>
+                                <div class="collapse" id="collapseInfo" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                                    <nav class="sb-sidenav-menu-nested nav">
+                                        <a class="nav-link" asp-area="" asp-controller="User" asp-action="Information">Mi Perfil</a>
+                                    </nav>
+                                </div>
                             }
                             else if (User.IsInRole("Alumno/a"))
                             {
@@ -235,6 +268,17 @@
                                     <div class="sb-nav-link-icon"><i class="fas fa-key"></i></div>
                                     Cambiar Contraseña
                                 </a>
+                                <!-- Seccion Mi Información-->
+                                <a class="nav-link collapsed" data-bs-toggle="collapse" data-bs-target="#collapseInfo" aria-expanded="false" aria-controls="collapseInfo">
+                                    <div class="sb-nav-link-icon"><i class="fas fa-info-circle"></i></div>
+                                    Mi Información
+                                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                                </a>
+                                <div class="collapse" id="collapseInfo" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                                    <nav class="sb-sidenav-menu-nested nav">
+                                        <a class="nav-link" asp-area="" asp-controller="User" asp-action="Information">Mi Perfil</a>
+                                    </nav>
+                                </div>
                             }
                         </div>
                     </div>
