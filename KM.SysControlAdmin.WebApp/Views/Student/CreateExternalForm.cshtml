@@ -105,6 +105,21 @@
     }
 
     <script>
+        // Función para mostrar alerta de error
+        function showErrorAlert(message) {
+            Swal.fire({
+                title: 'Error',
+                text: message,
+                icon: 'error'
+            });
+        }
+
+        // Mostrar alerta de error si hay un error en ViewBag
+        @if (!string.IsNullOrEmpty(ViewBag.Error))
+
+        {
+            @:showErrorAlert('@ViewBag.Error');
+        }
         function actualizarCodigoEstudiante() {
             const nombre = document.getElementById("Name").value.toLowerCase();
             const apellido = document.getElementById("LastName").value.toLowerCase();
