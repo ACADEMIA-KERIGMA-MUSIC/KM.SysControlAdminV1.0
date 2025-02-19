@@ -122,7 +122,7 @@
             </div>
             <br />
             <div>
-                <p>Vista Previa de Fotografia:</p>
+                <p><strong>Vista Previa de Fotografia:</strong></p>
                 <img id="imagenPreview" src="#" alt="Vista previa de la imagen" style="max-width: 100%; max-height: 200px; display: none; border: 1px solid #d3d3d3;" />
             </div>
             <br />
@@ -292,7 +292,8 @@
                     icon: 'question',
                     showCancelButton: true,
                     confirmButtonText: 'Si, Guardar Registro',
-                    cancelButtonText: 'Cancelar'
+                    cancelButtonText: 'Cancelar',
+                    reverseButtons: true
                 }).then((result) => {
                     if (result.isConfirmed) {
                         form.submit(); // Enviar el formulario si se confirma

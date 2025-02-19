@@ -120,7 +120,8 @@
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonText: 'Sí, Eliminar Registro',
-                cancelButtonText: 'Cancelar'
+                cancelButtonText: 'Cancelar',
+                reverseButtons: true
             }).then((result) => {
                 if (result.isConfirmed) {
                     form.submit();

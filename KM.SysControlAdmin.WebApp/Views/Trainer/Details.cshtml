@@ -116,7 +116,8 @@
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonText: 'Sí, Ir a La Vista Modificar',
-                    cancelButtonText: 'Cancelar'
+                    cancelButtonText: 'Cancelar',
+                    reverseButtons: true
                 }).then((result) => {
                     if (result.isConfirmed) {
                         window.location.href = '@Url.Action("Edit", "Trainer", new { id = Model.Id })';
