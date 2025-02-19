@@ -4,12 +4,10 @@
     ViewData["Title"] = "Modificar Alumno/a";
 }
 
-@section Styles {
-    <link href="/css/Student/DesignCreateAndEdit.css" rel="stylesheet" />
-}
+<link href="/css/Student/DesignCreateAndEdit.css" rel="stylesheet" />
 
 <br />
-<h1>Modificar Alumno/a Existente</h1>
+<h1>Formulario - Modificar Alumno/a</h1>
 <span>@ViewBag.Error</span>
 <hr />
 <br />
@@ -22,7 +20,7 @@
             <div class="form-group-row">
                 <div class="form-group">
                     <label asp-for="StudentCode" class="control-label"></label>
-                    <input asp-for="StudentCode" id="StudentCode" class="form-control" placeholder="Generado automáticamente" readonly maxlength="10" />
+                    <input asp-for="StudentCode" id="StudentCode" class="form-control" placeholder="*Se auto-genera*" readonly maxlength="10" />
                     <span asp-validation-for="StudentCode" class="text-danger"></span>
                 </div>
                 <div class="form-group">
@@ -54,7 +52,7 @@
                 </div>
                 <div class="form-group">
                     <label asp-for="Age" class="control-label"></label>
-                    <input asp-for="Age" id="Age" class="form-control" placeholder="Calculado automáticamente" readonly />
+                    <input asp-for="Age" id="Age" class="form-control" placeholder="*Se auto-calcula*" readonly />
                     <span asp-validation-for="Age" class="text-danger"></span>
                 </div>
             </div>
@@ -62,29 +60,43 @@
                 <div class="form-group">
                     <label asp-for="Status" class="control-label"></label>
                     <select name="Status" id="Status" class="form-select" required>
-                        <option value="">Seleccionar</option>
+                        <option>Seleccionar</option>
                         <option value="1">Activo</option>
                         <option value="2">Inactivo</option>
                     </select>
                     <span asp-validation-for="Status" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label for="imagen">Seleccionar Fotografía:</label>
-                    <input type="file" id="imagen" class="form-control" onchange="mostrarImagen()" asp-for="ImageData" />
+                <label for="imagen">Seleccionar Fotografía:</label>
+                <input type="file" id="imagen" class="form-control" name="imagen" accept="image/*" />
+                </div>
+            </div>
+            <div class="form-group-row">
+                <div class="form-group">
+                    <label asp-for="DateCreated" class="control-label"></label>
+                    <input type="date" asp-for="DateCreated" class="form-control" readonly />
+                    <span asp-validation-for="DateCreated" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="DateModification" class="control-label"></label>
+                    <input type="date" asp-for="DateModification" class="form-control" readonly />
+                    <span asp-validation-for="DateModification" class="text-danger"></span>
                 </div>
             </div>
             <br />
             <div>
+                <p><strong>Vista Previa:</strong></p>
                 <img id="imagenPreview" src="@(ViewBag.ImageUrl != null ? "data:image/jpeg;base64," + ViewBag.ImageUrl : "")" alt="Vista previa de la imagen" style="max-width: 100%; max-height: 200px;" />
             </div>
             <br />
             <div class="form-group">
-                <input type="submit" value="Modificar Alumno/a" class="btn btn-primary" /> |
-                <a class="btn btn-outline-secondary" asp-action="Index">Regresar a La Lista</a>
+                <a class="btn btn-outline-secondary" asp-action="Index">Regresar a La Lista</a> |
+                <input type="submit" value="Modificar Alumno/a" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
+<br />
 
 @section Scripts {
     @{
@@ -119,7 +131,6 @@
 
             // Eventos dinámicos
             $("#Name, #LastName, #DateOfBirth").on("input change", function () {
-                generateStudentCode();
                 calculateAge();
             });
 
@@ -132,7 +143,6 @@
 
             // Generar valores iniciales si los datos están presentes
             if ($("#Name").val() && $("#LastName").val() && $("#DateOfBirth").val()) {
-                generateStudentCode();
                 calculateAge();
             }
         }
@@ -187,7 +197,8 @@
                 icon: 'question',
                 showCancelButton: true,
                 confirmButtonText: 'Sí, Modificar Registro',
-                cancelButtonText: 'Cancelar'
+                cancelButtonText: 'Cancelar',
+                reverseButtons: true
             }).then((result) => {
                 if (result.isConfirmed) {
                     $("#Form")[0].submit();
