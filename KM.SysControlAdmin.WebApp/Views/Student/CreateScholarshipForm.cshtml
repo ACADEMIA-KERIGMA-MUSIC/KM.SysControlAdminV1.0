@@ -104,13 +104,8 @@
 </div>
 <br />
 
-@section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
-
-    <script>
-        // Función para mostrar alerta de error
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
         function showErrorAlert(message) {
             Swal.fire({
                 title: 'Error',
@@ -120,15 +115,14 @@
         }
 
         // Mostrar alerta de error si hay un error en ViewBag
-        @if (!string.IsNullOrEmpty(ViewBag.Error))
-
-        {
-            @:showErrorAlert('@ViewBag.Error');
-        }
+    @if (!string.IsNullOrEmpty(ViewBag.Error))
+    {
+        @:showErrorAlert('@ViewBag.Error');
+    }
 
         function actualizarCodigoEstudiante() {
-            const nombre = document.getElementById("Name").value.toLowerCase();
-            const apellido = document.getElementById("LastName").value.toLowerCase();
+            const nombre = document.getElementById("Name").value.trim().toLowerCase();
+            const apellido = document.getElementById("LastName").value.trim().toLowerCase();
             const fechaNacimiento = document.getElementById("DateOfBirth").value;
 
             if (nombre && apellido && fechaNacimiento) {
@@ -137,7 +131,7 @@
                 const anioNacimiento = new Date(fechaNacimiento).getFullYear().toString().slice(-2);
                 const anioActual = new Date().getFullYear().toString().slice(-2);
 
-                const codigoEstudiante = `${inicialNombre}${inicialApellido}${anioNacimiento}${anioActual}`;
+                const codigoEstudiante = `${inicialNombre}${inicialApellido}${anioNacimiento}${anioActual}`; // 🔹 Sin .toUpperCase()
                 document.getElementById("StudentCode").value = codigoEstudiante;
 
                 const email = `${codigoEstudiante}@@kerigmamusic.com`;
@@ -200,16 +194,7 @@
             if (!regexCodigo.test(codigoProyecto)) {
                 Swal.fire({
                     title: "Advertencia",
-                    text: "El campo Codigo de Proyecto solo debe contener letras y números.",
-                    icon: "warning",
-                });
-                return;
-            }
-
-            if (!regexCodigo.test(codigoEstudiante)) {
-                Swal.fire({
-                    title: "Advertencia",
-                    text: "El campo Codigo de Estudiante solo debe contener números.",
+                    text: "El campo Código de Proyecto solo debe contener letras y números.",
                     icon: "warning",
                 });
                 return;
@@ -234,5 +219,8 @@
             actualizarCodigoEstudiante();
             calcularEdad();
         });
-    </script>
-}
+
+        document.getElementById("imagen").addEventListener("change", mostrarImagen);
+        document.getElementById("Form").addEventListener("submit", CreateRecord);
+    });
+</script>
