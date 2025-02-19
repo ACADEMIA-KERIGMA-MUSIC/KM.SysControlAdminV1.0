@@ -1,17 +1,17 @@
 ﻿@model KM.SysControlAdmin.EN.Student___EN.Student
 
 @{
-    ViewData["Title"] = "Eliminar Alumno/a Existente";
+    ViewData["Title"] = "Eliminar Alumno/a";
 }
 
 <br />
-<h1>Eliminar Alumno/a Existente</h1>
+<h1>Formulario - Eliminar Alumno/a</h1>
 <p class="alert alert-danger">¿Estas Seguro De Eliminar el Siguiente Registro? Recuerda No Puedes Revertir Los Cambios.</p>
 <hr />
+<br />
 <div>
     <div class="row">
         <div class="col-md-6">
-            <br />
             <h2>Información Personal</h2>
             <br />
             <dl class="row">
@@ -45,7 +45,7 @@
                 <dd class="col-sm-8">@Html.DisplayFor(model => model.LastName)</dd>
 
                 <dt class="col-sm-4">@Html.DisplayNameFor(model => model.DateOfBirth)</dt>
-                <dd class="col-sm-8">@Html.DisplayFor(model => model.DateOfBirth)</dd>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.DateOfBirthFormatted)</dd>
 
                 <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Age)</dt>
                 <dd class="col-sm-8">@Html.DisplayFor(model => model.Age) Años</dd>
@@ -71,15 +71,16 @@
                 }
 
                 <dt class="col-sm-4">@Html.DisplayNameFor(model => model.DateCreated)</dt>
-                <dd class="col-sm-8">@Html.DisplayFor(model => model.DateCreated)</dd>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.DateCreatedFormatted) - @Html.DisplayFor(model => model.TimeCreatedFormatted)</dd>
 
                 <dt class="col-sm-4">@Html.DisplayNameFor(model => model.DateModification)</dt>
-                <dd class="col-sm-8">@Html.DisplayFor(model => model.DateModification)</dd>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.DateModificationFormatted) - @Html.DisplayFor(model => model.TimeModificationFormatted)</dd>
             </dl>
         </div>
         <div class="col-md-6">
             <dl class="row">
                 <dd class="col-sm-8">
+                    <p><strong>Fotografia:</strong></p>
                     <img id="imagenPreview" src="@(ViewBag.ImageUrl != null ? "data:image/jpeg;base64," + ViewBag.ImageUrl : "")" alt="Vista previa de la imagen" style="max-width: 100%; max-height: 200px;" />
                 </dd>
             </dl>
@@ -88,8 +89,8 @@
         <form id="Form" asp-action="Delete" onsubmit="CreateRecord(event)">
             <br />
             <input type="hidden" asp-for="Id" />
-            <input type="submit" value="Eliminar Alumno/a" class="btn btn-danger" /> |
-            <a class="btn btn-outline-secondary" asp-action="Index">Regresar a La Lista</a>
+            <a class="btn btn-outline-secondary" asp-action="Index">Regresar a La Lista</a> |
+            <input type="submit" value="Eliminar Alumno/a" class="btn btn-danger" />
         </form>
     </div>
 </div>
@@ -126,7 +127,8 @@
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonText: 'Sí, Eliminar Registro',
-                cancelButtonText: 'Cancelar'
+                cancelButtonText: 'Cancelar',
+                reverseButtons: true
             }).then((result) => {
                 if (result.isConfirmed) {
                     form.submit();

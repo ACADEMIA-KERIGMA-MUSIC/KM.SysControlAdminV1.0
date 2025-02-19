@@ -9,7 +9,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ficha Alumno/a @Html.DisplayFor(model => model.Name)_@Html.DisplayFor(model => model.LastName)_@Html.DisplayFor(model => model.StudentCode)</title>
+    <title>Ficha Alumno/a @Html.DisplayFor(model => model.Name)_@Html.DisplayFor(model => model.LastName)_@Html.DisplayFor(model => model.StudentCode)_KM</title>
     <link href="/css/Student/DesignGeneratePDF.css" rel="stylesheet" />
 </head>
 <body>
@@ -54,7 +54,7 @@
                         }
                         <p><strong>@Html.DisplayNameFor(model => model.Name):</strong> @Html.DisplayFor(model => model.Name)</p>
                         <p><strong>@Html.DisplayNameFor(model => model.LastName):</strong> @Html.DisplayFor(model => model.LastName)</p>
-                        <p><strong>@Html.DisplayNameFor(model => model.DateOfBirth):</strong> @Model.DateOfBirth.ToString("dd/MM/yyyy")</p>
+                        <p><strong>@Html.DisplayNameFor(model => model.DateOfBirth):</strong> @Model.DateOfBirthFormatted</p>
                         <p><strong>@Html.DisplayNameFor(model => model.Age):</strong> @Html.DisplayFor(model => model.Age) Años</p>
                         @if (Model.ChurchName != "")
                         {
@@ -76,11 +76,12 @@
                         {
                             <p><strong>Estatus:</strong> Sin Designar</p>
                         }
-                        <p><strong>@Html.DisplayNameFor(model => model.DateCreated):</strong> @Html.DisplayFor(model => model.DateCreated)</p>
-                        <p><strong>@Html.DisplayNameFor(model => model.DateModification):</strong> @Html.DisplayFor(model => model.DateModification)</p>
+                        <p><strong>@Html.DisplayNameFor(model => model.DateCreated):</strong> @Html.DisplayFor(model => model.DateCreatedFormatted) - @Html.DisplayFor(model => model.TimeCreatedFormatted)</p>
+                        <p><strong>@Html.DisplayNameFor(model => model.DateModification):</strong> @Html.DisplayFor(model => model.DateModificationFormatted) - @Html.DisplayFor(model => model.TimeModificationFormatted)</p>
                     </div>
                 </td>
                 <td class="image">
+                    <p><strong>Fotografia:</strong></p>
                     <!-- Fotografía -->
                     @if (Model.ImageData != null)
                     {
