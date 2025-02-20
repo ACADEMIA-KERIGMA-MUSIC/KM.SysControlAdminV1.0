@@ -205,7 +205,8 @@
                 icon: "question",
                 showCancelButton: true,
                 confirmButtonText: "Sí, Guardar Estudiante",
-                cancelButtonText: "Cancelar"
+                cancelButtonText: "Cancelar",
+                reverseButtons: true
             }).then((result) => {
                 if (result.isConfirmed) {
                     form.submit();

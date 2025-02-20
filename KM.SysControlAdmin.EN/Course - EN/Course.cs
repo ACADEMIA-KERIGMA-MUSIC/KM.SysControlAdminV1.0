@@ -56,7 +56,7 @@ namespace KM.SysControlAdmin.EN.Course___EN
         public int MaxStudent { get; set; }
 
         [Required(ErrorMessage = "El estatus es Requerido")]
-        [Display(Name = "Estatus")]
+        [Display(Name = "Estado")]
         public byte Status { get; set; }
 
         [Display(Name = "Fecha de Creacion")]
