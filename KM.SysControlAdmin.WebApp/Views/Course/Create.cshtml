@@ -77,7 +77,7 @@
                         <option selected>Seleccionar</option>
                         @foreach (var schedule in schedules!)
                         {
-                            <option value="@schedule.Id">@schedule.StartTime - @schedule.EndTime</option>
+                            <option value="@schedule.Id">@schedule.StartTimeFormatted - @schedule.EndTimeFormatted</option>
                         }
                     </select>
                     <span asp-validation-for="IdSchedule" class="text-danger"></span>

@@ -9,7 +9,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ficha Curso PDF</title>
+    <title>Ficha Curso @Html.DisplayFor(model => model.Name)_@Html.DisplayFor(model => model.Code)_KM</title>
     <link href="/css/Course/DesignGeneratePDF.css" rel="stylesheet" />
 </head>
 <body>
@@ -42,7 +42,7 @@
                         <p><strong>@Html.DisplayNameFor(model => model.StartTime):</strong> @Html.DisplayFor(model => model.FormattedStartTime)</p>
                         <p><strong>@Html.DisplayNameFor(model => model.EndTime):</strong> @Html.DisplayFor(model => model.FormattedEndTime)</p>
                         <p><strong>@Html.DisplayNameFor(model => model.MaxStudent):</strong> @Html.DisplayFor(model => model.MaxStudent)</p>
-                        <p><strong>@Html.DisplayNameFor(model => model.IdSchedule):</strong> @Html.DisplayFor(model => model.Schedule!.StartTime) - @Html.DisplayFor(model => model.Schedule!.EndTime)</p>
+                        <p><strong>@Html.DisplayNameFor(model => model.IdSchedule):</strong> @Html.DisplayFor(model => model.Schedule!.StartTimeFormatted) - @Html.DisplayFor(model => model.Schedule!.EndTimeFormatted)</p>
                         <p><strong>@Html.DisplayNameFor(model => model.IdTrainer):</strong> @Html.DisplayFor(model => model.Trainer!.Name) @Html.DisplayFor(model => model.Trainer!.LastName) - @Html.DisplayFor(model => model.Trainer!.Code)</p>
                         @if (Model.Status == 1)
                         {
@@ -52,8 +52,8 @@
                         {
                             <p><strong>@Html.DisplayNameFor(model => model.Status):</strong> Inactivo</p>
                         }
-                        <p><strong>@Html.DisplayNameFor(model => model.DateCreated):</strong> @Html.DisplayFor(model => model.DateCreated)</p>
-                        <p><strong>@Html.DisplayNameFor(model => model.DateModification):</strong> @Html.DisplayFor(model => model.DateModification)</p>
+                        <p><strong>@Html.DisplayNameFor(model => model.DateCreated):</strong> @Html.DisplayFor(model => model.DateCreatedFormatted) - @Html.DisplayFor(model => model.TimeCreatedFormatted)</p>
+                        <p><strong>@Html.DisplayNameFor(model => model.DateModification):</strong> @Html.DisplayFor(model => model.DateModificationFormatted) - @Html.DisplayFor(model => model.TimeModificationFormatted)</p>
                     </div>
                 </td>
             </tr>

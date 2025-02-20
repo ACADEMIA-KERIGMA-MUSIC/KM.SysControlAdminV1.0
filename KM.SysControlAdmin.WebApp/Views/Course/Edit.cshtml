@@ -8,18 +8,19 @@
     List<Schedule> schedules = ViewBag.Schedule as List<Schedule>;
 }
 
-@section Styles {
-    <link href="/css/Course/DesignCreateAndEdit.css" rel="stylesheet" />
-}
+<link href="/css/Course/DesignCreateAndEdit.css" rel="stylesheet" />
 
 <br />
-<h1>Modificar Curso Existente</h1>
+<h1>Formulario - Modificar Curso</h1>
+<div class="alert alert-warning">El codigo del curso se genera de manera automatica en base a los datos ingresados</div>
 <span>@ViewBag.Error</span>
 <hr />
+<br />
 <div class="row">
     <div class="col-md-12">
         <form id="Form" asp-action="Edit" onsubmit="CreateRecord(event)">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <h2>Informacion Del Curso</h2>
             <div class="form-group-row">
                 <div class="form-group">
                     <label asp-for="Name" class="control-label"></label>
@@ -32,7 +33,7 @@
                     <span asp-validation-for="MaxStudent" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="ExternalFee" class="control-label">Precio Base</label>
+                    <label asp-for="ExternalFee" class="control-label"></label>
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text">$</span>
@@ -42,7 +43,7 @@
                     <span asp-validation-for="ExternalFee" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="ScholarshipFee" class="control-label">Precio con Descuento</label>
+                    <label asp-for="ScholarshipFee" class="control-label"></label>
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text">$</span>
@@ -65,7 +66,7 @@
                 </div>
                 <div class="form-group">
                     <label asp-for="Code" class="control-label"></label>
-                    <input asp-for="Code" class="form-control" id="inputCode" placeholder="Ingresar" required readonly />
+                    <input asp-for="Code" class="form-control" id="inputCode" placeholder="*Se auto-genera*" required readonly />
                     <span asp-validation-for="Code" class="text-danger"></span>
                 </div>
             </div>
@@ -76,7 +77,7 @@
                         <option selected value="">Seleccionar</option>
                         @foreach (var schedule in schedules!)
                         {
-                            <option value="@schedule.Id">@schedule.StartTime - @schedule.EndTime</option>
+                            <option value="@schedule.Id">@schedule.StartTimeFormatted - @schedule.EndTimeFormatted</option>
                         }
                     </select>
                     <span asp-validation-for="IdSchedule" class="text-danger"></span>
@@ -117,8 +118,8 @@
             <br />
             <br />
             <div class="form-group">
-                <input type="submit" value="Modificar Curso" class="btn btn-primary" /> |
-                <a class="btn btn-outline-secondary" asp-action="Index">Regresar a La Lista</a>
+                <a class="btn btn-outline-secondary" asp-action="Index">Regresar a La Lista</a> |
+                <input type="submit" value="Modificar Curso" class="btn btn-primary" />
             </div>
         </form>
     </div>
@@ -209,6 +210,7 @@
                 showCancelButton: true,
                 confirmButtonText: 'Sí, Modificar Curso',
                 cancelButtonText: 'Cancelar',
+                reverseButtons: true
             }).then((result) => {
                 if (result.isConfirmed) {
                     form.submit();

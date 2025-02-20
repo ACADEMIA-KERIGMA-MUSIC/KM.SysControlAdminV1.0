@@ -1,13 +1,16 @@
 ﻿@model KM.SysControlAdmin.EN.Course___EN.Course
 
 @{
-    ViewData["Title"] = "Detalles del Curso";
+    ViewData["Title"] = "Detalles Del Curso";
 }
 
 <br />
-<h1>Detalles del Curso Existente</h1>
+<h1>Formulario - Detalles Del Curso</h1>
 <div>
     <hr />
+    <br />
+    <h2>Información Del Curso</h2>
+    <br />
     <dl class="row">
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Code)
@@ -55,7 +58,7 @@
             @Html.DisplayNameFor(model => model.IdSchedule)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Schedule!.StartTime) - @Html.DisplayFor(model => model.Schedule!.EndTime)
+            @Html.DisplayFor(model => model.Schedule!.StartTimeFormatted) - @Html.DisplayFor(model => model.Schedule!.EndTimeFormatted)
         </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.IdTrainer)
@@ -76,18 +79,11 @@
                 <span>Inactivo</span>
             }
         </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.DateCreated)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.DateCreated)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.DateModification)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.DateModification)
-        </dd>
+        <dt class="col-sm-2">@Html.DisplayNameFor(model => model.DateCreated)</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.DateCreatedFormatted) - @Html.DisplayFor(model => model.TimeCreatedFormatted)</dd>
+
+        <dt class="col-sm-2">@Html.DisplayNameFor(model => model.DateModification)</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.DateModificationFormatted) - @Html.DisplayFor(model => model.TimeModificationFormatted)</dd>
     </dl>
 </div>
 <br />
@@ -124,7 +120,8 @@
                         icon: 'warning',
                         showCancelButton: true,
                         confirmButtonText: 'Sí, Ir a La Vista Modificar',
-                        cancelButtonText: 'Cancelar'
+                        cancelButtonText: 'Cancelar',
+                        reverseButtons: true
                     }).then((result) => {
                         if (result.isConfirmed) {
                             window.location.href = '@Url.Action("Edit", "Course", new { id = Model.Id })';
