@@ -5,7 +5,7 @@
 }
 
 <br />
-<h1>Mantenimiento Para Roles</h1>
+<h1>Mantenimiento De Roles</h1>
 <hr />
 <form asp-action="Index">
     <div class="row">
@@ -47,9 +47,12 @@
                     @Html.DisplayFor(modelItem => item.Name)
                 </td>
                 <td>
-                    @Html.ActionLink("Modificar", "Edit", new { id = item.Id }, new { @class = "btn btn-warning m-1" }) |
-                    @Html.ActionLink("Detalles", "Details", new { id = item.Id }, new { @class = "btn btn-outline-info m-1" }) |
-                    @Html.ActionLink("Eliminar", "Delete", new { id = item.Id }, new { @class = "btn btn-danger m-1" })
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning m-1">
+                        <i class="fas fa-edit"></i>
+                    </a>
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger m-1">
+                        <i class="fas fa-trash-alt"></i>
+                    </a>
                 </td>
             </tr>
         }
