@@ -85,17 +85,9 @@ namespace KM.SysControlAdmin.EN.User___EN
         [Display(Name = "Confirmar Contraseña")]
         public string ConfirmPassword_Aux { get; set; } = string.Empty; //propiedad auxiliar
 
-        [NotMapped]
-        public int Top_Aux { get; set; } // propiedad auxiliar
-
         public Role? Role { get; set; } //propiedad de navegación
 
         [NotMapped]
         public List<Trainer> Trainer { get; set; } = new List<Trainer>(); // Propiedad de navegacion
-    }
-
-    public enum User_Status
-    {
-        ACTIVO = 1, INACTIVO = 2
     }
 }

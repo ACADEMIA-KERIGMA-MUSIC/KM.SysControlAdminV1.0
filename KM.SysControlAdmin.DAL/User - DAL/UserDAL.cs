@@ -137,9 +137,6 @@ namespace KM.SysControlAdmin.DAL.User___DAL
 
             query = query.OrderByDescending(u => u.Id).AsQueryable();
 
-            if (user.Top_Aux > 0)
-                query = query.Take(user.Top_Aux).AsQueryable();
-
             return query;
         }
         #endregion
@@ -228,7 +225,7 @@ namespace KM.SysControlAdmin.DAL.User___DAL
                 EncryptMD5(user);
                 userDb = await dbContext.User.FirstOrDefaultAsync(
                     u => u.Email == user.Email && u.Password == user.Password
-                    && u.Status == (byte)User_Status.ACTIVO);
+                    && u.Status == 1);
             }
             return userDb!;
         }

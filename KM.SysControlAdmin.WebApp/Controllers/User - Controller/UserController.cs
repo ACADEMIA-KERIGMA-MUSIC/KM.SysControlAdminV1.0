@@ -74,16 +74,11 @@ namespace KM.SysControlAdmin.WebApp.Controllers.User___Controller
         {
             if (user == null)
                 user = new User();
-            if (user.Top_Aux == 0)
-                user.Top_Aux = 10; // setear el número de registros a mostrar
-            else if (user.Top_Aux == -1)
-                user.Top_Aux = 0;
 
             var users = await userBL.SearchIncludeRoleAsync(user);
             var roles = await roleBL.GetAllAsync();
 
             ViewBag.Roles = roles;
-            ViewBag.Top = user.Top_Aux;
 
             return View(users);
         }
@@ -309,7 +304,7 @@ namespace KM.SysControlAdmin.WebApp.Controllers.User___Controller
         {
             try
             {
-                var users = await userBL.SearchIncludeRoleAsync(new User { Email = User.Identity!.Name!, Top_Aux = 1 });
+                var users = await userBL.SearchIncludeRoleAsync(new User { Email = User.Identity!.Name!});
                 var actualUser = users.FirstOrDefault();
                 // Convertir el array de bytes en imagen para mostrar en la vista
                 if (actualUser!.ImageData != null && actualUser.ImageData.Length > 0)
@@ -330,7 +325,7 @@ namespace KM.SysControlAdmin.WebApp.Controllers.User___Controller
         // Accion Que Muestra El Formulario
         public async Task<IActionResult> ChangePassword()
         {
-            var users = await userBL.SearchAsync(new User { Email = User.Identity!.Name!, Top_Aux = 1 });
+            var users = await userBL.SearchAsync(new User { Email = User.Identity!.Name! });
             var actualUser = users.FirstOrDefault();
             return View(actualUser);
         }
@@ -349,7 +344,7 @@ namespace KM.SysControlAdmin.WebApp.Controllers.User___Controller
             catch (Exception e)
             {
                 ViewBag.Error = e.Message;
-                var users = await userBL.SearchAsync(new User { Email = User.Identity!.Name!, Top_Aux = 1 });
+                var users = await userBL.SearchAsync(new User { Email = User.Identity!.Name! });
                 var actualUser = users.FirstOrDefault();
                 return View(actualUser);
             }
