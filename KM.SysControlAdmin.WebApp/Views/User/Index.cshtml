@@ -52,7 +52,7 @@
                     <label class="form-group">Rol</label>
                     <select class="form-select" name="IdRole">
                         <option selected>Seleccionar</option>
-                        @foreach (var item in roles!.Skip(1)) // Saltar el primer rol
+                        @foreach (var item in roles!.Where(r => r.Id != 1)) // Excluir el rol con Id 1
                         {
                             <option value="@item.Id">@item.Name</option>
                         }
@@ -97,20 +97,13 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model.Skip(1)) // Saltar el primer usuario
+        @foreach (var item in Model.Where(u => u.Id != 1)) // Excluir usuarios con Id 1
         {
             <tr>
                 <td>@Html.DisplayFor(modelItem => item.Name)</td>
                 <td>@Html.DisplayFor(modelItem => item.LastName)</td>
                 <td>@Html.DisplayFor(modelItem => item.Email)</td>
-                @if (item.Status == 1)
-                {
-                    <td>Activo</td>
-                }
-                else if (item.Status == 2)
-                {
-                    <td>Inactivo</td>
-                }
+                <td>@(item.Status == 1 ? "Activo" : "Inactivo")</td>
                 <td>@Html.DisplayFor(modelItem => item.Role!.Name)</td>
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning m-1">
