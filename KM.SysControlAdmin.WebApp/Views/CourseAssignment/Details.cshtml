@@ -1,11 +1,11 @@
 ﻿@model KM.SysControlAdmin.EN.CourseAssignment___EN.CourseAssignment
 
 @{
-    ViewData["Title"] = "Detalles de la Asignación";
+    ViewData["Title"] = "Detalles De Asignación";
 }
 
 <br />
-<h1>Detalles de la Asignación</h1>
+<h1>Formulario - Detalles De Asignación</h1>
 <hr />
 <div>
     <div class="row">
@@ -41,6 +41,7 @@
                 <dd class="col-sm-8" id="ChurchName"></dd>
             </dl>
             <div>
+                <p><strong>Fotografia:</strong></p>
                 <img id="imagenPreview" src="" alt="Vista previa de la imagen" style="max-width: 100%; max-height: 200px;" />
             </div>
         </div>
@@ -81,10 +82,10 @@
             <br />
             <dl class="row">
                 <dt class="col-sm-4">@Html.DisplayNameFor(model => model.DateCreated)</dt>
-                <dd class="col-sm-8">@Html.DisplayFor(model => model.DateCreated)</dd>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.DateCreatedFormatted) - @Html.DisplayFor(model => model.TimeCreatedFormatted)</dd>
 
                 <dt class="col-sm-4">@Html.DisplayNameFor(model => model.DateModification)</dt>
-                <dd class="col-sm-8">@Html.DisplayFor(model => model.DateModification)</dd>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.DateModificationFormatted) - @Html.DisplayFor(model => model.TimeModificationFormatted)</dd>
             </dl>
         </div>
     </div>
@@ -94,6 +95,7 @@
     @Html.ActionLink("Modificar Asignación", "Edit", new { id = Model.Id }, new { @class = "btn btn-primary", id = "modifyButton" }) |
     <a class="btn btn-outline-secondary" asp-action="Index">Regresar a La Lista</a>
 </div>
+<br />
 
 @section Scripts {
     <script>
@@ -127,7 +129,8 @@
                         icon: 'warning',
                         showCancelButton: true,
                         confirmButtonText: 'Sí, Ir a La Vista Modificar',
-                        cancelButtonText: 'Cancelar'
+                        cancelButtonText: 'Cancelar',
+                        reverseButtons: true
                     }).then((result) => {
                         if (result.isConfirmed) {
                             window.location.href = '@Url.Action("Edit", "CourseAssignment", new { id = Model.Id })';

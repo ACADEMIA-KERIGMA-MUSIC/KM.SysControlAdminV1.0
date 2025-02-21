@@ -8,12 +8,10 @@
     List<Course> courses = ViewBag.Course as List<Course>;
 }
 
-@section Styles {
-    <link href="/css/CourseAssignment/DesignCreateAndEdit.css" rel="stylesheet" />
-}
+<link href="/css/CourseAssignment/DesignCreateAndEdit.css" rel="stylesheet" />
 
 <br />
-<h1>Modificar Asignación Existente</h1>
+<h1>Formulario - Modificar Asignación</h1>
 <span>@ViewBag.Error</span>
 <hr />
 <br />
@@ -65,6 +63,7 @@
             </div>
             <br />
             <div>
+                <p><strong>Fotografia:</strong></p>
                 <img id="imagenPreview" src="" alt="Vista previa de la imagen" style="max-width: 100%; max-height: 200px;" />
             </div>
             <br />
@@ -137,14 +136,15 @@
             <br />
             <br />
             <div class="form-group">
-                <input type="submit" value="Modificar Asignación" class="btn btn-primary" /> |
-                <a class="btn btn-outline-secondary" asp-action="Index">Regresar a La Lista</a>
+                <a class="btn btn-outline-secondary" asp-action="Index">Regresar a La Lista</a> |
+                <input type="submit" value="Modificar Asignación" class="btn btn-primary" />
             </div>
             <br />
             <br />
         </form>
     </div>
 </div>
+<br />
 
 @section Scripts {
     @{
@@ -285,7 +285,8 @@
                 icon: 'question',
                 showCancelButton: true,
                 confirmButtonText: 'Sí, Modificar Registro',
-                cancelButtonText: 'Cancelar'
+                cancelButtonText: 'Cancelar',
+                reverseButtons: true
             }).then((result) => {
                 if (result.isConfirmed) {
                     form.submit();
