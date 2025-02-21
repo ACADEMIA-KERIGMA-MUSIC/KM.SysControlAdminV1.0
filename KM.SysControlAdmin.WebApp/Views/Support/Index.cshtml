@@ -28,14 +28,14 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="Email">Correo Electronico</label>
-                    <input type="text" class="form-control" name="Email" placeholder="Ingresar" />
+                    <input type="text" class="form-control" name="Email" placeholder="ejemplo@kerigmamusic.com" />
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="Status">Estatus</label>
                     <select class="form-select" name="Status">
-                        <option selected value="">Seleccionar</option>
+                        <option selected>Seleccionar</option>
                         <option value="1">Activo</option>
                         <option value="2">Inactivo</option>
                     </select>
@@ -51,8 +51,8 @@
                 <div class="form-group">
                     <label class="form-group">Rol</label>
                     <select class="form-select" name="IdRole">
-                        <option selected value="">Seleccionar</option>
-                        @foreach (var item in roles!)
+                        <option selected>Seleccionar</option>
+                        @foreach (var item in roles!.Where(r => r.Id != 1)) // Excluir el rol con Id 1
                         {
                             <option value="@item.Id">@item.Name</option>
                         }
@@ -96,7 +96,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
+        @foreach (var item in Model.Where(u => u.Id != 1)) // Excluir usuarios con Id 1
         {
             <tr>
                 <td>
