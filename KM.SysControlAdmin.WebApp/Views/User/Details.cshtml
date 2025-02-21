@@ -5,7 +5,7 @@
 }
 
 <br />
-<h1>Detalles Del Usuario</h1>
+<h1>Formulario - Detalles Del Usuario</h1>
 <span>@ViewBag.Error</span>
 <hr />
 <br />
@@ -38,15 +38,20 @@
                 <dd class="col-sm-8">@Html.DisplayFor(model => model.Role!.Name)</dd>
 
                 <dt class="col-sm-4">@Html.DisplayNameFor(model => model.DateCreated)</dt>
-                <dd class="col-sm-8">@Html.DisplayFor(model => model.DateCreated)</dd>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.DateCreatedFormatted) - @Html.DisplayFor(model => model.TimeCreatedFormatted)
+                </dd>
 
                 <dt class="col-sm-4">@Html.DisplayNameFor(model => model.DateModification)</dt>
-                <dd class="col-sm-8">@Html.DisplayFor(model => model.DateModification)</dd>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.DateModificationFormatted) - @Html.DisplayFor(model => model.TimeModificationFormatted)
+                </dd>
 
             </dl>
         </div>
         <div class="col-md-6">
             <dl class="row">
+                <p><strong>Fotografia:</strong></p>
                 <dd class="col-sm-8"><img id="imagenPreview" src="@(ViewBag.ImageUrl != null ? "data:image/jpeg;base64," + ViewBag.ImageUrl : "")" alt="Vista previa de la imagen" style="max-width: 100%; max-height: 200px;" /></dd>
             </dl>
         </div>

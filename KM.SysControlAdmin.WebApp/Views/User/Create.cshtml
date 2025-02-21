@@ -7,12 +7,10 @@
     List<Role> roles = ViewBag.Roles as List<Role>;
 }
 
-@section Styles {
-    <link href="/css/User/DesignCreateAndEdit.css" rel="stylesheet" />
-}
+<link href="/css/User/DesignCreateAndEdit.css" rel="stylesheet" />
 
 <br />
-<h1>Crear Nuevo Usuario</h1>
+<h1>Formulario - Crear Usuario</h1>
 <div class="alert alert-success" role="alert">
     <strong>Recomendación:</strong> Usa Letras Mayusculas, Minusculas, Numeros y Simbolos Para Tu Contraseña
 </div>
@@ -20,7 +18,6 @@
 <hr />
 <br />
 <h2>Información Personal</h2>
-
 <br />
 <div class="row">
     <div class="col-md-12">
@@ -41,7 +38,7 @@
             <div class="form-group-row">
                 <div class="form-group">
                     <label asp-for="Email" class="control-label"></label>
-                    <input asp-for="Email" class="form-control" placeholder="Ingresar" />
+                    <input asp-for="Email" class="form-control" placeholder="ejemplo@kerigmamusic.com" />
                     <span asp-validation-for="Email" class="text-danger"></span>
                 </div>
                 <div class="form-group">
@@ -59,7 +56,7 @@
                 <div class="form-group">
                     <label asp-for="Status" class="control-label"></label>
                     <select asp-for="Status" class="form-select">
-                        <option value="">Seleccionar</option>
+                        <option>Seleccionar</option>
                         <option selected value="1">Activo</option>
                         <option value="2">Inactivo</option>
                     </select>
@@ -68,8 +65,8 @@
                 <div class="form-group">
                     <label asp-for="IdRole" class="control-label"></label>
                     <select asp-for="IdRole" class="form-select">
-                        <option selected value="">Seleccionar</option>
-                        @foreach (var item in roles!)
+                        <option selected>Seleccionar</option>
+                        @foreach (var item in roles!.Skip(1))
                         {
                             <option value="@item.Id">@item.Name</option>
                         }
@@ -84,16 +81,18 @@
             </div>
             <br />
             <div>
+                <p><strong>Fotografia:</strong></p>
                 <img id="imagenPreview" src="#" alt="Vista previa de la imagen" style="max-width: 100%; max-height: 200px; display: none; border: 1px solid #d3d3d3;" />
             </div>
             <br />
             <div>
-                <input type="submit" value="Guardar Usuario" class="btn btn-primary" /> |
-                <a class="btn btn-outline-secondary" asp-action="Index">Regresar a La Lista</a>
+                <a class="btn btn-outline-secondary" asp-action="Index">Regresar a La Lista</a> |
+                <input type="submit" value="Guardar Usuario" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
+<br />
 
 @section Scripts {
 
@@ -184,7 +183,8 @@
                 icon: 'question',
                 showCancelButton: true,
                 confirmButtonText: 'Sí, Guardar Registro',
-                cancelButtonText: 'Cancelar'
+                cancelButtonText: 'Cancelar',
+                reverseButtons: true
             }).then((result) => {
                 if (result.isConfirmed) {
                     form.submit(); // Enviar el formulario si se confirma la acción

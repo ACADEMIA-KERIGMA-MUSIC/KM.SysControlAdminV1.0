@@ -7,12 +7,10 @@
     List<Role> roles = ViewBag.Roles as List<Role>;
 }
 
-@section Styles {
-    <link href="/css/User/DesignCreateAndEdit.css" rel="stylesheet" />
-}
+<link href="/css/User/DesignCreateAndEdit.css" rel="stylesheet" />
 
 <br />
-<h1>Modificar Usuario Existente</h1>
+<h1>Formulario - Modificar Usuario</h1>
 <span>@ViewBag.Error</span>
 <hr />
 <br />
@@ -44,7 +42,8 @@
                 <div class="form-group">
                     <label asp-for="IdRole" class="control-label"></label>
                     <select asp-for="IdRole" class="form-select" id="cbxRole">
-                        @foreach (var item in roles!)
+                        <option>Seleccionar</option>
+                        @foreach (var item in roles!.Skip(1))
                         {
                             <option selected value="@item.Id">@item.Name</option>
                         }
@@ -56,7 +55,7 @@
                 <div class="form-group">
                     <label asp-for="Status" class="control-label"></label>
                     <select asp-for="Status" class="form-select" id="cbxStatus">
-                        <option value="">Seleccionar</option>
+                        <option>Seleccionar</option>
                         <option selected value="1">Activo</option>
                         <option value="2">Inactivo</option>
                     </select>
@@ -82,17 +81,18 @@
             </div>
             <br />
             <div>
+                <p><strong>Fotografia:</strong></p>
                 <img id="imagenPreview" src="@(ViewBag.ImageUrl != null ? "data:image/jpeg;base64," + ViewBag.ImageUrl : "")" alt="Vista previa de la imagen" style="max-width: 100%; max-height: 200px;" />
             </div>
             <br />
             <div>
-                <input type="submit" value="Modificar Usuario" class="btn btn-primary" /> |
-                <a class="btn btn-outline-secondary" asp-action="Index">Regresar A La Lista</a>
+                <a class="btn btn-outline-secondary" asp-action="Index">Regresar A La Lista</a> |
+                <input type="submit" value="Modificar Usuario" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
-
+<br />
 
 @section Scripts {
 
@@ -189,7 +189,8 @@
                 icon: 'question',
                 showCancelButton: true,
                 confirmButtonText: 'Sí, Modificar Registro',
-                cancelButtonText: 'Cancelar'
+                cancelButtonText: 'Cancelar',
+                reverseButtons: true
             }).then((result) => {
                 if (result.isConfirmed) {
                     form.submit(); // Enviar el formulario si se confirma

@@ -8,7 +8,7 @@
 }
 
 <br />
-<h1>Mantenimiento Para Usuarios</h1>
+<h1>Mantenimiento De Usuarios</h1>
 <hr />
 <div>
     <form asp-action="Index">
@@ -28,14 +28,14 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="Email">Correo Electronico</label>
-                    <input type="text" class="form-control" name="Email" placeholder="Ingresar" />
+                    <input type="text" class="form-control" name="Email" placeholder="ejemplo@kerigmamusic.com" />
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="Status">Estatus</label>
                     <select class="form-select" name="Status">
-                        <option selected value="">Seleccionar</option>
+                        <option selected>Seleccionar</option>
                         <option value="1">Activo</option>
                         <option value="2">Inactivo</option>
                     </select>
@@ -51,8 +51,8 @@
                 <div class="form-group">
                     <label class="form-group">Rol</label>
                     <select class="form-select" name="IdRole">
-                        <option selected value="">Seleccionar</option>
-                        @foreach (var item in roles!)
+                        <option selected>Seleccionar</option>
+                        @foreach (var item in roles!.Skip(1)) // Saltar el primer rol
                         {
                             <option value="@item.Id">@item.Name</option>
                         }
@@ -97,18 +97,12 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
+        @foreach (var item in Model.Skip(1)) // Saltar el primer usuario
         {
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.LastName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Email)
-                </td>
+                <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                <td>@Html.DisplayFor(modelItem => item.LastName)</td>
+                <td>@Html.DisplayFor(modelItem => item.Email)</td>
                 @if (item.Status == 1)
                 {
                     <td>Activo</td>
@@ -117,18 +111,23 @@
                 {
                     <td>Inactivo</td>
                 }
+                <td>@Html.DisplayFor(modelItem => item.Role!.Name)</td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Role!.Name)
-                </td>
-                <td>
-                    @Html.ActionLink("Modificar", "Edit", new { id = item.Id }, new { @class = "btn btn-warning m-1" }) |
-                    @Html.ActionLink("Detalles", "Details", new { id = item.Id }, new { @class = "btn btn-outline-info m-1" }) |
-                    @Html.ActionLink("Eliminar", "Delete", new { id = item.Id }, new { @class = "btn btn-danger m-1" })
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning m-1">
+                        <i class="fas fa-edit"></i>
+                    </a>
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-info m-1">
+                        <i class="fas fa-info-circle"></i>
+                    </a>
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger m-1">
+                        <i class="fas fa-trash-alt"></i>
+                    </a>
                 </td>
             </tr>
         }
     </tbody>
 </table>
+<br />
 
 @section Scripts {
     <script>
