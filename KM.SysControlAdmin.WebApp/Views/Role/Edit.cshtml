@@ -43,7 +43,8 @@
             title: '¿Modificar Registro Existente?',
             icon: 'question',
             showCancelButton: true,
-            confirmButtonText: 'Si, Modificar Registro'
+            confirmButtonText: 'Si, Modificar Registro',
+            reverseButtons: true
         }).then((result) => {
             if (result.isConfirmed) {
                 document.getElementById('Form').submit();

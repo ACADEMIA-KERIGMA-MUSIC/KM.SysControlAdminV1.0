@@ -44,7 +44,8 @@
             title: '¿Guardar Nuevo Registro?',
             icon: 'question',
             showCancelButton: true,
-            confirmButtonText: 'Si, Guardar Registro'
+            confirmButtonText: 'Si, Guardar Registro',
+            reverseButtons: true
         }).then((result) => {
             if (result.isConfirmed) {
                 document.getElementById('Form').submit();
