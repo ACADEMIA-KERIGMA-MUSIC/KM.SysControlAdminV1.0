@@ -47,10 +47,10 @@
                     @Html.DisplayFor(modelItem => item.Name)
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning m-1">
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning m-1" title="Modificar Rol">
                         <i class="fas fa-edit"></i>
                     </a>
-                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger m-1">
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger m-1" title="Eliminar Rol">
                         <i class="fas fa-trash-alt"></i>
                     </a>
                 </td>

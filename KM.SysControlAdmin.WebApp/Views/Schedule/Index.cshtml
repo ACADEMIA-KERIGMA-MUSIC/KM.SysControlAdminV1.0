@@ -64,10 +64,10 @@
                     @(item.EndTime.Hours >= 12 ? "PM" : "AM")
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning m-1">
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning m-1" title="Modificar Horario">
                         <i class="fas fa-edit"></i>
                     </a>
-                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger m-1">
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger m-1" title="Eliminar Horario">
                         <i class="fas fa-trash-alt"></i>
                     </a>
                 </td>

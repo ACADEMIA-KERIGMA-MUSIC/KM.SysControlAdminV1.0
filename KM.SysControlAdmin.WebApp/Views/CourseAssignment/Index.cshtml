@@ -83,13 +83,13 @@
                     @Html.DisplayFor(modelItem => item.Course!.Name)
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning m-1">
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning m-1" title="Modificar Asignación">
                         <i class="fas fa-edit"></i>
                     </a>
-                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-info m-1">
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-info m-1" title="Detalles De Asignación">
                         <i class="fas fa-info-circle"></i>
                     </a>
-                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger m-1">
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger m-1" title="Eliminar Asignación">
                         <i class="fas fa-trash-alt"></i>
                     </a>
                 </td>

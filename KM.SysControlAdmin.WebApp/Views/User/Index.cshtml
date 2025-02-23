@@ -106,13 +106,13 @@
                 <td>@(item.Status == 1 ? "Activo" : "Inactivo")</td>
                 <td>@Html.DisplayFor(modelItem => item.Role!.Name)</td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning m-1">
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning m-1" title="Modificar Usuario">
                         <i class="fas fa-edit"></i>
                     </a>
-                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-info m-1">
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-info m-1" title="Detalles Del Usuario">
                         <i class="fas fa-info-circle"></i>
                     </a>
-                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger m-1">
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger m-1" title="Eliminar Usuario">
                         <i class="fas fa-trash-alt"></i>
                     </a>
                 </td>

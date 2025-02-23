@@ -98,16 +98,16 @@
                     @Html.DisplayFor(modelItem => item.CivilStatus)
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning m-1">
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning m-1"title="Modificar Instructor">
                         <i class="fas fa-edit"></i>
                     </a>
-                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-info m-1">
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-info m-1" title="Detalles Del Instructor">
                         <i class="fas fa-info-circle"></i>
                     </a>
-                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger m-1">
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger m-1" title="Eliminar Instructor">
                         <i class="fas fa-trash-alt"></i>
                     </a>
-                    <a asp-action="GeneratePDFfile" asp-route-id="@item.Id" class="btn btn-primary">
+                    <a asp-action="GeneratePDFfile" asp-route-id="@item.Id" class="btn btn-primary" title="Generar Pdf">
                         <i class="fas fa-file-pdf"></i>
                     </a>
                 </td>
