@@ -2,6 +2,7 @@
 // Referencias Necesarias Para El Correcto Funcionamiento
 using KM.SysControlAdmin.BL.Schedule___BL;
 using KM.SysControlAdmin.EN.Schedule___EN;
+using KM.SysControlAdmin.EN.Trainer___EN;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -33,6 +34,9 @@ namespace KM.SysControlAdmin.WebApp.Controllers.Schedule___Controller
         {
             try
             {
+                schedule.Status = 1;
+                schedule.DateCreated = DateTime.Now;
+                schedule.DateModification = DateTime.Now;
                 int result = await scheduleBL.CreateAsync(schedule);
                 TempData["SuccessMessageCreate"] = "Horario Agregado Exitosamente";
                 return RedirectToAction(nameof(Index));
@@ -76,6 +80,7 @@ namespace KM.SysControlAdmin.WebApp.Controllers.Schedule___Controller
         {
             try
             {
+                schedule.DateModification = DateTime.Now;
                 int result = await scheduleBL.UpdateAsync(schedule);
                 TempData["SuccessMessageUpdate"] = "Horario Modificado Exitosamente";
                 return RedirectToAction(nameof(Index));
