@@ -48,6 +48,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.EndTime)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
             <th>Acciones</th>
         </tr>
     </thead>
@@ -63,6 +66,18 @@
                     @Html.DisplayFor(modelItem => item.EndTimeFormatted)
                     @(item.EndTime.Hours >= 12 ? "PM" : "AM")
                 </td>
+                @if (item.Status == 1)
+                {
+                    <td>Activo</td>
+                }
+                else if (item.Status == 2)
+                {
+                    <td>Inactivo</td>
+                }
+                else
+                {
+                    <td></td>
+                }
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning m-1" title="Modificar Horario">
                         <i class="fas fa-edit"></i>
