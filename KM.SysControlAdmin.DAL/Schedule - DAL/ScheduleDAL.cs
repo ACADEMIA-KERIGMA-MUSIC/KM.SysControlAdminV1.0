@@ -123,7 +123,6 @@ namespace KM.SysControlAdmin.DAL.Schedule___DAL
                         scheduleDb.StartTime = schedule.StartTime;
                         scheduleDb.EndTime = schedule.EndTime;
                         scheduleDb.Status = schedule.Status;
-                        scheduleDb.DateCreated = schedule.DateCreated;
                         scheduleDb.DateModification = schedule.DateModification;
                         dbContext.Schedule.Update(scheduleDb);
                         result = await dbContext.SaveChangesAsync();
