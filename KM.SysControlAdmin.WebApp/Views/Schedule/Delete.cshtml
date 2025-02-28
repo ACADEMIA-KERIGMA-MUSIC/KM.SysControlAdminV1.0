@@ -12,14 +12,20 @@
 </p>
 <span>@ViewBag.Error</span>
 <hr />
+
 <script>
     async function ShowDeletePrompt() {
+        const statusText = @Model.Status == 1 ? "Activo" : @Model.Status == 2 ? "Inactivo" : "Desconocido";
+
         const result = await Swal.fire({
             title: 'Información Del Horario',
             html: `
                     <div style="text-align: center;">
                         <p><strong>Hora de Inicio:</strong> @Model.StartTimeFormatted @(Model.StartTime.Hours >= 12 ? "PM" : "AM")</p>
                         <p><strong>Hora de Fin:</strong> @Model.EndTimeFormatted @(Model.EndTime.Hours >= 12 ? "PM" : "AM")</p>
+                        <p><strong>Estado:</strong> <span>${statusText}</span></p>
+                        <p><strong>Fecha de Creacion:</strong> @Model.DateCreatedFormatted @Model.TimeCreatedFormatted</p>
+                        <p><strong>Fecha de Modificacion:</strong> @Model.DateModificationFormatted @Model.TimeModificationFormatted</p>
                     </div>
                 `,
             icon: 'warning',

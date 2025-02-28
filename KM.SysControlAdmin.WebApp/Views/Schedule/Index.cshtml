@@ -51,6 +51,12 @@
             <th>
                 @Html.DisplayNameFor(model => model.Status)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DateCreated)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DateModification)
+            </th>
             <th>Acciones</th>
         </tr>
     </thead>
@@ -78,6 +84,14 @@
                 {
                     <td></td>
                 }
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateCreatedFormatted)
+                    @(item.TimeCreatedFormatted)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateModificationFormatted)
+                    @(item.TimeModificationFormatted)
+                </td>
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning m-1" title="Modificar Horario">
                         <i class="fas fa-edit"></i>

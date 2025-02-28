@@ -12,29 +12,51 @@
 
 <script>
     async function ShowEditPrompt() {
+        const statusOptions = `
+            <label for="status"><strong>Estado:</strong></label>
+            <select id="status" class="swal2-select">
+                <option value="0">Seleccionar</option>
+                <option value="1" ${@Model.Status == 1 ? "selected" : ""}>Activo</option>
+                <option value="2" ${@Model.Status == 2 ? "selected" : ""}>Inactivo</option>
+            </select>
+            <br />
+        `;
+
         const { value: formValues } = await Swal.fire({
             title: 'Horario a Modificar',
             html: `
-                    <label for="startTime"><strong>Hora de Inicio:</strong></label>
-                    <input type="time" id="startTime" class="swal2-input" value="@Model.StartTime">
-                    <br />
-                    <label for="endTime"><strong>Hora de Fin:</strong></label>
-                    <input type="time" id="endTime" class="swal2-input" value="@Model.EndTime">
-                `,
-                focusConfirm: true,
-                showCancelButton: true,
-                confirmButtonText: 'Modificar Horario',
-                cancelButtonText: 'Cancelar',
-                reverseButtons: true,
-                preConfirm: () => {
+                <label for="startTime"><strong>Hora de Inicio:</strong></label>
+                <input type="time" id="startTime" class="swal2-input" value="@Model.StartTime">
+                <br />
+                <label for="endTime"><strong>Hora de Fin:</strong></label>
+                <input type="time" id="endTime" class="swal2-input" value="@Model.EndTime">
+                <br />
+                ${statusOptions}
+                <br />
+                <p><strong>Fecha de Creacion:</strong> @Model.DateCreatedFormatted @Model.TimeCreatedFormatted</p>
+                <p><strong>Fecha de Modificacion:</strong> @Model.DateModificationFormatted @Model.TimeModificationFormatted</p>
+            `,
+            focusConfirm: true,
+            showCancelButton: true,
+            confirmButtonText: 'Modificar Horario',
+            cancelButtonText: 'Cancelar',
+            reverseButtons: true,
+            preConfirm: () => {
                 const startTime = document.getElementById('startTime').value;
                 const endTime = document.getElementById('endTime').value;
+                const status = document.getElementById('status').value;
 
                 if (!startTime || startTime === "00:00" || !endTime || endTime === "00:00") {
                     Swal.showValidationMessage('Por favor, ingrese una hora válida para ambos campos.');
+                    return false;
                 }
 
-                return { startTime, endTime };
+                if (status == "0") {
+                    Swal.showValidationMessage('Por favor, seleccione un estado válido.');
+                    return false;
+                }
+
+                return { startTime, endTime, status };
             }
         });
 
@@ -55,6 +77,7 @@
             if (result.isConfirmed) {
                 document.getElementById('StartTime').value = formValues.startTime;
                 document.getElementById('EndTime').value = formValues.endTime;
+                document.getElementById('Status').value = formValues.status;
                 document.getElementById('Form').submit();
             } else {
                 window.location.href = '@Url.Action("Index", "Schedule")';
@@ -84,4 +107,5 @@
     <input type="hidden" asp-for="Id" />
     <input type="hidden" id="StartTime" name="StartTime" />
     <input type="hidden" id="EndTime" name="EndTime" />
+    <input type="hidden" id="Status" name="Status" />
 </form>
