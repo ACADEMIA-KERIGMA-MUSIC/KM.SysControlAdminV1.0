@@ -23,7 +23,7 @@ CREATE TABLE [User](
     DateCreated DATETIME NOT NULL,
     DateModification DATETIME NOT NULL,
 	ImageData VARBINARY(MAX) NOT NULL,
-	IdRole INT NOT NULL FOREIGN KEY REFERENCES [Role](Id) ON DELETE CASCADE
+	IdRole INT NOT NULL FOREIGN KEY REFERENCES [Role](Id)
     );
 GO
     INSERT INTO [User] (IdRole, [Name], LastName, Email, [Password], [Status], DateCreated, DateModification, ImageData) 
@@ -97,3 +97,17 @@ CREATE TABLE CourseAssignment(
   DateModification DATETIME NOT NULL,
   );
 GO
+-- PRIMERAS ACTUALIZACIONES AL SCRIPT ACTUAL --
+
+-- 1. Obtener el nombre de la clave foránea actual (opcional, solo si no sabes su nombre)
+SELECT name 
+FROM sys.foreign_keys 
+WHERE parent_object_id = OBJECT_ID('[User]');
+
+-- 2. Eliminar la restricción de clave foránea existente (cambia el nombre si es diferente)
+ALTER TABLE [User] DROP CONSTRAINT FK_User_Role;
+
+-- 3. Volver a crear la clave foránea con ON DELETE CASCADE y un nombre explícito
+ALTER TABLE [User]  
+ADD CONSTRAINT FK_Id_Role -- Asignamos un nombre a la clave foránea
+FOREIGN KEY (IdRole) REFERENCES [Role](Id) ON DELETE CASCADE;
