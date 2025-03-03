@@ -33,9 +33,6 @@ CREATE TABLE Schedule(
   Id INT NOT NULL PRIMARY KEY IDENTITY(1,1),
   StartTime TIME NOT NULL,
   EndTime TIME NOT NULL,
-  [Status] TINYINT NOT NULL,
-  DateCreated DATETIME NOT NULL,
-  DateModification DATETIME NOT NULL
   );
 GO
 CREATE TABLE Trainer(
@@ -105,9 +102,26 @@ FROM sys.foreign_keys
 WHERE parent_object_id = OBJECT_ID('[User]');
 
 -- 2. Eliminar la restricción de clave foránea existente (cambia el nombre si es diferente)
-ALTER TABLE [User] DROP CONSTRAINT FK_User_Role;
+ALTER TABLE [User] DROP CONSTRAINT FK__User__IdRole__398D8EEE;
 
 -- 3. Volver a crear la clave foránea con ON DELETE CASCADE y un nombre explícito
 ALTER TABLE [User]  
 ADD CONSTRAINT FK_Id_Role -- Asignamos un nombre a la clave foránea
 FOREIGN KEY (IdRole) REFERENCES [Role](Id) ON DELETE CASCADE;
+
+-- Nueva actualizacion del script --
+ALTER TABLE Schedule  
+ADD 
+    [Status] TINYINT NOT NULL,
+    DateCreated DATETIME NOT NULL,
+    DateModification DATETIME NOT NULL;
+
+-- Agregar las nuevas columnas EntryDate y PersonalEmail
+ALTER TABLE Trainer  
+ADD 
+    EntryDate DATETIME NOT NULL,
+    PersonalEmail VARCHAR(50) NOT NULL; -- No permite valores nulos
+
+-- Modificar CommentsOrObservations para permitir valores nulos
+ALTER TABLE Trainer  
+ALTER COLUMN CommentsOrObservations VARCHAR(100) NULL;
