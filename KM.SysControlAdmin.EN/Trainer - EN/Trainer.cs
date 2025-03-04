@@ -80,10 +80,9 @@ namespace KM.SysControlAdmin.EN.Trainer___EN
         [Display(Name = "Estado")]
         public byte Status { get; set; }
 
-        [Required(ErrorMessage = "Los Comentarios u Observaciones Son Requeridas")]
         [StringLength(100, ErrorMessage = "Maximo 100 caracteres")]
         [Display(Name = "Comentarios u Observaciones")]
-        public string CommentsOrObservations { get; set; } = string.Empty;
+        public string? CommentsOrObservations { get; set; }
 
         [Display(Name = "Fecha De Creación")]
         public DateTime DateCreated { get; set; }
@@ -93,6 +92,16 @@ namespace KM.SysControlAdmin.EN.Trainer___EN
 
         [Display(Name = "Fotografia")]
         public byte[]? ImageData { get; set; }
+
+        [Required(ErrorMessage = "La Fecha De Ingreso Es Requerida")]
+        [Display(Name = "Fecha De Ingreso")]
+        [DataType(DataType.Date, ErrorMessage = "Por favor, Introduce una fecha válida")]
+        public DateTime EntryDate { get; set; } = DateTime.MinValue;
+
+        [Required(ErrorMessage = "El Correo Personal es requerido")]
+        [MaxLength(50, ErrorMessage = "Máximo 50 caracteres")]
+        [Display(Name = "Correo Electronico")]
+        public string PersonalEmail { get; set; } = string.Empty;
 
         #endregion
 
@@ -104,6 +113,8 @@ namespace KM.SysControlAdmin.EN.Trainer___EN
         public string DateCreatedFormatted => DateCreated.ToString(@"dd/MM/yyyy");
         [NotMapped]
         public string DateModificationFormatted => DateModification.ToString(@"dd/MM/yyyy");
+        [NotMapped]
+        public string EntryDateFormatted => EntryDate.ToString(@"dd/MM/yyyy");
 
         // Propiedad para formatear la hora con AM/PM
         [NotMapped]
