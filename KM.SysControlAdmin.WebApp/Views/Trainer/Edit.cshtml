@@ -68,9 +68,19 @@
             </div>
             <div class="form-group-row">
                 <div class="form-group">
+                    <label asp-for="EntryDate" class="control-label"></label>
+                    <input asp-for="EntryDate" class="form-control" required />
+                    <span asp-validation-for="EntryDate" class="text-danger"></span>
+                </div>
+                <div class="form-group">
                     <label asp-for="Phone" class="control-label"></label>
                     <input asp-for="Phone" class="form-control" id="inputPhone" required placeholder="0000-0000" />
                     <span asp-validation-for="Phone" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="PersonalEmail" class="control-label"></label>
+                    <input asp-for="PersonalEmail" class="form-control" placeholder="ejemplo@gmail.com" />
+                    <span asp-validation-for="PersonalEmail" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="Status" class="control-label"></label>
@@ -165,120 +175,45 @@
 
             const firstNameInput = document.querySelector('input[name="Name"]');
             const lastNameInput = document.querySelector('input[name="LastName"]');
-
-            // Eventos para generar el código cuando se cambian los nombres o apellidos
+    
             firstNameInput.addEventListener('input', generateCode);
             lastNameInput.addEventListener('input', generateCode);
+    
+            // Validación en tiempo real del correo electrónico
+            const emailInput = document.querySelector('input[name="Email"]');
+            emailInput.addEventListener('input', validateEmail);
 
-            calculateAge(); // Llamada inicial para calcular la edad
-            generateCode(); // Generar el código al cargar la página
+            calculateAge();
+            generateCode();
         });
 
-        // Función para formatear el DUI con guiones
-        function formatDui(inputValue) {
-            inputValue = inputValue.replace(/\D/g, ''); // Remover todos los caracteres que no sean dígitos
-            var formattedValue = '';
-            for (var i = 0; i < inputValue.length; i++) {
-                if (i == 8) {
-                    formattedValue += '-' + inputValue.charAt(i);
-                } else {
-                    formattedValue += inputValue.charAt(i);
-                }
-            }
-            formattedValue = formattedValue.substring(0, 10); // Limitar la longitud total a 10 caracteres, incluyendo el guion
-            return formattedValue;
-        }
+        // Función para validar correo electrónico en tiempo real
+        function validateEmail() {
+            const emailInput = document.querySelector('input[name="Email"]');
+            const emailValue = emailInput.value.trim();
+            const emailPattern = /^[^@@\s]+@@[^@@\s]+\.[^@@\s]+$/;
 
-        // Función para calcular la edad en base a la fecha de nacimiento
-        function calculateAge() {
-            const birthDateInput = document.querySelector('input[name="DateOfBirth"]');
-            const ageInput = document.querySelector('input[name="Age"]');
-            const birthDateValue = birthDateInput.value.trim();
-
-            if (birthDateValue !== "") {
-                const birthDate = new Date(birthDateValue);
-                const currentDate = new Date();
-                let age = currentDate.getFullYear() - birthDate.getFullYear(); // Calcular la edad restando el año de nacimiento del año actual
-
-                // Ajustar la edad si la fecha de nacimiento aún no ha ocurrido este año
-                if (birthDate.getMonth() > currentDate.getMonth() ||
-                    (birthDate.getMonth() === currentDate.getMonth() && birthDate.getDate() > currentDate.getDate())) {
-                    age--;
-                }
-                ageInput.value = age; // Actualizar el campo de edad
+            if (!emailPattern.test(emailValue)) {
+                emailInput.classList.add("is-invalid");
+                Swal.fire({
+                    title: 'Correo Inválido',
+                    text: 'Por favor, ingrese un correo válido.',
+                    icon: 'warning'
+                });
             } else {
-                ageInput.value = ""; // Desactivar el campo de edad si no se proporciona ninguna fecha de nacimiento
+                emailInput.classList.remove("is-invalid");
             }
-        }
-
-        // Función para formatear los números de teléfono con un guion
-        function formatPhoneNumber(input) {
-            let phoneNumber = input.value.replace(/\D/g, ''); // Elimina cualquier carácter que no sea número
-            if (phoneNumber.length > 4) {
-                phoneNumber = phoneNumber.slice(0, 4) + '-' + phoneNumber.slice(4, 8);
-            }
-            input.value = phoneNumber;
-        }
-
-        // Función para mostrar vista previa de la imagen seleccionada
-        function mostrarImagen() {
-            var archivo = document.getElementById('imagen').files[0];
-            var reader = new FileReader();
-
-            reader.onload = function (e) {
-                var imagenPreview = document.getElementById('imagenPreview');
-                imagenPreview.src = e.target.result;
-                imagenPreview.style.display = 'block';
-            };
-            reader.readAsDataURL(archivo);
-        }
-
-        // Función para generar automáticamente el código tomando la primera letra de cada palabra en nombres y apellidos
-        function generateCode() {
-            const firstName = document.querySelector('input[name="Name"]').value.trim();
-            const lastName = document.querySelector('input[name="LastName"]').value.trim();
-            const dui = document.querySelector('#inputDui').value.trim();
-            const codeField = document.querySelector('#Code');
-
-            let code = '';
-
-            // Tomar la primera letra de cada palabra de los nombres y apellidos
-            if (firstName) {
-                const firstNameParts = firstName.split(" ");
-                firstNameParts.forEach(name => {
-                    code += name.charAt(0).toLowerCase(); // Cambiado a toLowerCase
-                });
-            }
-
-            if (lastName) {
-                const lastNameParts = lastName.split(" ");
-                lastNameParts.forEach(last => {
-                    code += last.charAt(0).toLowerCase(); // Cambiado a toLowerCase
-                });
-            }
-
-            // Tomar el último dígito del campo DUI
-            if (dui.length >= 9) {
-                code += dui.charAt(dui.length - 1);
-            }
-
-            // Añadir los últimos dos dígitos del año actual
-            const currentYear = new Date().getFullYear();
-            code += currentYear.toString().slice(-2);
-
-            // Asignar el valor generado al campo Code
-            codeField.value = code;
         }
 
         // Función para confirmar la modificación del registro
         function CreateRecord(e) {
-            e.preventDefault();
+            e.preventDefault();  // Evita el envío del formulario hasta que se valide
+
             const form = document.getElementById('Form');
             const nameFields = ['Name', 'LastName'];
             const regex = /^[A-ZÑa-zñáéíóúÁÉÍÓÚ. ]+$/;
             let isValid = true;
 
-            // Validar que los campos nameFields solo contengan letras, punto y espacios
             nameFields.forEach((field) => {
                 const input = document.querySelector(`input[name="${field}"]`);
                 if (!regex.test(input.value)) {
@@ -286,7 +221,17 @@
                 }
             });
 
-            // Si la validación falla, muestra una alerta advirtiendo al usuario
+            // Validación final del correo antes de enviar
+            const emailInput = document.querySelector('input[name="PersonalEmail"]');
+            if (emailInput.classList.contains("is-invalid")) {
+                Swal.fire({
+                    title: 'Error en el formulario',
+                    text: 'Corrija los errores antes de enviar.',
+                    icon: 'error'
+                });
+                return;  // No envia el formulario si el correo es inválido
+            }
+
             if (!isValid) {
                 Swal.fire({
                     title: '!Advertencia!',
@@ -294,10 +239,10 @@
                     icon: 'warning',
                     confirmButtonText: 'Aceptar'
                 });
-                return;
+                return;  // No envia el formulario si los nombres tienen caracteres inválidos
             }
 
-            // Si todos los campos son válidos, muestra la alerta de confirmación
+            // Si todas las validaciones son correctas, procede a enviar el formulario
             Swal.fire({
                 title: '¿Modificar Registro Existente?',
                 icon: 'question',
@@ -307,7 +252,7 @@
                 reverseButtons: true
             }).then((result) => {
                 if (result.isConfirmed) {
-                    form.submit();
+                    form.submit();  // Enviar el formulario solo si el usuario confirma
                 }
             });
         }

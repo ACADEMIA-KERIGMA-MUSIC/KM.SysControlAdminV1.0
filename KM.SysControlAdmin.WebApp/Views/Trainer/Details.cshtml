@@ -39,8 +39,14 @@
                 <dt class="col-sm-4">@Html.DisplayNameFor(model => model.CivilStatus)</dt>
                 <dd class="col-sm-8">@Html.DisplayFor(model => model.CivilStatus)</dd>
 
+                <dt class="col-sm-4">@Html.DisplayNameFor(model => model.EntryDate)</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.EntryDateFormatted)</dd>
+
                 <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Phone)</dt>
                 <dd class="col-sm-8">@Html.DisplayFor(model => model.Phone)</dd>
+
+                <dt class="col-sm-4">@Html.DisplayNameFor(model => model.PersonalEmail)</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.PersonalEmail)</dd>
 
                 <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Address)</dt>
                 <dd class="col-sm-8">@Html.DisplayFor(model => model.Address)</dd>
@@ -56,7 +62,14 @@
                 }
 
                 <dt class="col-sm-4">@Html.DisplayNameFor(model => model.CommentsOrObservations)</dt>
-                <dd class="col-sm-8">@Html.DisplayFor(model => model.CommentsOrObservations)</dd>
+                @if (Model.CommentsOrObservations != null)
+                {
+                    <dd class="col-sm-8">@Html.DisplayFor(model => model.CommentsOrObservations)</dd>
+                }
+                else
+                {
+                    <dd class="col-sm-8">"Campo sin rellenar - Vacio"</dd>
+                }
 
                 <dt class="col-sm-4">@Html.DisplayNameFor(model => model.DateCreated)</dt>
                 <dd class="col-sm-8">

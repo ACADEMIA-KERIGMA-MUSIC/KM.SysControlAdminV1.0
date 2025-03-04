@@ -67,9 +67,19 @@
             </div>
             <div class="form-group-row">
                 <div class="form-group">
+                    <label asp-for="EntryDate" class="control-label"></label>
+                    <input asp-for="EntryDate" class="form-control" required />
+                    <span asp-validation-for="EntryDate" class="text-danger"></span>
+                </div>
+                <div class="form-group">
                     <label asp-for="Phone" class="control-label"></label>
                     <input asp-for="Phone" class="form-control" id="inputPhone" required placeholder="0000-0000" />
                     <span asp-validation-for="Phone" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="PersonalEmail" class="control-label"></label>
+                    <input asp-for="PersonalEmail" class="form-control" placeholder="ejemplo@gmail.com" />
+                    <span asp-validation-for="PersonalEmail" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="Status" class="control-label"></label>
@@ -99,7 +109,6 @@
                 <div class="form-group">
                     <label asp-for="CommentsOrObservations" class="control-label"></label>
                     <input asp-for="CommentsOrObservations" class="form-control" placeholder="Opcional" />
-                    <span asp-validation-for="CommentsOrObservations" class="text-danger"></span>
                 </div>
             </div>
             <br />
@@ -149,7 +158,7 @@
 
         // Función para formatear el DUI
         function formatDui(inputValue) {
-            inputValue = inputValue.replace(/\D/g, ''); // Remover todos los caracteres que no sean dígitos
+            inputValue = inputValue.replace(/\D/g, ''); // Remover caracteres no numéricos
             let formattedValue = '';
             for (let i = 0; i < inputValue.length; i++) {
                 if (i == 8) {
@@ -178,20 +187,20 @@
                 }
                 ageInput.value = age;
             } else {
-                ageInput.value = ""; // Desactivar el campo de edad
+                ageInput.value = "";
             }
         }
 
         // Función para formatear el número de teléfono
         function formatPhoneNumber(input) {
-            let phoneNumber = input.value.replace(/\D/g, ''); // Eliminar caracteres no numéricos
+            let phoneNumber = input.value.replace(/\D/g, '');
             if (phoneNumber.length > 4) {
-                phoneNumber = phoneNumber.slice(0, 4) + '-' + phoneNumber.slice(4, 8); // Formatear con guion
+                phoneNumber = phoneNumber.slice(0, 4) + '-' + phoneNumber.slice(4, 8);
             }
             input.value = phoneNumber;
         }
 
-        // Función para generar automáticamente el código tomando la primera letra de cada palabra en nombres y apellidos
+        // Función para generar automáticamente el código
         function generateCode() {
             const firstName = document.querySelector('input[name="Name"]').value.trim();
             const lastName = document.querySelector('input[name="LastName"]').value.trim();
@@ -201,35 +210,27 @@
 
             let code = '';
 
-            // Tomar la primera letra de cada palabra de los nombres y apellidos
             if (firstName) {
-                const firstNameParts = firstName.split(" ");
-                firstNameParts.forEach(name => {
-                    code += name.charAt(0).toLowerCase(); // Cambiado a toLowerCase
+                firstName.split(" ").forEach(name => {
+                    code += name.charAt(0).toLowerCase();
                 });
             }
 
             if (lastName) {
-                const lastNameParts = lastName.split(" ");
-                lastNameParts.forEach(last => {
-                    code += last.charAt(0).toLowerCase(); // Cambiado a toLowerCase
+                lastName.split(" ").forEach(last => {
+                    code += last.charAt(0).toLowerCase();
                 });
             }
 
-            // Tomar el último dígito del campo DUI
             if (dui.length >= 9) {
                 code += dui.charAt(dui.length - 1);
             }
 
-            // Añadir los últimos dos dígitos del año actual
             const currentYear = new Date().getFullYear();
             code += currentYear.toString().slice(-2);
 
-            // Asignar el valor generado al campo Code
             codeField.value = code;
-
-            // Generar el email con el formato "código@kerigmamusic.com"
-            emailField.value = code + "@@kerigmamusic.com"; // Elimina uno de los "@@" para corregir la sintaxis
+            emailField.value = code + "@@kerigmamusic.com";
         }
 
         // Función para mostrar vista previa de la imagen seleccionada
@@ -254,38 +255,61 @@
             });
         }
 
-        // Automatización que asegura que todos los campos y eventos se manejen correctamente
+        // Validación en tiempo real del correo electrónico
+        function validateEmail() {
+            const emailInput = document.querySelector('input[name="Email"]');
+            const emailValue = emailInput.value.trim();
+            const emailPattern = /^[^@@\s]+@@[^@@\s]+\.[^@@\s]+$/; // Ahora sí válida correos correctamente
+
+            if (!emailPattern.test(emailValue)) {
+                emailInput.classList.add("is-invalid");
+                Swal.fire({
+                    title: 'Correo Inválido',
+                    text: 'Por favor, ingrese un correo válido.',
+                    icon: 'warning'
+                });
+            } else {
+                emailInput.classList.remove("is-invalid");
+            }
+        }
+
         document.addEventListener("DOMContentLoaded", function () {
             const birthDateInput = document.querySelector('input[name="DateOfBirth"]');
             const inputPhone = document.getElementById('inputPhone');
             const duiInput = document.getElementById('inputDui');
             const firstNameInput = document.querySelector('input[name="Name"]');
             const lastNameInput = document.querySelector('input[name="LastName"]');
-            const codeField = document.querySelector('#Code');
+            const emailInput = document.querySelector('input[name="Email"]');
             const form = document.getElementById('Form');
 
-            // Asignar eventos a los campos relevantes
-            birthDateInput.addEventListener('change', calculateAge); // Calcular la edad cuando cambia la fecha de nacimiento
+            birthDateInput.addEventListener('change', calculateAge);
             inputPhone.addEventListener('input', function (e) {
-                formatPhoneNumber(e.target); // Formatear el teléfono
+                formatPhoneNumber(e.target);
             });
             duiInput.addEventListener('input', function (event) {
-                const inputValue = event.target.value;
-                event.target.value = formatDui(inputValue); // Formatear DUI
-                generateCode(); // Generar el código al cambiar el DUI
+                event.target.value = formatDui(event.target.value);
+                generateCode();
             });
 
-            // Eventos para actualizar el código y el email cuando cambian los nombres o apellidos
             firstNameInput.addEventListener('input', generateCode);
             lastNameInput.addEventListener('input', generateCode);
+            emailInput.addEventListener('input', validateEmail); // Agregado para validar en tiempo real
 
-            // Inicializar valores al cargar la página
-            calculateAge(); // Calcular la edad al cargar la página
-            generateCode(); // Generar el código y el email al cargar la página
+            calculateAge();
+            generateCode();
 
-            // Función para mostrar alerta al intentar guardar el formulario
             form.addEventListener('submit', function (e) {
-                e.preventDefault(); // Prevenir el envío automático del formulario
+                e.preventDefault();
+
+                // Validación final del correo antes de enviar
+                if (emailInput.classList.contains("is-invalid")) {
+                    Swal.fire({
+                        title: 'Error en el formulario',
+                        text: 'Corrija los errores antes de enviar.',
+                        icon: 'error'
+                    });
+                    return;
+                }
 
                 Swal.fire({
                     title: '¿Guardar Nuevo Registro?',
@@ -296,9 +320,8 @@
                     reverseButtons: true
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        form.submit(); // Enviar el formulario si se confirma
+                        form.submit();
                     }
-                    // Si se cancela, no hacer nada (permanecer en la misma vista)
                 });
             });
         });

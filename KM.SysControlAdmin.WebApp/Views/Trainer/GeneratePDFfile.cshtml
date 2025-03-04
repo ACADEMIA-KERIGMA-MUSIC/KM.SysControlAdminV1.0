@@ -43,7 +43,9 @@
                         <p><strong>@Html.DisplayNameFor(model => model.Age):</strong> @Html.DisplayFor(model => model.Age) Años</p>
                         <p><strong>@Html.DisplayNameFor(model => model.Gender):</strong> @Html.DisplayFor(model => model.Gender)</p>
                         <p><strong>@Html.DisplayNameFor(model => model.CivilStatus):</strong> @Html.DisplayFor(model => model.CivilStatus)</p>
+                        <p><strong>@Html.DisplayNameFor(model => model.EntryDate):</strong> @Html.DisplayFor(model => model.EntryDateFormatted)</p>
                         <p><strong>@Html.DisplayNameFor(model => model.Phone):</strong> @Html.DisplayFor(model => model.Phone)</p>
+                        <p><strong>@Html.DisplayNameFor(model => model.PersonalEmail):</strong> @Html.DisplayFor(model => model.PersonalEmail)</p>
                         <p><strong>@Html.DisplayNameFor(model => model.Address):</strong> @Html.DisplayFor(model => model.Address)</p>
                         @if (Model.Status == 1)
                         {
@@ -58,7 +60,14 @@
                             <p><strong>Estatus:</strong> Sin Designar</p>
                         }
                         <p><strong>@Html.DisplayNameFor(model => model.Code):</strong> @Html.DisplayFor(model => model.Code)</p>
-                        <p><strong>@Html.DisplayNameFor(model => model.CommentsOrObservations):</strong> @Html.DisplayFor(model => model.CommentsOrObservations)</p>
+                        @if (Model.CommentsOrObservations != "")
+                        {
+                            <p><strong>@Html.DisplayNameFor(model => model.CommentsOrObservations):</strong> @Html.DisplayFor(model => model.CommentsOrObservations)</p>
+                        }
+                        else
+                        {
+                            <p><strong>@Html.DisplayNameFor(model => model.CommentsOrObservations):</strong></p>
+                        }
                         <p><strong>@Html.DisplayNameFor(model => model.DateCreated):</strong> @Html.DisplayFor(model => model.DateCreatedFormatted) - @Html.DisplayFor(model => model.TimeCreatedFormatted)</p>
                         <p><strong>@Html.DisplayNameFor(model => model.DateModification):</strong> @Html.DisplayFor(model => model.DateModificationFormatted) - @Html.DisplayFor(model => model.TimeModificationFormatted)</p>
                     </div>
