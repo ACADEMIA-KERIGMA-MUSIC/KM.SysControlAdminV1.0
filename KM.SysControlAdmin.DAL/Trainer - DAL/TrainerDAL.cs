@@ -129,7 +129,6 @@ namespace KM.SysControlAdmin.DAL.Trainer___DAL
                     bool trainerExists = await ExistTrainer(trainer, dbContext);
                     if (trainerExists == false)
                     {
-                        trainerDB.Code = trainer.Code;
                         trainerDB.Name = trainer.Name;
                         trainerDB.LastName = trainer.LastName;
                         trainerDB.Dui = trainer.Dui;
@@ -144,6 +143,8 @@ namespace KM.SysControlAdmin.DAL.Trainer___DAL
                         trainerDB.DateCreated = trainer.DateCreated;
                         trainerDB.DateModification = trainer.DateModification;
                         trainerDB.ImageData = trainer.ImageData;
+                        trainerDB.EntryDate = trainer.EntryDate;
+                        trainerDB.PersonalEmail = trainer.PersonalEmail;
 
                         dbContext.Update(trainerDB);
                         result = await dbContext.SaveChangesAsync();
