@@ -125,3 +125,14 @@ ADD
 -- Modificar CommentsOrObservations para permitir valores nulos
 ALTER TABLE Trainer  
 ALTER COLUMN CommentsOrObservations VARCHAR(100) NULL;
+
+-- Modificacion en tabla Student
+ALTER TABLE Student 
+ADD 
+    Gender VARCHAR(20) NOT NULL DEFAULT 'No especificado',
+    PersonalEmail VARCHAR(50) NOT NULL DEFAULT 'sincorreo@example.com',
+    CommentsOrObservations VARCHAR(100) NULL,
+    RepresentativeName VARCHAR(50) NULL,
+    RepresentativeLastName VARCHAR(50) NULL,
+    Relationship VARCHAR(8) NULL,
+    TelephoneResponsible VARCHAR(9) NULL;
