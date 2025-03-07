@@ -88,11 +88,11 @@ namespace KM.SysControlAdmin.DAL.Student___DAL
             if (student.Id > 0)
                 query = query.Where(m => m.Id == student.Id);
 
-            if (!string.IsNullOrWhiteSpace(student.ParticipantCode))
-                query = query.Where(m => m.ParticipantCode.Contains(student.ParticipantCode));
-
             if (!string.IsNullOrWhiteSpace(student.StudentCode))
                 query = query.Where(m => m.StudentCode.Contains(student.StudentCode));
+
+            if (!string.IsNullOrWhiteSpace(student.Gender))
+                query = query.Where(m => m.Gender.Contains(student.Gender));
 
             if (!string.IsNullOrWhiteSpace(student.Name))
                 query = query.Where(m => m.Name.Contains(student.Name));
