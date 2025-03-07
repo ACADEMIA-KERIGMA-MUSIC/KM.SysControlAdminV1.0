@@ -78,6 +78,44 @@ namespace KM.SysControlAdmin.EN.Student___EN
 
         [Display(Name = "Fecha De Modificación")]
         public DateTime DateModification { get; set; }
+
+        [Required(ErrorMessage = "El Genero Es Requerido")]
+        [StringLength(20, ErrorMessage = "Maximo 20 caracteres")]
+        [Display(Name = "Genero")]
+        [RegularExpression("^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+$", ErrorMessage = "Debe contener solo Letras")]
+        public string Gender { get; set; } = string.Empty;
+
+        [Required(ErrorMessage = "El Correo Personal es requerido")]
+        [MaxLength(50, ErrorMessage = "Máximo 50 caracteres")]
+        [Display(Name = "Correo Electronico")]
+        public string PersonalEmail { get; set; } = string.Empty;
+
+        [StringLength(100, ErrorMessage = "Maximo 100 caracteres")]
+        [Display(Name = "Comentarios u Observaciones")]
+        public string? CommentsOrObservations { get; set; }
+
+        [Required(ErrorMessage = "El Nombre Del Representante Es Requerido")]
+        [StringLength(50, ErrorMessage = "Maximo 50 caracteres")]
+        [Display(Name = "Nombres")]
+        [RegularExpression("^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+$", ErrorMessage = "Debe contener solo Letras")]
+        public string? RepresentativeName { get; set; }
+
+        [Required(ErrorMessage = "El Nombre Del Representante Es Requerido")]
+        [StringLength(50, ErrorMessage = "Maximo 50 caracteres")]
+        [Display(Name = "Nombres")]
+        [RegularExpression("^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+$", ErrorMessage = "Debe contener solo Letras")]
+        public string? RepresentativeLastName { get; set; }
+
+        [Required(ErrorMessage = "El Parentesco Es Requerido")]
+        [MaxLength(8, ErrorMessage = "Máximo 8 caracteres")]
+        [RegularExpression("^[a-zA-ZáéíóúÁÉÍÓÚñÑ/ ]+$", ErrorMessage = "Debe contener solo Letras")]
+        [Display(Name = "Parentesco")]
+        public string? Relationship {  get; set; }
+
+        [StringLength(9, ErrorMessage = "Maximo 9 caracteres")]
+        [Display(Name = "Telefono Del Responsable")]
+        [RegularExpression("^[0-9-]+$", ErrorMessage = "El Telefono debe contener solo números")]
+        public string? TelephoneResponsible { get; set; }
         #endregion
 
         #region Atributos No Mapeables
