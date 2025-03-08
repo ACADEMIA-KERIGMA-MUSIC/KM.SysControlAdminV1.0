@@ -91,9 +91,6 @@ namespace KM.SysControlAdmin.DAL.Student___DAL
             if (!string.IsNullOrWhiteSpace(student.StudentCode))
                 query = query.Where(m => m.StudentCode.Contains(student.StudentCode));
 
-            if (!string.IsNullOrWhiteSpace(student.Gender))
-                query = query.Where(m => m.Gender.Contains(student.Gender));
-
             if (!string.IsNullOrWhiteSpace(student.Name))
                 query = query.Where(m => m.Name.Contains(student.Name));
 
