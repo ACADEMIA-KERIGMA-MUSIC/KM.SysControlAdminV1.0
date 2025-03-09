@@ -20,4 +20,9 @@
     <ProjectReference Include="..\KM.SysControlAdmin.EN\KM.SysControlAdmin.EN.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Controllers\Student - Controller\" />
+    <Folder Include="Views\Student\" />
+  </ItemGroup>
+
 </Project>
