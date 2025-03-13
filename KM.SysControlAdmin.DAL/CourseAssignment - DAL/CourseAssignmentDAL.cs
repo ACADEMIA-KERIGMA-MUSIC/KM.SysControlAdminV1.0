@@ -15,59 +15,97 @@ namespace KM.SysControlAdmin.DAL.CourseAssignment___DAL
 {
     public class CourseAssignmentDAL
     {
-        #region METODO PARA VALIDAR UNICA EXISTENCIA DEL REGISTRO
+        #region METODO PARA VALIDAR UNICA EXISTENCIA DEL REGISTRO Y OTRAS METODOS PARA VALIDACIONES EXTRAS
         // Metodo Para Validar La Unica Existencia De Un Registro y No Haber Duplicidad
         private static async Task<bool> ExistCourseAssignment(CourseAssignment courseAssignment, ContextDB contextDB)
         {
-            // Verificar si ya existe una asignación con el mismo estudiante y curso
-            var courseAssignments = await contextDB.CourseAssignment.FirstOrDefaultAsync(c =>
+            var existingAssignment = await contextDB.CourseAssignment.FirstOrDefaultAsync(c =>
                 c.IdStudent == courseAssignment.IdStudent &&
                 c.IdCourse == courseAssignment.IdCourse &&
                 c.Id != courseAssignment.Id);
 
-            if (courseAssignments != null &&
-                courseAssignments.Id > 0 &&
-                courseAssignments.IdStudent == courseAssignment.IdStudent &&
-                courseAssignments.IdCourse == courseAssignment.IdCourse)
+            return existingAssignment != null;
+        }
+
+        // Metodo Para Validara Si El Estudiante Esta Activo
+        private static async Task<bool> IsStudentActive(int studentId, ContextDB contextDB)
+        {
+            var student = await contextDB.Student.FirstOrDefaultAsync(s => s.Id == studentId);
+            if (student == null)
             {
-                return true;
+                throw new Exception("El estudiante no existe.");
             }
 
-            // Verificar si el estudiante está inactivo
-            var student = await contextDB.Student.FirstOrDefaultAsync(c => c.Id == courseAssignment.IdStudent);
-            if (student != null && student.Status == 2)
+            return student.Status == 1; // Retorna true si el estudiante está activo
+        }
+
+        // Metodo Para Validar Si El Curso Esta Activo
+        private static async Task<bool> IsCourseActive(int courseId, ContextDB contextDB)
+        {
+            var course = await contextDB.Course.FirstOrDefaultAsync(c => c.Id == courseId);
+            if (course == null)
             {
-                throw new Exception("No se puede agregar la asignacion ya que el Alumno/a no esta activo.");
+                throw new Exception("El curso no existe.");
             }
 
-            // Verificar si el curso está inactivo
-            var course = await contextDB.Course.FirstOrDefaultAsync(c => c.Id == courseAssignment.IdCourse);
-            if (course != null && course.Status == 2)
+            return course.Status == 1; // Retorna true si el curso está activo
+        }
+
+        // Metodo Para Validar Si El Curso Llego
+        private static async Task<bool> IsCourseFull(int courseId, ContextDB contextDB)
+        {
+            var course = await contextDB.Course.FirstOrDefaultAsync(c => c.Id == courseId);
+            if (course == null)
             {
-                throw new Exception("No se puede agregar la asignacion ya que el Curso no esta activo.");
+                throw new Exception("El curso no existe.");
             }
 
-            return false; // Solo devolvemos false si ambas validaciones no fallaron
+            int currentAssignments = await contextDB.CourseAssignment.CountAsync(ca => ca.IdCourse == courseId);
+            return currentAssignments >= course.MaxStudent; // Retorna true si el curso ya está lleno
         }
         #endregion
 
         #region METODO PARA CREAR
-        // Metodo Para Guardar Un Nuevo Registro En La Base De Datos
         public static async Task<int> CreateAsync(CourseAssignment courseAssignment)
         {
+            if (courseAssignment == null)
+            {
+                throw new ArgumentNullException(nameof(courseAssignment), "La asignación no puede ser nula.");
+            }
+
             int result = 0;
-            // Un bloque de conexion que mientras se permanezca en el bloque la base de datos permanecera abierta y al terminar se destruira
+
             using (var dbContext = new ContextDB())
             {
-                bool courseAssignmentExists = await ExistCourseAssignment(courseAssignment, dbContext);
-                if (courseAssignmentExists == false)
+                // Validar si ya existe la asignación
+                if (await ExistCourseAssignment(courseAssignment, dbContext))
                 {
-                    dbContext.CourseAssignment.Add(courseAssignment);
-                    result = await dbContext.SaveChangesAsync();
+                    throw new Exception("Asignacion ya existente, vuelve a intentarlo nuevamente.");
                 }
-                else
-                    throw new Exception("Asignacion Ya Existente, Vuelve a Intentarlo Nuevamente");
+
+                // Validar si el estudiante está activo
+                if (!await IsStudentActive(courseAssignment.IdStudent, dbContext))
+                {
+                    throw new Exception("No se puede agregar la asignacion ya que el Alumno/a no esta activo.");
+                }
+
+                // Validar si el curso está activo
+                if (!await IsCourseActive(courseAssignment.IdCourse, dbContext))
+                {
+                    throw new Exception("No se puede agregar la asignacion ya que el Curso no esta activo.");
+                }
+
+                // Validar si el curso no ha alcanzado su límite
+                if (await IsCourseFull(courseAssignment.IdCourse, dbContext))
+                {
+                    throw new Exception("No se puede agregar la asignacion porque el curso ha alcanzado su limite maximo de estudiantes.");
+                }
+
+                // Guardar la asignación en la base de datos
+                dbContext.CourseAssignment.Add(courseAssignment);
+                result = await dbContext.SaveChangesAsync();
             }
+
             return result;
         }
         #endregion
@@ -172,35 +210,50 @@ namespace KM.SysControlAdmin.DAL.CourseAssignment___DAL
         #endregion
 
         #region METODO PARA MODIFICAR
-        // Metodo Para Modificar Un Registro Existente De La Base De Datos
         public static async Task<int> UpdateAsync(CourseAssignment courseAssignment)
         {
+            if (courseAssignment == null)
+            {
+                throw new ArgumentNullException(nameof(courseAssignment), "La asignación no puede ser nula.");
+            }
+
             int result = 0;
+
             using (var dbContext = new ContextDB())
             {
                 var courseAssignmentDB = await dbContext.CourseAssignment.FirstOrDefaultAsync(c => c.Id == courseAssignment.Id);
-                if (courseAssignmentDB != null)
+                if (courseAssignmentDB == null)
                 {
-                    bool courseAssignmentExists = await ExistCourseAssignment(courseAssignment, dbContext);
-                    if (courseAssignmentExists == false)
-                    {
-                        courseAssignmentDB.IdStudent = courseAssignment.IdStudent;
-                        courseAssignmentDB.IdCourse = courseAssignment.IdCourse;
-                        courseAssignmentDB.DateModification = courseAssignment.DateModification;
+                    throw new Exception("Asignación no encontrada para actualizar.");
+                }
 
-                        dbContext.Update(courseAssignmentDB);
-                        result = await dbContext.SaveChangesAsync();
-                    }
-                    else
-                    {
-                        throw new Exception("Asignacion Ya Existente, Vuelve a Intentarlo Nuevamente");
-                    }
-                }
-                else
+                // Validar si ya existe la asignación
+                if (await ExistCourseAssignment(courseAssignment, dbContext))
                 {
-                    throw new Exception("Asignacion No Encontrada Para Actualizar.");
+                    throw new Exception("Asignación ya existente, vuelve a intentarlo nuevamente.");
                 }
+
+                // Validar si el estudiante está activo
+                if (!await IsStudentActive(courseAssignment.IdStudent, dbContext))
+                {
+                    throw new Exception("No se puede modificar la asignación ya que el Alumno/a no está activo.");
+                }
+
+                // Validar si el curso está activo
+                if (!await IsCourseActive(courseAssignment.IdCourse, dbContext))
+                {
+                    throw new Exception("No se puede modificar la asignación ya que el Curso no está activo.");
+                }
+
+                // Actualizar la asignación en la base de datos
+                courseAssignmentDB.IdStudent = courseAssignment.IdStudent;
+                courseAssignmentDB.IdCourse = courseAssignment.IdCourse;
+                courseAssignmentDB.DateModification = courseAssignment.DateModification;
+
+                dbContext.Update(courseAssignmentDB);
+                result = await dbContext.SaveChangesAsync();
             }
+
             return result;
         }
         #endregion
