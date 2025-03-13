@@ -180,6 +180,41 @@ namespace KM.SysControlAdmin.DAL.Trainer___DAL
             }
             return result;  // Si se realizo con exito devuelve 1 sino devuelve 0
         }
-        #endregion        
+        #endregion
+
+        #region METODOS DE OBTENCION DE DATOS PARA DASHBOARD
+        // Metodo para obtener el total de instructores
+        public static async Task<int> GetTotalCountAsync()
+        {
+            using (var dbContext = new ContextDB())
+            {
+                return await dbContext.Trainer.CountAsync();
+            }
+        }
+
+        // Método para obtener el total de instructores por género
+        public static async Task<(int totalMasculino, int totalFemenino)> GetTotalGenderAsync()
+        {
+            using (var dbContext = new ContextDB())
+            {
+                int totalMasculino = await dbContext.Trainer.CountAsync(t => t.Gender == "Masculino");
+                int totalFemenino = await dbContext.Trainer.CountAsync(t => t.Gender == "Femenino");
+
+                return (totalMasculino, totalFemenino);
+            }
+        }
+
+        // Método para obtener el total de instructores por estado (Activo/Inactivo)
+        public static async Task<(int totalActivos, int totalInactivos)> GetTotalByStatusAsync()
+        {
+            using (var dbContext = new ContextDB())
+            {
+                int totalActivos = await dbContext.Trainer.CountAsync(t => t.Status == 1);
+                int totalInactivos = await dbContext.Trainer.CountAsync(t => t.Status == 2);
+
+                return (totalActivos, totalInactivos);
+            }
+        }
+        #endregion
     }
 }

@@ -3,82 +3,87 @@
     ViewData["Title"] = "Dashboard";
 }
 
-
 <div class="container-fluid px-4">
     <br />
     <div class="row">
-        <div class="col-xl-2 col-md-6">
+        <div class="col-xl-2 col-md-4 mb-3">
             <div class="card bg-primary text-white mb-4 text-center">
                 <div class="card-body"><strong>Total De Alumnos</strong></div>
-                <h4 class="card-body">@ViewData["TotalHorarios"] Alumnos</h4>
+                <h4 class="card-body">@ViewData["TotalAlumnos"] Alumnos</h4>
             </div>
         </div>
-        <div class="col-xl-2 col-md-6">
+        <div class="col-xl-2 col-md-4 mb-3">
             <div class="card bg-warning text-white mb-4 text-center">
                 <div class="card-body"><strong>Total De Horarios</strong></div>
                 <h4 class="card-body">@ViewData["TotalHorarios"] Horarios</h4>
             </div>
         </div>
-        <div class="col-xl-2 col-md-6">
+        <div class="col-xl-2 col-md-4 mb-3">
             <div class="card bg-success text-white mb-4 text-center">
                 <div class="card-body"><strong>Total De Instructores</strong></div>
-                <h4 class="card-body">@ViewData["TotalCursosActivos"] Instructores</h4>
+                <h4 class="card-body">@ViewData["TotalInstructores"] Instructores</h4>
             </div>
         </div>
-        <div class="col-xl-2 col-md-6">
+        <div class="col-xl-2 col-md-4 mb-3">
             <div class="card bg-danger text-white mb-4 text-center">
                 <div class="card-body"><strong>Total De Cursos</strong></div>
-                <h4 class="card-body">@ViewData["TotalCursosActivos"] Cursos</h4>
+                <h4 class="card-body">@ViewData["TotalCursos"] Cursos</h4>
             </div>
         </div>
-        <div class="col-xl-2 col-md-6">
+        <div class="col-xl-2 col-md-4 mb-3">
             <div class="card bg-warning text-white mb-4 text-center">
                 <div class="card-body"><strong>Total De Asignaciones</strong></div>
-                <h4 class="card-body">@ViewData["TotalAlumnosActivos"] Asignaciones</h4>
+                <h4 class="card-body">@ViewData["TotalAsignaciones"] Asignaciones</h4>
             </div>
         </div>
-        <div class="col-xl-2 col-md-6">
+        <div class="col-xl-2 col-md-4 mb-3">
             <div class="card bg-warning text-white mb-4 text-center">
-                <div class="card-body"><strong>Pendiente</strong></div>
-                <h4 class="card-body">Sin Valor Asignado</h4>
+                <div class="card-body"><strong>Total De Usuarios</strong></div>
+                <h4 class="card-body">@ViewData["TotalUsuarios"] Usuarios</h4>
             </div>
         </div>
     </div>
+
     <!-- Contenedor principal -->
     <div class="container-fluid mt-4">
         <div class="row justify-content-center">
-            <div class="col-md-4 d-flex justify-content-center">
-                <div class="card p-3 shadow">
+            <!-- Gráfico Horarios -->
+            <div class="col-md-4 d-flex justify-content-center mb-3">
+                <div class="card p-3 shadow" style="height: 350px;">
                     <h5 class="text-center">Resumen de Horarios</h5>
-                    <canvas id="horariosChart" style="width: 200%; max-width: 400px;"></canvas>
+                    <div class="d-flex justify-content-center align-items-center" style="height: 100%;">
+                        <canvas id="horariosChart" style="width: 100%; height: 100%;"></canvas>
+                    </div>
                 </div>
             </div>
 
-            <!-- Gráfico 2: (Ejemplo) Horarios por día -->
-            <div class="col-md-4 d-flex justify-content-center">
-                <div class="card p-3 shadow">
-                    <h5 class="text-center">Horarios por Día</h5>
-                    <canvas id="horariosPorDiaChart" style="width: 100%; max-width: 350px;"></canvas>
+            <!-- Gráfico Instructores por género -->
+            <div class="col-md-4 d-flex justify-content-center mb-3">
+                <div class="card p-3 shadow" style="width: 100%; height: 350px;">
+                    <h5 class="text-center">Resumen Instructores Por Género</h5>
+                    <div class="d-flex justify-content-center align-items-center" style="height: 85%;">
+                        <canvas id="instructoresPorGeneroChart" style="width: 150%; max-width: 300px;"></canvas>
+                    </div>
                 </div>
             </div>
 
-            <!-- Gráfico 3: (Ejemplo) Distribución de Turnos -->
-            <div class="col-md-4 d-flex justify-content-center">
-                <div class="card p-3 shadow">
-                    <h5 class="text-center">Distribución de Turnos</h5>
-                    <canvas id="turnosChart" style="width: 100%; max-width: 350px;"></canvas>
+            <!-- Gráfico Instructores por estado -->
+            <div class="col-md-4 d-flex justify-content-center mb-3">
+                <div class="card p-3 shadow" style="width: 100%; height: 350px;">
+                    <h5 class="text-center">Resumen Instructores Segun Su Estado</h5>
+                    <div class="d-flex justify-content-center align-items-center" style="height: 85%;">
+                        <canvas id="instructoresPorEstadoChart" style="width: 150%; max-width: 300px;"></canvas>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    <br />
-
 </div>
 
 <script>
     document.addEventListener("DOMContentLoaded", function () {
 
-        // Grafico Resumen De Horarios
+        // Gráfico Resumen De Horarios
         var ctx = document.getElementById("horariosChart").getContext("2d");
 
         // Datos traídos desde ViewData
@@ -113,6 +118,90 @@
                         beginAtZero: true,
                         ticks: {
                             stepSize: 1 // Para evitar valores decimales si los datos son enteros
+                        }
+                    }
+                }
+            }
+        });
+
+        // Gráfico Instructores por Género
+        var ctxGenero = document.getElementById("instructoresPorGeneroChart").getContext("2d");
+
+        // Datos traídos desde ViewData para los instructores por género
+        var totalInstructoresMasculinos = @ViewData["TotalInstructoresMasculinos"];
+        var totalInstructoresFemeninos = @ViewData["TotalInstructoresFemeninos"];
+
+        var instructoresPorGeneroChart = new Chart(ctxGenero, {
+            type: 'pie', // Tipo de gráfico (pastel)
+            data: {
+                labels: ["Masculinos", "Femeninos"], // Etiquetas
+                datasets: [{
+                    label: 'Cantidad de Instructores por Género',
+                    data: [totalInstructoresMasculinos, totalInstructoresFemeninos], // Valores
+                    backgroundColor: [
+                        'rgba(54, 162, 235, 0.6)', // Azul para masculinos
+                        'rgba(255, 99, 132, 0.6)' // Rojo para femeninos
+                    ],
+                    borderColor: [
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 99, 132, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top', // Posición de la leyenda
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function (tooltipItem) {
+                                return tooltipItem.label + ': ' + tooltipItem.raw + ' instructores'; // Formato del tooltip
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // Gráfico Instructores por Estado
+        var ctxEstado = document.getElementById("instructoresPorEstadoChart").getContext("2d");
+
+        // Datos traídos desde ViewData para los instructores activos e inactivos
+        var totalInstructoresActivos = @ViewData["TotalInstructoresActivos"];
+        var totalInstructoresInactivos = @ViewData["TotalInstructoresInactivos"];
+
+        var instructoresPorEstadoChart = new Chart(ctxEstado, {
+            type: 'pie', // Tipo de gráfico (pastel)
+            data: {
+                labels: ["Activos", "Inactivos"], // Etiquetas
+                datasets: [{
+                    label: 'Cantidad de Instructores por Estado',
+                    data: [totalInstructoresActivos, totalInstructoresInactivos], // Valores
+                    backgroundColor: [
+                        'rgba(75, 192, 192, 0.6)', // Verde para activos
+                        'rgba(255, 99, 132, 0.6)' // Rojo para inactivos
+                    ],
+                    borderColor: [
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(255, 99, 132, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top', // Posición de la leyenda
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function (tooltipItem) {
+                                return tooltipItem.label + ': ' + tooltipItem.raw + ' instructores'; // Formato del tooltip
+                            }
                         }
                     }
                 }

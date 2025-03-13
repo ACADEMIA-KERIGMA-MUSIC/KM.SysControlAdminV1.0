@@ -30,13 +30,32 @@ namespace KM.SysControlAdmin.WebApp.Controllers
         [Authorize(Roles = "Desarrollador, Administrador")]
         public async Task<IActionResult> Dashboard()
         {
+            // Horarios
             int totalHorarios = await scheduleBL.GetTotalCountAsync(); // Total de horarios
             int totalHorariosActivos = await scheduleBL.GetTotalActiveScheduleAsync(); // Total de horarios activos
             int totalHorariosInactivos = await scheduleBL.GetTotalInactiveScheduleAsync(); // Total de horarios inactivos
 
+            // Instructores
+            int totalInstructores = await trainerBL.GetTotalCountAsync(); // Total de instructores
+            var (totalMasculino, totalFemenino) = await trainerBL.GetTotalGenderAsync(); // Total de instructores por genero: masculino y femenino
+            var (totalActivos, totalInactivos) = await trainerBL.GetTotalByStatusAsync(); // Total de instructores por estado: Activo e Inactivo
+
+            // Alumnos
+
+
+            // ViewData Horarios
             ViewData["TotalHorarios"] = totalHorarios; // Total de horarios
             ViewData["TotalHorariosActivos"] = totalHorariosActivos; // Total de horarios activos
             ViewData["TotalHorariosInactivos"] = totalHorariosInactivos; // Total de horarios inactivos
+
+            // ViewData Instructores
+            ViewData["TotalInstructores"] = totalInstructores; // Total de instructores
+            ViewData["TotalInstructoresMasculinos"] = totalMasculino; // Total de instructores por genero masculino
+            ViewData["TotalInstructoresFemeninos"] = totalFemenino; // Total de instructores por genero femenino
+            ViewData["TotalInstructoresActivos"] = totalActivos; // Total de instructores por estado activo
+            ViewData["TotalInstructoresInactivos"] = totalInactivos; // Total de instructores por estado inactivo
+
+            // ViewData Alumnos
 
 
             return View();
