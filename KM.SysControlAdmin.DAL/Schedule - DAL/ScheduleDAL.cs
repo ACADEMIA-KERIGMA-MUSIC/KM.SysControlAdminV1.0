@@ -152,5 +152,34 @@ namespace KM.SysControlAdmin.DAL.Schedule___DAL
             return result;
         }
         #endregion
+
+        #region METODOS DE OBTENCION DE DATOS PARA DASHBOARD
+        // Metodo para obtener el total de horarios
+        public static async Task<int> GetTotalCountAsync()
+        {
+            using (var dbContext = new ContextDB())
+            {
+                return await dbContext.Schedule.CountAsync();
+            }
+        }
+
+        // Método para obtener el total de horarios activos
+        public static async Task<int> GetTotalActiveScheduleAsync()
+        {
+            using (var dbContext = new ContextDB())
+            {
+                return await dbContext.Schedule.Where(s => s.Status == 1).CountAsync();
+            }
+        }
+
+        // Método para obtener el total de horarios inactivos
+        public static async Task<int> GetTotalInactiveScheduleAsync()
+        {
+            using (var dbContext = new ContextDB())
+            {
+                return await dbContext.Schedule.Where(s => s.Status == 2).CountAsync();
+            }
+        }
+        #endregion
     }
 }
