@@ -56,10 +56,15 @@
                     <label asp-for="Status" class="control-label"></label>
                     <select asp-for="Status" class="form-select" id="cbxStatus">
                         <option>Seleccionar</option>
-                        <option selected value="1">Activo</option>
+                        <option value="1">Activo</option>
                         <option value="2">Inactivo</option>
                     </select>
                     <span asp-validation-for="Status" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="RecoveryEmail" class="control-label"></label>
+                    <input asp-for="RecoveryEmail" class="form-control" placeholder="recuperacion@gmail.com" type="email" />
+                    <span asp-validation-for="RecoveryEmail" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="ImageData" class="control-label"></label>

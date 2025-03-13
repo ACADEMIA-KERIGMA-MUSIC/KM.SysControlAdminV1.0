@@ -61,6 +61,11 @@ namespace KM.SysControlAdmin.EN.User___EN
         [Required(ErrorMessage = "El rol es requerido")]
         [Display(Name = "Rol")]
         public int IdRole { get; set; }
+
+        [Required(ErrorMessage = "El Correo De Recuperacion es requerido")]
+        [MaxLength(50, ErrorMessage = "Máximo 50 caracteres")]
+        [Display(Name = "Correo De Recuperacion")]
+        public string RecoveryEmail { get; set; } = string.Empty;
         #endregion
 
         #region Atributos No Mapeables

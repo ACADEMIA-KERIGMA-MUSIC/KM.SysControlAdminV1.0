@@ -189,6 +189,7 @@ namespace KM.SysControlAdmin.DAL.User___DAL
                     userDb.DateModification = DateTime.Now;
                     userDb.ImageData = user.ImageData;
                     userDb.IdRole = user.IdRole;
+                    userDb.RecoveryEmail = user.RecoveryEmail;
 
                     dbContext.User.Update(userDb);
                     result = await dbContext.SaveChangesAsync();
