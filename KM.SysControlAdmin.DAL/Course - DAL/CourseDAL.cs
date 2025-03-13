@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 // Referencias Necesarias Para El Correcto Funcionamiento
 using KM.SysControlAdmin.EN.Course___EN;
+using KM.SysControlAdmin.EN.Schedule___EN;
 using Microsoft.EntityFrameworkCore;
 
 #endregion
@@ -14,7 +15,7 @@ namespace KM.SysControlAdmin.DAL.Course___DAL
 {
     public class CourseDAL
     {
-        #region METODO PARA VALIDAR UNICA EXISTENCIA DEL REGISTRO
+        #region METODO PARA VALIDAR UNICA EXISTENCIA DEL REGISTRO Y METODO PARA VALIDAR STATUS DE SCHEDULE
         // Metodo Para Validar La Unica Existencia De Un Registro y No Haber Duplicidad
         private static async Task<bool> ExistCourse(Course course, ContextDB contextDB)
         {
@@ -24,25 +25,70 @@ namespace KM.SysControlAdmin.DAL.Course___DAL
                 result = true;
             return result;
         }
+
+        // Metodo Para Validar El Status Del Horario Seleccionado
+        private static async Task<bool> StatusSchedule(int scheduleId, ContextDB contextDB)
+        {
+            var schedule = await contextDB.Schedule.FirstOrDefaultAsync(s => s.Id == scheduleId);
+
+            if (schedule == null)
+            {
+                throw new Exception("El horario especificado no existe.");
+            }
+
+            return schedule.Status == 1; // Retorna true si el Schedule está activo (Status == 1)
+        }
+
+        private static async Task<bool> IsTrainerActive(int trainerId, ContextDB contextDB)
+        {
+            var trainer = await contextDB.Trainer.FirstOrDefaultAsync(t => t.Id == trainerId);
+
+            if (trainer == null)
+            {
+                throw new Exception("El Instructor especificado no existe");
+            }
+
+            return trainer.Status == 1; // Retorna true si el Trainer está activo (Status == 1)
+        }
+
         #endregion
 
         #region METODO PARA CREAR
-        // Metodo Para Guardar Un Nuevo Registro En La Base De Datos
         public static async Task<int> CreateAsync(Course course)
         {
+            if (course == null)
+            {
+                throw new ArgumentNullException(nameof(course), "El curso no puede ser nulo.");
+            }
+
             int result = 0;
-            // Un bloque de conexion que mientras se permanezca en el bloque la base de datos permanecera abierta y al terminar se destruira
+
             using (var dbContext = new ContextDB())
             {
+                // Verificar si el curso ya existe
                 bool courseExists = await ExistCourse(course, dbContext);
-                if (courseExists == false)
+                if (courseExists)
                 {
-                    dbContext.Course.Add(course);
-                    result = await dbContext.SaveChangesAsync();
+                    throw new Exception("Curso ya existente, vuelve a intentarlo nuevamente.");
                 }
-                else
-                    throw new Exception("Curso Ya Existente, Vuelve a Intentarlo Nuevamente");
+
+                // Validar que el horario esté activo
+                if (!await StatusSchedule(course.IdSchedule, dbContext))
+                {
+                    throw new Exception("Horario No Disponible o Inactivo, Intenta Con Otro Horario.");
+                }
+
+                // Validar que el Instructor este activo
+                if (!await IsTrainerActive(course.IdTrainer, dbContext))
+                {
+                    throw new Exception("Instructor No Disponible o Inactivo, Intenta Con Otro Instructor.");
+                }
+
+                // Guardar el curso en la base de datos
+                dbContext.Course.Add(course);
+                result = await dbContext.SaveChangesAsync();
             }
+
             return result;
         }
         #endregion
@@ -154,44 +200,54 @@ namespace KM.SysControlAdmin.DAL.Course___DAL
         #endregion
 
         #region METODO PARA MODIFICAR
-        // Metodo Para Modificar Un Registro Existente De La Base De Datos
         public static async Task<int> UpdateAsync(Course course)
         {
             int result = 0;
+
             using (var dbContext = new ContextDB())
             {
                 var courseDB = await dbContext.Course.FirstOrDefaultAsync(c => c.Id == course.Id);
-                if (courseDB != null)
+                if (courseDB == null)
                 {
-                    bool courseExists = await ExistCourse(course, dbContext);
-                    if (courseExists == false)
-                    {
-                        courseDB.Code = course.Code;
-                        courseDB.Name = course.Name;
-                        courseDB.ExternalFee = course.ExternalFee;
-                        courseDB.ScholarshipFee = course.ScholarshipFee;
-                        courseDB.StartTime = course.StartTime;
-                        courseDB.EndTime = course.EndTime;
-                        courseDB.MaxStudent = course.MaxStudent;
-                        courseDB.IdSchedule = course.IdSchedule;
-                        courseDB.IdTrainer = course.IdTrainer;
-                        courseDB.Status = course.Status;
-                        courseDB.DateCreated = course.DateCreated;
-                        courseDB.DateModification = course.DateModification;
+                    throw new Exception("Curso no encontrado para actualizar.");
+                }
 
-                        dbContext.Update(courseDB);
-                        result = await dbContext.SaveChangesAsync();
-                    }
-                    else
-                    {
-                        throw new Exception("Curso Ya Existente, Vuelve a Intentarlo Nuevamente");
-                    }
-                }
-                else
+                // Verificar si ya existe otro curso con el mismo código
+                bool courseExists = await dbContext.Course.AnyAsync(c => c.Id != course.Id && c.Code == course.Code);
+                if (courseExists)
                 {
-                    throw new Exception("Curso No Encontrado Para Actualizar.");
+                    throw new Exception("Ya existe otro curso con el mismo código. Vuelve a intentarlo.");
                 }
+
+                // Validar que el horario esté activo
+                if (!await StatusSchedule(course.IdSchedule, dbContext))
+                {
+                    throw new Exception("El curso no puede modificarse porque el horario no está disponible.");
+                }
+
+                // Validar que el horario esté activo
+                if (!await IsTrainerActive(course.IdTrainer, dbContext))
+                {
+                    throw new Exception("El curso no puede modificarse porque el Instructor no está disponible.");
+                }
+
+                // Actualizar los datos del curso
+                courseDB.Code = course.Code;
+                courseDB.Name = course.Name;
+                courseDB.ExternalFee = course.ExternalFee;
+                courseDB.ScholarshipFee = course.ScholarshipFee;
+                courseDB.StartTime = course.StartTime;
+                courseDB.EndTime = course.EndTime;
+                courseDB.MaxStudent = course.MaxStudent;
+                courseDB.IdSchedule = course.IdSchedule;
+                courseDB.IdTrainer = course.IdTrainer;
+                courseDB.Status = course.Status;
+                courseDB.DateModification = DateTime.Now;
+
+                dbContext.Update(courseDB);
+                result = await dbContext.SaveChangesAsync();
             }
+
             return result;
         }
         #endregion
