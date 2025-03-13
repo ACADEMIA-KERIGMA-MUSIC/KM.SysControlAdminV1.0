@@ -68,6 +68,7 @@ namespace KM.SysControlAdmin.WebApp.Controllers.Student___Controller
                     DateCreated = student.DateCreated,
                     DateModification = student.DateModification,
                     ImageData = student.ImageData,
+                    RecoveryEmail = student.PersonalEmail,
                 };
 
                 // Guardar en la tabla User
@@ -133,6 +134,7 @@ namespace KM.SysControlAdmin.WebApp.Controllers.Student___Controller
                     DateCreated = student.DateCreated,
                     DateModification = student.DateModification,
                     ImageData = student.ImageData,
+                    RecoveryEmail = student.PersonalEmail,
                 };
 
                 // Guardar en la tabla User
