@@ -7,32 +7,43 @@
 <div class="container-fluid px-4">
     <br />
     <div class="row">
-        <div class="col-xl-3 col-md-6">
-            <div class="card bg-primary text-white mb-4" style="text-align:center">
-                <div class="card-body"><strong>Total De Alumnos Registrados</strong></div>
-                <h4 class="card-body">@ViewData["TotalAlumnos"] Alumnos</h4> <!-- Mostrar el número obtenido -->
+        <div class="col-xl-2 col-md-6">
+            <div class="card bg-primary text-white mb-4 text-center">
+                <div class="card-body"><strong>Total De Alumnos</strong></div>
+                <h4 class="card-body">@ViewData["TotalHorarios"] Alumnos</h4>
             </div>
         </div>
-        <div class="col-xl-3 col-md-6">
-            <div class="card bg-warning text-white mb-4" style="text-align:center">
-                <div class="card-body"><strong>Alumnos Activos</strong></div>
-                <h4 class="card-body">@ViewData["TotalAlumnosActivos"] Alumnos</h4> <!-- Mostrar el número obtenido -->
+        <div class="col-xl-2 col-md-6">
+            <div class="card bg-warning text-white mb-4 text-center">
+                <div class="card-body"><strong>Total De Horarios</strong></div>
+                <h4 class="card-body">@ViewData["TotalHorarios"] Horarios</h4>
             </div>
         </div>
-        <div class="col-xl-3 col-md-6">
-            <div class="card bg-success text-white mb-4" style="text-align:center">
-                <div class="card-body"><strong>Total De Cursos Activos</strong></div>
-                <h4 class="card-body">@ViewData["TotalCursosActivos"] Cursos</h4> <!-- Mostrar el número obtenido -->
+        <div class="col-xl-2 col-md-6">
+            <div class="card bg-success text-white mb-4 text-center">
+                <div class="card-body"><strong>Total De Instructores</strong></div>
+                <h4 class="card-body">@ViewData["TotalCursosActivos"] Instructores</h4>
             </div>
         </div>
-        <div class="col-xl-3 col-md-6">
-            <div class="card bg-danger text-white mb-4" style="text-align:center">
-                <div class="card-body"><strong>Total De Instructores/Docentes</strong></div>
-                <h4 class="card-body">@ViewData["TotalInstructores"] Instructores</h4>
+        <div class="col-xl-2 col-md-6">
+            <div class="card bg-danger text-white mb-4 text-center">
+                <div class="card-body"><strong>Total De Cursos</strong></div>
+                <h4 class="card-body">@ViewData["TotalCursosActivos"] Cursos</h4>
+            </div>
+        </div>
+        <div class="col-xl-2 col-md-6">
+            <div class="card bg-warning text-white mb-4 text-center">
+                <div class="card-body"><strong>Total De Asignaciones</strong></div>
+                <h4 class="card-body">@ViewData["TotalAlumnosActivos"] Asignaciones</h4>
+            </div>
+        </div>
+        <div class="col-xl-2 col-md-6">
+            <div class="card bg-warning text-white mb-4 text-center">
+                <div class="card-body"><strong>Pendiente</strong></div>
+                <h4 class="card-body">Sin Valor Asignado</h4>
             </div>
         </div>
     </div>
-    <br />
     <!-- Contenedor principal -->
     <div class="container-fluid mt-4">
         <div class="row justify-content-center">
@@ -43,7 +54,7 @@
                 </div>
             </div>
 
-            @* <!-- Gráfico 2: (Ejemplo) Horarios por día -->
+            <!-- Gráfico 2: (Ejemplo) Horarios por día -->
             <div class="col-md-4 d-flex justify-content-center">
                 <div class="card p-3 shadow">
                     <h5 class="text-center">Horarios por Día</h5>
@@ -57,7 +68,7 @@
                     <h5 class="text-center">Distribución de Turnos</h5>
                     <canvas id="turnosChart" style="width: 100%; max-width: 350px;"></canvas>
                 </div>
-            </div> *@
+            </div>
         </div>
     </div>
     <br />
