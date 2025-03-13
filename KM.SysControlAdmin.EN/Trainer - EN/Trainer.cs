@@ -152,6 +152,12 @@ namespace KM.SysControlAdmin.EN.Trainer___EN
         public string ConfirmPassword_Aux { get; set; } = string.Empty; //propiedad auxiliar
 
         [NotMapped]
+        [Required(ErrorMessage = "El Correo De Recuperacion es requerido")]
+        [MaxLength(50, ErrorMessage = "Máximo 50 caracteres")]
+        [Display(Name = "Correo De Recuperacion")]
+        public string RecoveryEmail { get; set; } = string.Empty;
+
+        [NotMapped]
         public User? User { get; set; } //propiedad de navegación
         #endregion
 

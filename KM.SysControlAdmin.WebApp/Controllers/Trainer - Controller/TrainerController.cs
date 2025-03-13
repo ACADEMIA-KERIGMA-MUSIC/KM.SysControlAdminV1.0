@@ -65,6 +65,7 @@ namespace KM.SysControlAdmin.WebApp.Controllers.Trainer___Controller
                     DateCreated = trainer.DateCreated,
                     DateModification = trainer.DateModification,
                     ImageData = trainer.ImageData,
+                    RecoveryEmail = trainer.PersonalEmail,
                 };
 
                 // Guardar en la tabla User
