@@ -66,8 +66,8 @@ CREATE TABLE Course (
   [Status] TINYINT NOT NULL,
   DateCreated DATETIME NOT NULL,
   DateModification DATETIME NOT NULL,
-  IdSchedule INT NOT NULL FOREIGN KEY REFERENCES Schedule(Id) ON DELETE CASCADE,
-  IdTrainer INT NOT NULL FOREIGN KEY REFERENCES Trainer(Id) ON DELETE CASCADE
+  IdSchedule INT NOT NULL FOREIGN KEY REFERENCES Schedule(Id),
+  IdTrainer INT NOT NULL FOREIGN KEY REFERENCES Trainer(Id)
   );
 GO
 CREATE TABLE Student (
@@ -88,8 +88,8 @@ CREATE TABLE Student (
 GO
 CREATE TABLE CourseAssignment(
   Id INT NOT NULL PRIMARY KEY IDENTITY(1,1),
-  IdStudent INT NOT NULL FOREIGN KEY REFERENCES Student(Id) ON DELETE CASCADE,
-  IdCourse INT NOT NULL FOREIGN KEY REFERENCES Course(Id) ON DELETE CASCADE,
+  IdStudent INT NOT NULL FOREIGN KEY REFERENCES Student(Id),
+  IdCourse INT NOT NULL FOREIGN KEY REFERENCES Course(Id),
   DateCreated DATETIME NOT NULL,
   DateModification DATETIME NOT NULL,
   );
@@ -129,10 +129,52 @@ ALTER COLUMN CommentsOrObservations VARCHAR(100) NULL;
 -- Modificacion en tabla Student
 ALTER TABLE Student 
 ADD 
-    Gender VARCHAR(20) NOT NULL DEFAULT 'Vacio',
+    Gender VARCHAR(20) NOT NULL DEFAULT 'Sin Asignar',
     PersonalEmail VARCHAR(50) NOT NULL DEFAULT 'sincorreo@example.com',
     CommentsOrObservations VARCHAR(100) NULL,
     RepresentativeName VARCHAR(50) NULL,
     RepresentativeLastName VARCHAR(50) NULL,
     Relationship VARCHAR(9) NULL,
     TelephoneResponsible VARCHAR(9) NULL;
+
+------- Modificacion en tabla Course --------
+-- 1. Obtener el nombre de las claves foráneas actuales (opcional)
+SELECT name 
+FROM sys.foreign_keys 
+WHERE parent_object_id = OBJECT_ID('Course');
+
+-- 2. Eliminar las restricciones de clave foránea existentes
+ALTER TABLE Course DROP CONSTRAINT FK__Course__IdSchedu__403A8C7D;
+ALTER TABLE Course DROP CONSTRAINT FK__Course__IdTraine__412EB0B6;
+
+-- 3. Volver a crear las claves foráneas con ON DELETE CASCADE y nombres explícitos
+ALTER TABLE Course  
+ADD CONSTRAINT FK_Course_Schedule 
+FOREIGN KEY (IdSchedule) REFERENCES Schedule(Id) ON DELETE CASCADE;
+
+ALTER TABLE Course  
+ADD CONSTRAINT FK_Course_Trainer 
+FOREIGN KEY (IdTrainer) REFERENCES Trainer(Id) ON DELETE CASCADE;
+
+------- Modificacion en tabla CourseAssignment --------
+-- 1. Obtener el nombre de las claves foráneas actuales (opcional)
+SELECT name 
+FROM sys.foreign_keys 
+WHERE parent_object_id = OBJECT_ID('CourseAssignment');
+
+-- 2. Eliminar las restricciones de clave foránea existentes
+ALTER TABLE CourseAssignment DROP CONSTRAINT FK__CourseAss__IdStu__45F365D3;
+ALTER TABLE CourseAssignment DROP CONSTRAINT FK__CourseAss__IdCou__46E78A0C;
+
+-- 3. Volver a crear las claves foráneas con ON DELETE CASCADE y nombres explícitos
+ALTER TABLE CourseAssignment  
+ADD CONSTRAINT FK_CourseAssignment_Student 
+FOREIGN KEY (IdStudent) REFERENCES Student(Id) ON DELETE CASCADE;
+
+ALTER TABLE CourseAssignment  
+ADD CONSTRAINT FK_CourseAssignment_Course 
+FOREIGN KEY (IdCourse) REFERENCES Course(Id) ON DELETE CASCADE;
+
+----- Insercion de nuevo parametro para la tabla User
+ALTER TABLE [User]  
+ADD RecoveryEmail VARCHAR(50) NOT NULL DEFAULT 'sincorreo@example.com';
