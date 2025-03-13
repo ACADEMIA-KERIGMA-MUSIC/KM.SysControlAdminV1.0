@@ -189,49 +189,5 @@ namespace KM.SysControlAdmin.DAL.Student___DAL
             return result;  // Si se realizo con exito devuelve 1 sino devuelve 0
         }
         #endregion
-
-        #region METODO PARA OBTENER LA CANTIDAD DE ESTUDIANTES
-        // Método para obtener la cantidad total de estudiantes
-        public static async Task<int> GetTotalCountAsync()
-        {
-            using (var dbContext = new ContextDB())
-            {
-                return await dbContext.Student.CountAsync();
-            }
-        }
-        #endregion
-
-        #region METODO PARA OBTENER LA CANTIDAD DE ALUMNOS ACTIVOS
-        // Método para obtener la cantidad de alumnos con status "1"
-        public static async Task<int> GetActiveStudentsCountAsync()
-        {
-            using (var dbContext = new ContextDB())
-            {
-                return await dbContext.Student.CountAsync(s => s.Status == 1);
-            }
-        }
-        #endregion
-
-        #region METODO PARA OBTENER LA CANTIDAD DE ALUMNOS BECADOS
-        // Método para contar alumnos que son becados
-        public static async Task<int> GetScholarshipStudentsCountAsync()
-        {
-            using (var dbContext = new ContextDB())
-            {
-                return await dbContext.Student.CountAsync(s => s.ProjectCode != "" && s.ParticipantCode != "");
-            }
-        }
-        #endregion
-
-        #region METODO PARA OBTENER LA CANTIDAD DE ALUMNOS EXTERNOS
-        // Método para contar alumnos que son externos
-        public static async Task<int> GetExternalStudentsCountAsync()
-        {
-            using (var dbContext = new ContextDB())
-            {
-                return await dbContext.Student.CountAsync(s => s.ProjectCode == "" && s.ParticipantCode == "");
-            }
-        }
-        #endregion
     }
 }

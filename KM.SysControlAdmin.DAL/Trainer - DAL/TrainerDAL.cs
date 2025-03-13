@@ -180,17 +180,6 @@ namespace KM.SysControlAdmin.DAL.Trainer___DAL
             }
             return result;  // Si se realizo con exito devuelve 1 sino devuelve 0
         }
-        #endregion
-
-        #region METODO PARA OBTENER LA CANTIDAD DE INSTRUCTORES/DOCENTES
-        // Método para obtener la cantidad total de instructores/docentes
-        public static async Task<int> GetTotalCountAsync()
-        {
-            using (var dbContext = new ContextDB())
-            {
-                return await dbContext.Trainer.CountAsync();
-            }
-        }
-        #endregion
+        #endregion        
     }
 }

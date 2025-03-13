@@ -61,13 +61,5 @@ namespace KM.SysControlAdmin.BL.Trainer___BL
             return await TrainerDAL.DeleteAsync(trainer);
         }
         #endregion
-
-        #region METODO PARA OBTENER LA CANTIDAD DE INSTRUCTORES/DOCENTES
-        // Método para obtener la cantidad total de instructores/docentes
-        public async Task<int> GetTotalCountAsync()
-        {
-            return await TrainerDAL.GetTotalCountAsync();
-        }
-        #endregion
     }
 }

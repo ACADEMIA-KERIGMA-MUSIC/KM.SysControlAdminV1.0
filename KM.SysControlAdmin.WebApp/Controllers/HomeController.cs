@@ -28,28 +28,6 @@ namespace KM.SysControlAdmin.WebApp.Controllers
         [Authorize(Roles = "Desarrollador, Administrador")]
         public async Task<IActionResult> Dashboard()
         {
-            int totalAlumnos = await studentBL.GetTotalCountAsync(); // Total de estudiantes
-            int totalAlumnosActivos = await studentBL.GetActiveStudentsCountAsync(); // Total de estudiantes activos
-            int totalCursosActivos = await courseBL.GetActiveCourseCountAsync();
-            int totalInstructores = await trainerBL.GetTotalCountAsync();
-            int totalBecados = await studentBL.GetScholarshipStudentsCountAsync();
-            int totalExternos = await studentBL.GetExternalStudentsCountAsync();
-            int totalCursos = await courseBL.GetCourseCountAsync();
-            int totalCursosInactivos = await courseBL.GetInactiveCourseCountAsync();
-            var topCourses = await courseAssignmentBL.GetTopCoursesAsync();
-
-            ViewData["TotalAlumnos"] = totalAlumnos;
-            ViewData["TotalAlumnosActivos"] = totalAlumnosActivos;
-            ViewData["TotalCursosActivos"] = totalCursosActivos;
-            ViewData["TotalInstructores"] = totalInstructores;
-            ViewData["TotalBecados"] = totalBecados;
-            ViewData["TotalExternos"] = totalExternos;
-            ViewData["TotalCursos"] = totalCursos;
-            ViewData["TotalCursosInactivos"] = totalCursosInactivos;
-            // Pasar los datos de los cursos al ViewData para usarlos en la vista
-            ViewData["TopCourses"] = topCourses.Select(c => c.CourseName).ToArray();
-            ViewData["Assignments"] = topCourses.Select(c => c.AssignmentCount).ToArray();
-
             return View();
         }
     }

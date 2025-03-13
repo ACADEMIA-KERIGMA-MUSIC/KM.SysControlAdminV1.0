@@ -257,23 +257,5 @@ namespace KM.SysControlAdmin.DAL.CourseAssignment___DAL
             return result;
         }
         #endregion
-
-        #region METODO PARA OBTENER LOS 4 CURSOS CON MAS ASIGNACIONES
-        public static async Task<List<CourseAssignment>> GetTopCoursesAsync()
-        {
-            using (var dbContext = new ContextDB())
-            {
-                return await dbContext.Course
-                    .Select(c => new CourseAssignment
-                    {
-                        CourseName = c.Name,
-                        AssignmentCount = dbContext.CourseAssignment.Count(a => a.IdCourse == c.Id)
-                    })
-                    .OrderByDescending(c => c.AssignmentCount)
-                    .Take(4)
-                    .ToListAsync();
-            }
-        }
-        #endregion
     }
 }
