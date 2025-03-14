@@ -52,6 +52,9 @@ namespace KM.SysControlAdmin.WebApp.Controllers
             int totalCursos = await courseBL.GetTotalCountAsync(); // Total de cursos
             var (totalActivosCourse, totalInactivosCourse) = await courseBL.GetTotalByStatusAsync(); // Total de cursos por estado: Activo e Inactivo
 
+            // Asignacion de curso
+            int totalAsignaciones = await courseAssignmentBL.GetTotalCountAsync(); // Total de asignaciones de curso
+            var topCourses = await courseAssignmentBL.GetTopCoursesAsync();
 
             // ViewData Horarios
             ViewData["TotalHorarios"] = totalHorarios; // Total de horarios
@@ -84,6 +87,11 @@ namespace KM.SysControlAdmin.WebApp.Controllers
             ViewData["TotalCursos"] = totalCursos; // Total de cursos
             ViewData["TotalCursosActivos"] = totalActivosCourse; // Total de cursos activos
             ViewData["TotalCursosInactivos"] = totalInactivosCourse; // Total de cursos inactivos
+
+            // ViewData Asignacion de cursos
+            ViewData["TotalAsignaciones"] = totalAsignaciones; // Total de asignaciones de cursos
+            ViewData["TopCourses"] = topCourses.Select(c => c.CourseName).ToArray(); // Nombre del curso
+            ViewData["Assignments"] = topCourses.Select(c => c.AssignmentCount).ToArray(); // Total de asignaciones
 
             return View();
         }

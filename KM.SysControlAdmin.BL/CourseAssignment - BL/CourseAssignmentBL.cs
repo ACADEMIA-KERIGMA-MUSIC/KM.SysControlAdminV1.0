@@ -68,5 +68,19 @@ namespace KM.SysControlAdmin.BL.CourseAssignment___BL
             return await CourseAssignmentDAL.UpdateAsync(courseAssignment);
         }
         #endregion
+
+        #region METODOS DE OBTENCION DE DATOS PARA DASHBOARD
+        // Metodo para obtener el total de cursos
+        public async Task<int> GetTotalCountAsync()
+        {
+            return await CourseAssignmentDAL.GetTotalCountAsync();
+        }
+
+        // Metodo para obtener los 3 cursos con mas asignaciones
+        public async Task<List<CourseAssignment>> GetTopCoursesAsync()
+        {
+            return await CourseAssignmentDAL.GetTopCoursesAsync();
+        }
+        #endregion
     }
 }

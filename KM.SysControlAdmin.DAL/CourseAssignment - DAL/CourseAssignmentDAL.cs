@@ -257,5 +257,33 @@ namespace KM.SysControlAdmin.DAL.CourseAssignment___DAL
             return result;
         }
         #endregion
+
+        #region METODOS DE OBTENCION DE DATOS PARA DASHBOARD
+        // Metodo para obtener el total de asignaciones
+        public static async Task<int> GetTotalCountAsync()
+        {
+            using (var dbContext = new ContextDB())
+            {
+                return await dbContext.CourseAssignment.CountAsync();
+            }
+        }
+
+        // Metodo para obtener los 3 cursos con mas asignaciones
+        public static async Task<List<CourseAssignment>> GetTopCoursesAsync()
+        {
+            using (var dbContext = new ContextDB())
+            {
+                return await dbContext.Course
+                    .Select(c => new CourseAssignment
+                    {
+                        CourseName = c.Name,
+                        AssignmentCount = dbContext.CourseAssignment.Count(a => a.IdCourse == c.Id)
+                    })
+                    .OrderByDescending(c => c.AssignmentCount)
+                    .Take(3)
+                    .ToListAsync();
+            }
+        }
+        #endregion
     }
 }
