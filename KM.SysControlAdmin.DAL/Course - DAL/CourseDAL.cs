@@ -270,5 +270,30 @@ namespace KM.SysControlAdmin.DAL.Course___DAL
             return result;
         }
         #endregion
+
+        #region METODOS DE OBTENCION DE DATOS PARA DASHBOARD
+        // Metodo para obtener el total de cursos
+        public static async Task<int> GetTotalCountAsync()
+        {
+            using (var dbContext = new ContextDB())
+            {
+                return await dbContext.Course.CountAsync();
+            }
+        }
+
+        // Metodo para obtener el total de cursos por estado activo o inactivo
+        public static async Task<(int totalActivosCourse, int totalInactivosCourse)> GetTotalByStatusAsync()
+        {
+            using (var dbContext = new ContextDB())
+            {
+                int totalActivosCourse = await dbContext.Course.CountAsync(t => t.Status == 1);
+                int totalInactivosCourse = await dbContext.Course.CountAsync(t => t.Status == 2);
+
+                return (totalActivosCourse, totalInactivosCourse);
+            }
+        }
+
+
+        #endregion
     }
 }

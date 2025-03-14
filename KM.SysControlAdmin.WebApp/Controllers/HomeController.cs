@@ -48,6 +48,11 @@ namespace KM.SysControlAdmin.WebApp.Controllers
             var (totalmenoresEdad, totalmayoresEdad) = await studentBL.GetStudentsByAgeCategoryAsync(); // Total de alumnos categorisados por edad
             var ageCategories = studentBL.GetStudentAgeCategories(); // Categorizacion de edad de los alumnos
 
+            // Cursos
+            int totalCursos = await courseBL.GetTotalCountAsync(); // Total de cursos
+            var (totalActivosCourse, totalInactivosCourse) = await courseBL.GetTotalByStatusAsync(); // Total de cursos por estado: Activo e Inactivo
+
+
             // ViewData Horarios
             ViewData["TotalHorarios"] = totalHorarios; // Total de horarios
             ViewData["TotalHorariosActivos"] = totalHorariosActivos; // Total de horarios activos
@@ -74,6 +79,11 @@ namespace KM.SysControlAdmin.WebApp.Controllers
             ViewData["TotalAdolescentes"] = ageCategories["Adolescentes (13-17)"]; // Total de alumnos adolecentes
             ViewData["TotalJovenes"] = ageCategories["Jóvenes (18-25)"]; // Total de alumnos jovenes
             ViewData["TotalAdultos"] = ageCategories["Adultos (26+)"]; // Total de alumnos adultos
+
+            // ViewData Cursos
+            ViewData["TotalCursos"] = totalCursos; // Total de cursos
+            ViewData["TotalCursosActivos"] = totalActivosCourse; // Total de cursos activos
+            ViewData["TotalCursosInactivos"] = totalInactivosCourse; // Total de cursos inactivos
 
             return View();
         }

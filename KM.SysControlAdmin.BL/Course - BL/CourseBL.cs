@@ -78,5 +78,19 @@ namespace KM.SysControlAdmin.BL.Course___BL
             return await CourseDAL.DeleteAsync(course);
         }
         #endregion
+
+        #region METODOS DE OBTENCION DE DATOS PARA DASHBOARD
+        // Metodo para obtener el total de cursos
+        public async Task<int> GetTotalCountAsync()
+        {
+            return await CourseDAL.GetTotalCountAsync();
+        }
+
+        // Método para obtener el total de alumnos por estado (Activo/Inactivo)
+        public async Task<(int totalActivosCourse, int totalInactivosCourse)> GetTotalByStatusAsync()
+        {
+            return await CourseDAL.GetTotalByStatusAsync();
+        }
+        #endregion
     }
 }
