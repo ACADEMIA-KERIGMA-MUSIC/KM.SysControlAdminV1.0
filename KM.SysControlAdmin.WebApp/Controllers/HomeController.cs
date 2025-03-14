@@ -13,7 +13,7 @@ using System.Diagnostics;
 
 namespace KM.SysControlAdmin.WebApp.Controllers
 {
-    [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme, Roles = "Desarrollador, Administrador, Secretario/a, Instructor/Docente, Alumno/a")]
+    [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme, Roles = "Desarrollador, Administrador, Secretario/a, Instructor, Alumno/a")]
     public class HomeController : Controller
     {
         // Creamos Una Instancia Para Acceder a Los Metodos
@@ -24,7 +24,7 @@ namespace KM.SysControlAdmin.WebApp.Controllers
         ScheduleBL scheduleBL = new ScheduleBL();
         UserBL userBL = new UserBL();
 
-        [Authorize(Roles = "Desarrollador, Administrador, Secretario/a, Instructor/Docente, Alumno/a")]
+        [Authorize(Roles = "Desarrollador, Administrador, Secretario/a, Instructor, Alumno/a")]
         public IActionResult Index()
         {
             return View();

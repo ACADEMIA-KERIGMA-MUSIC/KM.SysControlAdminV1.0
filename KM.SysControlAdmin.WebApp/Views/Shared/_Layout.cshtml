@@ -151,6 +151,10 @@
                                 </a>
                                 <!-- Seccion Seguridad-->
                                 <div class="sb-sidenav-menu-heading">Seguridad</div>
+                                <a class="nav-link" asp-area="" asp-controller="Role" asp-action="Index">
+                                    <div class="sb-nav-link-icon"><i class="fas fa-user-shield"></i></div>
+                                    Roles
+                                </a>
                                 <a class="nav-link" asp-area="" asp-controller="User" asp-action="Index">
                                     <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
                                     Usuarios
@@ -230,7 +234,7 @@
                                     </nav>
                                 </div>
                             }
-                            else if (User.IsInRole("Instructor/Docente"))
+                            else if (User.IsInRole("Instructor"))
                             {
                                 <!-- Seccion Principal-->
                                 <div class="sb-sidenav-menu-heading">Principal</div>

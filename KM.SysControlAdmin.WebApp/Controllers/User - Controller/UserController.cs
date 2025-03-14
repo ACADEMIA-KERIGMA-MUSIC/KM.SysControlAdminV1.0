@@ -15,7 +15,7 @@ using System.Security.Claims;
 
 namespace KM.SysControlAdmin.WebApp.Controllers.User___Controller
 {
-    [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme, Roles = "Desarrollador, Administrador, Secretario/a, Instructor/Docente, Alumno/a")]
+    [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme, Roles = "Desarrollador, Administrador, Secretario/a, Instructor, Alumno/a")]
     public class UserController : Controller
     {
         // Creamos Las Instancias Para Acceder a Los Metodos
@@ -299,7 +299,7 @@ namespace KM.SysControlAdmin.WebApp.Controllers.User___Controller
 
         #region METODO PARA DETALLES DEL PERFIL LOGIADO
         // Accion Que Muestra El Formulario
-        [Authorize(Roles = "Desarrollador, Administrador, Secretario/a, Instructor/Docente, Alumno/a")]
+        [Authorize(Roles = "Desarrollador, Administrador, Secretario/a, Instructor, Alumno/a")]
         public async Task<IActionResult> Information()
         {
             try

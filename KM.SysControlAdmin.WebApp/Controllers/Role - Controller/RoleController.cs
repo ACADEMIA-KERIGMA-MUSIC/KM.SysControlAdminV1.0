@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace KM.SysControlAdmin.WebApp.Controllers.Role___Controller
 {
-    [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme, Roles = "Desarrollador")]
+    [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme, Roles = "Desarrollador, Administrador")]
     public class RoleController : Controller
     {
         // Creamos Las Instancias Para Acceder a Los Metodos
@@ -19,7 +19,7 @@ namespace KM.SysControlAdmin.WebApp.Controllers.Role___Controller
 
         #region METODO PARA GUARDAR
         // Metodo Para Mostrar La Vista Guardar
-        [Authorize(Roles = "Desarrollador")]
+        [Authorize(Roles = "Desarrollador, Administrador")]
         public IActionResult Create()
         {
             ViewBag.Error = "";
@@ -27,7 +27,7 @@ namespace KM.SysControlAdmin.WebApp.Controllers.Role___Controller
         }
 
         // Metodo Que Recibe y Envia a La Base De Datos
-        [Authorize(Roles = "Desarrollador")]
+        [Authorize(Roles = "Desarrollador, Administrador")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Role role)
@@ -48,7 +48,7 @@ namespace KM.SysControlAdmin.WebApp.Controllers.Role___Controller
 
         #region METODO PARA INDEX
         // Metodo Para Mostrar La Vista Index
-        [Authorize(Roles = "Desarrollador")]
+        [Authorize(Roles = "Desarrollador, Administrador")]
         public async Task<IActionResult> Index(Role role = null!)
         {
             if (role == null)
@@ -61,7 +61,7 @@ namespace KM.SysControlAdmin.WebApp.Controllers.Role___Controller
 
         #region METODO PARA DETALLES
         // Metodo que Muestra La Vista De Detalles
-        [Authorize(Roles = "Desarrollador")]
+        [Authorize(Roles = "Desarrollador, Administrador")]
         public async Task<IActionResult> Details(int id)
         {
             var role = await roleBL.GetByIdAsync(new Role { Id = id });
@@ -70,7 +70,7 @@ namespace KM.SysControlAdmin.WebApp.Controllers.Role___Controller
         #endregion
 
         #region METODO PARA MODIFICAR
-        [Authorize(Roles = "Desarrollador")]
+        [Authorize(Roles = "Desarrollador, Administrador")]
         // Metodo Para Mostrar La Vista De Modificar
         public async Task<IActionResult> Edit(int id)
         {
@@ -80,7 +80,7 @@ namespace KM.SysControlAdmin.WebApp.Controllers.Role___Controller
         }
 
         // Metodo Que Recibe y Envia a La Base De Datos
-        [Authorize(Roles = "Desarrollador")]
+        [Authorize(Roles = "Desarrollador, Administrador")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Role role)
@@ -101,7 +101,7 @@ namespace KM.SysControlAdmin.WebApp.Controllers.Role___Controller
 
         #region METODO PARA ELIMINAR
         // Metodo Para Mostrar La Vista De Eliminar
-        [Authorize(Roles = "Desarrollador")]
+        [Authorize(Roles = "Desarrollador, Administrador")]
         public async Task<IActionResult> Delete(int id)
         {
             var role = await roleBL.GetByIdAsync(new Role { Id = id });
@@ -110,7 +110,7 @@ namespace KM.SysControlAdmin.WebApp.Controllers.Role___Controller
         }
 
         // Metodo Que Recibe y Envia a La Base De Datos
-        [Authorize(Roles = "Desarrollador")]
+        [Authorize(Roles = "Desarrollador, Administrador")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int id, Role role)

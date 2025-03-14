@@ -178,3 +178,8 @@ FOREIGN KEY (IdCourse) REFERENCES Course(Id) ON DELETE CASCADE;
 ----- Insercion de nuevo parametro para la tabla User
 ALTER TABLE [User]  
 ADD RecoveryEmail VARCHAR(50) NOT NULL DEFAULT 'sincorreo@example.com';
+
+--- Modificamos el parametro segun el Id ----
+UPDATE [Role]  
+SET [Name] = 'Instructor'  
+WHERE Id = 3;
