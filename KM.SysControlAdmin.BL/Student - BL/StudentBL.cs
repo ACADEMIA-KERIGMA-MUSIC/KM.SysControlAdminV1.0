@@ -71,5 +71,47 @@ namespace KM.SysControlAdmin.BL.Student___BL
             return await StudentDAL.DeleteAsync(student);
         }
         #endregion
+
+        #region METODOS DE OBTENCION DE DATOS PARA DASHBOARD
+        // Metodo para obtener el total de alumnos
+        public async Task<int> GetTotalCountAsync()
+        {
+            return await StudentDAL.GetTotalCountAsync();
+        }
+
+        // Metodo para obtener el total de alumnos becados y externos
+        public async Task<(int becados, int externos)> GetAlumnosByStatusAsync()
+        {
+            return await StudentDAL.GetAlumnosByStatusAsync();
+        }
+
+        // Metodo para obtener el total de alumnos por genero masculino y femenino
+        public async Task<(int masculino, int femenino)> GetStudentsByGenderAsync()
+        {
+            return await StudentDAL.GetStudentsByGenderAsync();
+        }
+
+        // Método para obtener el total de alumnos por estado (Activo/Inactivo)
+        public async Task<(int totalActivosStudent, int totalInactivosStudent)> GetTotalByStatusAsync()
+        {
+            return await StudentDAL.GetTotalByStatusAsync();
+        }
+
+        // Metodo para obtener la edad de los alumnos y categorizar por mayor o menor de edad
+        public async Task<(int menoresEdad, int mayoresEdad)> GetStudentsByAgeCategoryAsync()
+        {
+            return await StudentDAL.GetStudentsByAgeCategoryAsync();
+        }
+
+        // Metodo para obtener la edad de los alumnos y categorizarla
+        public Dictionary<string, int> GetStudentAgeCategories()
+        {
+            StudentDAL studentDAL = new StudentDAL();
+            return studentDAL.GetStudentsByAgeCategory();
+        }
+
+
+
+        #endregion
     }
 }

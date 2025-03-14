@@ -189,5 +189,107 @@ namespace KM.SysControlAdmin.DAL.Student___DAL
             return result;  // Si se realizo con exito devuelve 1 sino devuelve 0
         }
         #endregion
+
+        #region METODOS DE OBTENCION DE DATOS PARA DASHBOARD
+        // Metodo para obtener el total de alumnos
+        public static async Task<int> GetTotalCountAsync()
+        {
+            using (var dbContext = new ContextDB())
+            {
+                return await dbContext.Student.CountAsync();
+            }
+        }
+
+        // Metodo para obtener el total de alumnos becados y externos
+        public static async Task<(int becados, int externos)> GetAlumnosByStatusAsync()
+        {
+            using (var dbContext = new ContextDB())
+            {
+                var becados = await dbContext.Student.Where(a => string.IsNullOrEmpty(a.ChurchName)).CountAsync();
+                var externos = await dbContext.Student.Where(a => !string.IsNullOrEmpty(a.ChurchName)).CountAsync();
+                return (becados, externos);
+            }
+        }
+
+        // Metodo para obtener el total de alumnos por genero masculino y femenino
+        public static async Task<(int masculino, int femenino)> GetStudentsByGenderAsync()
+        {
+            using (var dbContext = new ContextDB())
+            {
+                var masculino = await dbContext.Student.Where(s => s.Gender == "Masculino").CountAsync();
+                var femenino = await dbContext.Student.Where(s => s.Gender == "Femenino").CountAsync();
+
+                return (masculino, femenino);
+            }
+        }
+
+        // Metodo para obtener el total de alumnos por estado activo o inactivo
+        public static async Task<(int totalActivosStudent, int totalInactivosStudent)> GetTotalByStatusAsync()
+        {
+            using (var dbContext = new ContextDB())
+            {
+                int totalActivosStudent = await dbContext.Student.CountAsync(t => t.Status == 1);
+                int totalInactivosStudent = await dbContext.Student.CountAsync(t => t.Status == 2);
+
+                return (totalActivosStudent, totalInactivosStudent);
+            }
+        }
+
+        // Metodo para obtener la edad de los alumnos y categorizar por mayor o menor de edad
+        public static async Task<(int menoresEdad, int mayoresEdad)> GetStudentsByAgeCategoryAsync()
+        {
+            using (var dbContext = new ContextDB())
+            {
+                var students = await dbContext.Student.Select(s => s.Age) // Traemos solo la columna de edad
+                    .ToListAsync(); // Forzamos la ejecución en memoria
+
+                int menoresEdad = students.Count(age => int.TryParse(age, out int edad) && edad <= 17);
+                int mayoresEdad = students.Count(age => int.TryParse(age, out int edad) && edad >= 18);
+
+                return (menoresEdad, mayoresEdad);
+            }
+        }
+
+        // Metodo para obtener la edad de los alumnos y categorizarla
+        public Dictionary<string, int> GetStudentsByAgeCategory()
+        {
+            using (var dbContext = new ContextDB())
+            {
+                var students = dbContext.Student
+                    .Where(s => !string.IsNullOrEmpty(s.Age)) // Filtrar edades no nulas o vacías
+                    .ToList();
+
+                // Inicializar categorías
+                int totalNinos = 0;
+                int totalAdolescentes = 0;
+                int totalJovenes = 0;
+                int totalAdultos = 0;
+
+                foreach (var student in students)
+                {
+                    // Intentar convertir la edad de string a int
+                    if (int.TryParse(student.Age, out int age))
+                    {
+                        if (age >= 5 && age <= 12) totalNinos++;
+                        else if (age >= 13 && age <= 17) totalAdolescentes++;
+                        else if (age >= 18 && age <= 25) totalJovenes++;
+                        else if (age >= 26) totalAdultos++;
+                    }
+                }
+
+                return new Dictionary<string, int>
+                {
+                    { "Niños (5-12)", totalNinos },
+                    { "Adolescentes (13-17)", totalAdolescentes },
+                    { "Jóvenes (18-25)", totalJovenes },
+                    { "Adultos (26+)", totalAdultos }
+                };
+            }
+        }
+
+
+
+
+        #endregion
     }
 }

@@ -41,7 +41,12 @@ namespace KM.SysControlAdmin.WebApp.Controllers
             var (totalActivos, totalInactivos) = await trainerBL.GetTotalByStatusAsync(); // Total de instructores por estado: Activo e Inactivo
 
             // Alumnos
-
+            int totalAlumnos = await studentBL.GetTotalCountAsync(); // Total de Alumnos
+            var (totalbecados, totalexternos) = await studentBL.GetAlumnosByStatusAsync(); // Total de alumnos becados y externos
+            var (totalmasculino, totalfemenino) = await studentBL.GetStudentsByGenderAsync(); // Total de alumnos por genero masculino y femenino
+            var (totalActivosStudent, totalInactivosStudent) = await studentBL.GetTotalByStatusAsync(); // Total de alumnos por estado: Activo e Inactivo
+            var (totalmenoresEdad, totalmayoresEdad) = await studentBL.GetStudentsByAgeCategoryAsync(); // Total de alumnos categorisados por edad
+            var ageCategories = studentBL.GetStudentAgeCategories(); // Categorizacion de edad de los alumnos
 
             // ViewData Horarios
             ViewData["TotalHorarios"] = totalHorarios; // Total de horarios
@@ -56,7 +61,19 @@ namespace KM.SysControlAdmin.WebApp.Controllers
             ViewData["TotalInstructoresInactivos"] = totalInactivos; // Total de instructores por estado inactivo
 
             // ViewData Alumnos
-
+            ViewData["TotalAlumnos"] = totalAlumnos; // Total de alumnos
+            ViewData["TotalAlumnosBecados"] = totalbecados; // Total alumnos becados
+            ViewData["TotalAlumnosExternos"] = totalexternos; // Total alumnos externos
+            ViewData["TotalAlumnosMasculinos"] = totalmasculino; // Total alumnos Masculinos
+            ViewData["TotalAlumnosFemeninos"] = totalfemenino; // Total alumnos femeninos
+            ViewData["TotalAlumnosActivos"] = totalActivosStudent; // Total alumnos activos
+            ViewData["TotalAlumnosInactivos"] = totalInactivosStudent; // Total alumnos inactivos
+            ViewData["TotalMenoresEdad"] = totalmenoresEdad; // Total alumnos menores de edad
+            ViewData["TotalMayoresEdad"] = totalmayoresEdad; // Total alumnos mayores de edad
+            ViewData["TotalNinos"] = ageCategories["Niños (5-12)"]; // Total de alumnos niños
+            ViewData["TotalAdolescentes"] = ageCategories["Adolescentes (13-17)"]; // Total de alumnos adolecentes
+            ViewData["TotalJovenes"] = ageCategories["Jóvenes (18-25)"]; // Total de alumnos jovenes
+            ViewData["TotalAdultos"] = ageCategories["Adultos (26+)"]; // Total de alumnos adultos
 
             return View();
         }

@@ -78,6 +78,61 @@
             </div>
         </div>
     </div>
+    <!-- Contenedor principal 2 -->
+    <div class="container-fluid mt-4">
+        <div class="row justify-content-center">
+            <!-- Gráfico Alumnos Becados y Externos -->
+            <div class="col-md-4 d-flex justify-content-center mb-3">
+                <div class="card p-3 shadow" style="width: 100%; height: 350px;">
+                    <h5 class="text-center">Resumen Alumnos Becados y Externos</h5>
+                    <div class="d-flex justify-content-center align-items-center" style="height: 85%;">
+                        <canvas id="alumnosBecadosExternosChart" style="width: 150%; max-width: 300px;"></canvas>
+                    </div>
+                </div>
+            </div>
+            <!-- Gráfico Alumnos Masculinos y Femeninos -->
+            <div class="col-md-4 d-flex justify-content-center mb-3">
+                <div class="card p-3 shadow" style="height: 350px;">
+                    <h5 class="text-center">Resumen De Alumnos Por Genero</h5>
+                    <div class="d-flex justify-content-center align-items-center" style="height: 100%;">
+                        <canvas id="alumnosPorGeneroChart" style="width: 100%; height: 100%;"></canvas>
+                    </div>
+                </div>
+            </div>
+            <!-- Gráfico Alumnos por estado -->
+            <div class="col-md-4 d-flex justify-content-center mb-3">
+                <div class="card p-3 shadow" style="width: 100%; height: 350px;">
+                    <h5 class="text-center">Resumen Alumnos Por Estado</h5>
+                    <div class="d-flex justify-content-center align-items-center" style="height: 85%;">
+                        <canvas id="alumnosPorEstadoChart" style="width: 150%; max-width: 300px;"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Contenedor principal 3 -->
+    <div class="container-fluid mt-4">
+        <div class="row justify-content-center">
+            <!-- Gráfico Alumnos Mayor de Edad y Menor de Edad -->
+            <div class="col-md-4 d-flex justify-content-center mb-3">
+                <div class="card p-3 shadow" style="height: 350px;">
+                    <h5 class="text-center">Resumen De Alumnos Por Edad</h5>
+                    <div class="d-flex justify-content-center align-items-center" style="height: 100%;">
+                        <canvas id="alumnosMayorMenorDeEdadChart" style="width: 100%; height: 100%;"></canvas>
+                    </div>
+                </div>
+            </div>
+            <!-- Gráfico Alumnos Categorizados Por Su Edad -->
+            <div class="col-md-4 d-flex justify-content-center mb-3">
+                <div class="card p-3 shadow" style="height: 350px;">
+                    <h5 class="text-center">Resumen De Alumnos Categorizados Por Edad</h5>
+                    <div class="d-flex justify-content-center align-items-center" style="height: 100%;">
+                        <canvas id="alumnosCategorizadosPorEdadChart" style="width: 100%; height: 100%;"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <script>
@@ -207,5 +262,224 @@
                 }
             }
         });
+
+        // Gráfico Alumnos Becados y Externos   
+        var totalAlumnosExternos = @ViewData["TotalAlumnosExternos"];
+        var totalAlumnosBecados = @ViewData["TotalAlumnosBecados"];
+
+        // Obtener el contexto del canvas
+        var ctx = document.getElementById("alumnosBecadosExternosChart").getContext("2d");
+
+        // Crear el gráfico de tipo Doughnut (con hueco al centro)
+        var alumnosBecadosExternosChart = new Chart(ctx, {
+            type: 'doughnut', // Tipo de gráfico: Doughnut (con hueco)
+            data: {
+                labels: ["Alumnos Externos", "Alumnos Becados"], // Etiquetas
+                datasets: [{
+                    data: [totalAlumnosExternos, totalAlumnosBecados], // Datos de los alumnos
+                    backgroundColor: [
+                        'rgba(54, 162, 235, 0.6)', // Color para alumnos externos
+                        'rgba(75, 192, 192, 0.6)'  // Color para alumnos becados
+                    ],
+                    borderColor: [
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(75, 192, 192, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top' // Posición de la leyenda
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function (tooltipItem) {
+                                // Personalizar el tooltip
+                                return tooltipItem.label + ': ' + tooltipItem.raw + ' Alumnos';
+                            }
+                        }
+                    },
+                    // Personalización para el hueco en el centro
+                    doughnut: {
+                        cutoutPercentage: 50, // Controla el tamaño del hueco en el centro (50% es el hueco a la mitad)
+                    }
+                }
+            }
+        });
+
+        // Grafico Alumnos Por Genero Masculino y Femenino
+        var totalMasculinos = @ViewData["TotalAlumnosMasculinos"];
+        var totalFemeninos = @ViewData["TotalAlumnosFemeninos"];
+
+        // Obtener el contexto del canvas
+        var ctx = document.getElementById("alumnosPorGeneroChart").getContext("2d");
+
+        // Crear el gráfico de barras
+        var alumnosPorGeneroChart = new Chart(ctx, {
+            type: 'bar', // Tipo de gráfico: Barra
+            data: {
+                labels: ["Masculino", "Femenino"], // Etiquetas
+                datasets: [{
+                    label: "Cantidad de Alumnos",
+                    data: [totalMasculinos, totalFemeninos], // Valores desde ViewData
+                    backgroundColor: [
+                        'rgba(54, 162, 235, 0.7)', // Azul para Masculinos
+                        'rgba(255, 99, 132, 0.7)' // Rojo para Femeninos
+                    ],
+                    borderColor: [
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 99, 132, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            stepSize: 1 // Para evitar valores decimales si los datos son enteros
+                        }   
+                    }
+                }
+            }
+        });
+
+        // Grafico Alumnos Por Estado Activo e Inactivo
+        var ctx = document.getElementById("alumnosPorEstadoChart").getContext("2d");
+
+        // Obtener los valores desde ViewBag
+        var totalAlumnosActivos = @ViewData["TotalAlumnosActivos"];
+        var totalAlumnosInactivos = @ViewData["TotalAlumnosInactivos"];
+
+        var alumnosPorEstadoChart = new Chart(ctx, {
+            type: 'doughnut', // Gráfico de pastel en forma de dona
+            data: {
+                labels: ["Activos", "Inactivos"], // Etiquetas del gráfico
+                datasets: [{
+                    data: [totalAlumnosActivos, totalAlumnosInactivos], // Valores
+                    backgroundColor: [
+                        'rgba(54, 162, 235, 0.7)', // Azul para Activos
+                        'rgba(255, 99, 132, 0.7)'  // Rojo para Inactivos
+                    ],
+                    borderColor: [
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 99, 132, 1)'
+                    ],
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'top'
+                    }
+                }
+            }
+        });
+
+        // Grafico Alumnos Por Edad: Mayor de Edad o Menor de Edad
+        var ctx = document.getElementById("alumnosMayorMenorDeEdadChart").getContext("2d");
+
+        // Obtener los valores desde ViewData
+        var totalMenoresEdad = @ViewData["TotalMenoresEdad"];
+        var totalMayoresEdad = @ViewData["TotalMayoresEdad"];
+
+        var alumnosMayorMenorDeEdadChart = new Chart(ctx, {
+            type: 'bar', // Tipo de gráfico: Barras
+            data: {
+                labels: ["Menores de Edad", "Mayores de Edad"], // Etiquetas de las barras
+                datasets: [{
+                    label: 'Cantidad de Alumnos',
+                    data: [totalMenoresEdad, totalMayoresEdad], // Datos desde ViewData
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.6)',  // Rojo para menores de edad
+                        'rgba(54, 162, 235, 0.6)'   // Azul para mayores de edad
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            stepSize: 1 // Asegura que los valores sean enteros
+                        }
+                    }
+                }
+            }
+        });
+
+        // Grafico alumnos categorizados por edad 
+        var ctx = document.getElementById("alumnosCategorizadosPorEdadChart").getContext("2d");
+
+        var totalNinos = parseInt('@ViewData["TotalNinos"]') || 0;
+        var totalAdolescentes = parseInt('@ViewData["TotalAdolescentes"]') || 0;
+        var totalJovenes = parseInt('@ViewData["TotalJovenes"]') || 0;
+        var totalAdultos = parseInt('@ViewData["TotalAdultos"]') || 0;
+
+        var alumnosCategorizadosPorEdadChart = new Chart(ctx, {
+            type: "bar",
+            data: {
+                labels: ["Niños (5-12 años)", "Adolescentes (13-17 años)", "Jóvenes (18-25 años)", "Adultos (26+ años)"],
+                datasets: [{
+                    label: "Cantidad de Alumnos",
+                    data: [totalNinos, totalAdolescentes, totalJovenes, totalAdultos],
+                    backgroundColor: [
+                        "rgba(54, 162, 235, 0.6)",  // Azul para Niños
+                        "rgba(255, 206, 86, 0.6)",  // Amarillo para Adolescentes
+                        "rgba(75, 192, 192, 0.6)",  // Verde para Jóvenes
+                        "rgba(255, 99, 132, 0.6)"   // Rojo para Adultos
+                    ],
+                    borderColor: [
+                        "rgba(54, 162, 235, 1)",
+                        "rgba(255, 206, 86, 1)",
+                        "rgba(75, 192, 192, 1)",
+                        "rgba(255, 99, 132, 1)"
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            stepSize: 1 // Asegura que los valores sean enteros
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false // Oculta la leyenda
+                    }
+                }
+            }
+        });
+
+        // 
+
+
+
+
+
+
+
+
     });
 </script>
