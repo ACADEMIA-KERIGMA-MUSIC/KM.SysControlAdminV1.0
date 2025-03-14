@@ -94,5 +94,27 @@ namespace KM.SysControlAdmin.BL.User___BL
             return await UserDAL.ChangePasswordRoleDesAsync(user);
         }
         #endregion
+
+        #region METODOS DE OBTENCION DE DATOS PARA DASHBOARD
+        // Metodo para obtener el total de usuarios
+        public async Task<int> GetTotalCountAsync()
+        {
+            return await UserDAL.GetTotalCountAsync();
+        }
+
+        // Metodo para obtener el total de usuario por estado activo o inactivo
+        public async Task<(int totalActivosUser, int totalInactivosUser)> GetTotalByStatusAsync()
+        {
+            return await UserDAL.GetTotalByStatusAsync();
+        }
+
+        // Metodo para obtener el total de usuarios por rol
+        public Dictionary<string, int> GetUsersByRole()
+        {
+            UserDAL userDAL = new UserDAL();
+            return userDAL.GetUsersByRole();
+        }
+
+        #endregion
     }
 }

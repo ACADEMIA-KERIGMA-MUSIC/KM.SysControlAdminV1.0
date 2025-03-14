@@ -279,5 +279,44 @@ namespace KM.SysControlAdmin.DAL.User___DAL
             return result;
         }
         #endregion
+
+        #region METODOS DE OBTENCION DE DATOS PARA DASHBOARD
+        // Metodo para obtener el total de usuarios
+        public static async Task<int> GetTotalCountAsync()
+        {
+            using (var dbContext = new ContextDB())
+            {
+                return await dbContext.User.CountAsync();
+            }
+        }
+
+        // Metodo para obtener el total de usuario por estado activo o inactivo
+        public static async Task<(int totalActivosUser, int totalInactivosUser)> GetTotalByStatusAsync()
+        {
+            using (var dbContext = new ContextDB())
+            {
+                int totalActivosUser = await dbContext.User.CountAsync(t => t.Status == 1);
+                int totalInactivosUser = await dbContext.User.CountAsync(t => t.Status == 2);
+
+                return (totalActivosUser, totalInactivosUser);
+            }
+        }
+
+        // Metodo para obtener el total de usuarios por rol
+        public Dictionary<string, int> GetUsersByRole()
+        {
+            using (var dbContext = new ContextDB())
+            {
+                return new Dictionary<string, int>
+                {
+                    { "Administradores", dbContext.User.Count(u => u.IdRole == 2) },
+                    { "Instructores", dbContext.User.Count(u => u.IdRole == 3) },
+                    { "Alumnos", dbContext.User.Count(u => u.IdRole == 4) },
+                    { "Secretarios", dbContext.User.Count(u => u.IdRole == 5) },
+                    //{ "Invitados", dbContext.User.Count(u => u.IdRole == 6) }
+                };
+            }
+        }
+        #endregion
     }
 }

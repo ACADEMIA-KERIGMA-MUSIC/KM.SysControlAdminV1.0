@@ -154,6 +154,24 @@
                     </div>
                 </div>
             </div>
+            <!-- Gráfico Usuarios por estado -->
+            <div class="col-md-4 d-flex justify-content-center mb-3">
+                <div class="card p-3 shadow" style="width: 100%; height: 350px;">
+                    <h5 class="text-center">Resumen Usuarios Segun Su Estado</h5>
+                    <div class="d-flex justify-content-center align-items-center" style="height: 85%;">
+                        <canvas id="usuariosPorEstadoChart" style="width: 150%; max-width: 300px;"></canvas>
+                    </div>
+                </div>
+            </div>
+            <!-- Gráfico usuarios totales segun su rol -->
+            <div class="col-md-4 d-flex justify-content-center mb-3">
+                <div class="card p-3 shadow" style="width: 100%; height: 350px;">
+                    <h5 class="text-center">Resumen Usuarios Totales Segun Su Rol</h5>
+                    <div class="d-flex justify-content-center align-items-center" style="height: 85%;">
+                        <canvas id="usuariosTotalesSegunRolChart" style="width: 150%; max-width: 300px;"></canvas>
+                    </div>
+                </div>
+            </div>
         </div>        
     </div>
 
@@ -575,7 +593,101 @@
             }
         });
 
+        // Grafico usuarios por su estado: activo o inactivo
+        var ctx = document.getElementById("usuariosPorEstadoChart").getContext("2d");
 
+        // Obtener datos desde ViewData
+        var totalUsuariosActivos = @ViewData["TotalUsuariosActivos"];
+        var totalUsuariosInactivos = @ViewData["TotalUsuariosInactivos"];
+
+        // Crear el gráfico de tipo Pie
+        var cursosPorEstadoChart = new Chart(ctx, {
+            type: 'pie', // Tipo de gráfico: Pie
+            data: {
+                labels: ["Usuarios Activos", "Usuarios Inactivos"], // Etiquetas
+                datasets: [{
+                    data: [totalUsuariosActivos, totalUsuariosInactivos], // Datos
+                    backgroundColor: [
+                        'rgba(54, 162, 235, 0.6)', // Azul para activos
+                        'rgba(255, 99, 132, 0.6)'  // Rojo para inactivos
+                    ],
+                    borderColor: [
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 99, 132, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top' // Posición de la leyenda
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function (tooltipItem) {
+                                // Personalizar el tooltip
+                                var value = tooltipItem.raw;
+                                return tooltipItem.label + ': ' + value + ' Usuarios';
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // Obtener datos desde ViewData
+        var totalAdministradores = @ViewData["TotalAdministradores"];
+        var totalSecretarios = @ViewData["TotalSecretarios"];
+        var totalAlumnos = @ViewData["TotalAlumnos"];
+        // var totalInvitados = @ViewData["TotalInvitados"];
+        var totalInstructores = @ViewData["TotalInstructores"];
+
+        // Obtener el contexto del canvas
+        var ctx = document.getElementById("usuariosTotalesSegunRolChart").getContext("2d");
+
+        // Crear el gráfico Doughnut
+        var usuariosTotalesSegunRolChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ["Administradores", "Secretarios", "Alumnos", /* "Invitados", */ "Instructores"],
+                datasets: [{
+                    data: [totalAdministradores, totalSecretarios, totalAlumnos, /* totalInvitados, */ totalInstructores],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.6)',  // Rojo - Administradores
+                        'rgba(54, 162, 235, 0.6)',  // Azul - Secretarios
+                        'rgba(255, 206, 86, 0.6)',  // Amarillo - Alumnos
+                        // 'rgba(75, 192, 192, 0.6)',  // Verde - Invitados
+                        'rgba(153, 102, 255, 0.6)'  // Morado - Instructores
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        // 'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top'
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function (tooltipItem) {
+                                return tooltipItem.label + ': ' + tooltipItem.raw + ' Usuarios';
+                            }
+                        }
+                    }
+                },
+                cutout: '50%' // Tamaño del agujero en el centro (Doughnut)
+            }
+        });
 
     });
 </script>

@@ -3,6 +3,8 @@ using KM.SysControlAdmin.BL.CourseAssignment___BL;
 using KM.SysControlAdmin.BL.Schedule___BL;
 using KM.SysControlAdmin.BL.Student___BL;
 using KM.SysControlAdmin.BL.Trainer___BL;
+using KM.SysControlAdmin.BL.User___BL;
+using KM.SysControlAdmin.DAL.User___DAL;
 using KM.SysControlAdmin.WebApp.Models;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
@@ -20,6 +22,7 @@ namespace KM.SysControlAdmin.WebApp.Controllers
         TrainerBL trainerBL = new TrainerBL();
         CourseAssignmentBL courseAssignmentBL = new CourseAssignmentBL();
         ScheduleBL scheduleBL = new ScheduleBL();
+        UserBL userBL = new UserBL();
 
         [Authorize(Roles = "Desarrollador, Administrador, Secretario/a, Instructor/Docente, Alumno/a")]
         public IActionResult Index()
@@ -55,6 +58,12 @@ namespace KM.SysControlAdmin.WebApp.Controllers
             // Asignacion de curso
             int totalAsignaciones = await courseAssignmentBL.GetTotalCountAsync(); // Total de asignaciones de curso
             var topCourses = await courseAssignmentBL.GetTopCoursesAsync();
+
+            // Usuarios
+            int totalUsuarios = await userBL.GetTotalCountAsync(); // Total de usuarios
+            var (totalActivosUser, totalInactivosUser) = await userBL.GetTotalByStatusAsync(); // Total de usuarios por estado: Activo e Inactivo
+            var usersByRole = userBL.GetUsersByRole(); // Total de usuarios segun su rol
+
 
             // ViewData Horarios
             ViewData["TotalHorarios"] = totalHorarios; // Total de horarios
@@ -92,6 +101,16 @@ namespace KM.SysControlAdmin.WebApp.Controllers
             ViewData["TotalAsignaciones"] = totalAsignaciones; // Total de asignaciones de cursos
             ViewData["TopCourses"] = topCourses.Select(c => c.CourseName).ToArray(); // Nombre del curso
             ViewData["Assignments"] = topCourses.Select(c => c.AssignmentCount).ToArray(); // Total de asignaciones
+
+            // ViewData Usuarios
+            ViewData["TotalUsuarios"] = totalUsuarios; // Total de usuarios
+            ViewData["TotalUsuariosActivos"] = totalActivosUser; // Total de usuarios activos
+            ViewData["TotalUsuariosInactivos"] = totalInactivosUser; // Total de usuarios inactivos
+            ViewData["TotalAdministradores"] = usersByRole["Administradores"]; // Total de usuarios administradores
+            ViewData["TotalSecretarios"] = usersByRole["Secretarios"]; // Total de usuarios secretarios
+            ViewData["TotalAlumnos"] = usersByRole["Alumnos"]; // Total de usuarios alumnos
+            //ViewData["TotalInvitados"] = usersByRole["Invitado"]; // Total de usuarios invitados
+            ViewData["TotalInstructores"] = usersByRole["Instructores"]; // Total de usuarios invitados
 
             return View();
         }
