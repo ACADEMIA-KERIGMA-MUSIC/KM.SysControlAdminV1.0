@@ -641,7 +641,7 @@
         var totalAdministradores = @ViewData["TotalAdministradores"];
         var totalSecretarios = @ViewData["TotalSecretarios"];
         var totalAlumnos = @ViewData["TotalAlumnos"];
-        // var totalInvitados = @ViewData["TotalInvitados"];
+        var totalInvitados = @ViewData["TotalInvitados"];
         var totalInstructores = @ViewData["TotalInstructores"];
 
         // Obtener el contexto del canvas
@@ -651,21 +651,21 @@
         var usuariosTotalesSegunRolChart = new Chart(ctx, {
             type: 'doughnut',
             data: {
-                labels: ["Administradores", "Secretarios", "Alumnos", /* "Invitados", */ "Instructores"],
+                labels: ["Administradores", "Secretarios", "Alumnos", "Invitados", "Instructores"],
                 datasets: [{
-                    data: [totalAdministradores, totalSecretarios, totalAlumnos, /* totalInvitados, */ totalInstructores],
+                    data: [totalAdministradores, totalSecretarios, totalAlumnos, totalInvitados, totalInstructores],
                     backgroundColor: [
                         'rgba(255, 99, 132, 0.6)',  // Rojo - Administradores
                         'rgba(54, 162, 235, 0.6)',  // Azul - Secretarios
                         'rgba(255, 206, 86, 0.6)',  // Amarillo - Alumnos
-                        // 'rgba(75, 192, 192, 0.6)',  // Verde - Invitados
+                        'rgba(75, 192, 192, 0.6)',  // Verde - Invitados
                         'rgba(153, 102, 255, 0.6)'  // Morado - Instructores
                     ],
                     borderColor: [
                         'rgba(255, 99, 132, 1)',
                         'rgba(54, 162, 235, 1)',
                         'rgba(255, 206, 86, 1)',
-                        // 'rgba(75, 192, 192, 1)',
+                        'rgba(75, 192, 192, 1)',
                         'rgba(153, 102, 255, 1)'
                     ],
                     borderWidth: 1

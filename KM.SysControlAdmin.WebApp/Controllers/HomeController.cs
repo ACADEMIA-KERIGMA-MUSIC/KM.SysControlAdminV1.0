@@ -109,7 +109,7 @@ namespace KM.SysControlAdmin.WebApp.Controllers
             ViewData["TotalAdministradores"] = usersByRole["Administradores"]; // Total de usuarios administradores
             ViewData["TotalSecretarios"] = usersByRole["Secretarios"]; // Total de usuarios secretarios
             ViewData["TotalAlumnos"] = usersByRole["Alumnos"]; // Total de usuarios alumnos
-            //ViewData["TotalInvitados"] = usersByRole["Invitado"]; // Total de usuarios invitados
+            ViewData["TotalInvitados"] = usersByRole["Invitados"]; // Total de usuarios invitados
             ViewData["TotalInstructores"] = usersByRole["Instructores"]; // Total de usuarios invitados
 
             return View();

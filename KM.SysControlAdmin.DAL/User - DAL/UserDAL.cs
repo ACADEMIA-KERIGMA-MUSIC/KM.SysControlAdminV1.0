@@ -313,7 +313,7 @@ namespace KM.SysControlAdmin.DAL.User___DAL
                     { "Instructores", dbContext.User.Count(u => u.IdRole == 3) },
                     { "Alumnos", dbContext.User.Count(u => u.IdRole == 4) },
                     { "Secretarios", dbContext.User.Count(u => u.IdRole == 5) },
-                    //{ "Invitados", dbContext.User.Count(u => u.IdRole == 6) }
+                    { "Invitados", dbContext.User.Count(u => u.IdRole == 6) }
                 };
             }
         }
