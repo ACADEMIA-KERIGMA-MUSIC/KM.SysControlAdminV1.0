@@ -21,7 +21,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
                 var principal = context.Principal;
                 if (principal != null)
                 {
-                    var identity = (ClaimsIdentity)principal.Identity;
+                    var identity = (ClaimsIdentity)principal.Identity!;
                     if (identity != null)
                     {
                         var roleClaim = identity.FindFirst(ClaimTypes.Role)?.Value;
@@ -29,11 +29,11 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
                         // Definir tiempos de sesión según el rol
                         TimeSpan sessionDuration = roleClaim switch
                         {
-                            "Desarrollador" => TimeSpan.FromHours(3),
-                            "Administrador" => TimeSpan.FromHours(3),
-                            "Secretario/a" => TimeSpan.FromHours(2),
-                            "Instructor/Docente" => TimeSpan.FromHours(1),
-                            "Alumno/a" => TimeSpan.FromMinutes(30),
+                            "Desarrollador" => TimeSpan.FromHours(5),
+                            "Administrador" => TimeSpan.FromHours(5),
+                            "Secretario/a" => TimeSpan.FromHours(3),
+                            "Instructor/Docente" => TimeSpan.FromHours(3),
+                            "Alumno/a" => TimeSpan.FromHours(1),
                             _ => TimeSpan.FromMinutes(30),            // Otros roles tienen 30 minutos
                         };
 
