@@ -183,3 +183,7 @@ ADD RecoveryEmail VARCHAR(50) NOT NULL DEFAULT 'sincorreo@example.com';
 UPDATE [Role]  
 SET [Name] = 'Instructor'  
 WHERE Id = 3;
+
+--- Insercion de nuevo rol a la tabla Role ----
+INSERT INTO [Role] ([Name])  
+VALUES ('Invitado');
