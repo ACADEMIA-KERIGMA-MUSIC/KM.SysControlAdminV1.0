@@ -112,15 +112,22 @@ FOREIGN KEY (IdRole) REFERENCES [Role](Id) ON DELETE CASCADE;
 -- Nueva actualizacion del script --
 ALTER TABLE Schedule  
 ADD 
-    [Status] TINYINT NOT NULL,
-    DateCreated DATETIME NOT NULL,
-    DateModification DATETIME NOT NULL;
+    [Status] TINYINT NOT NULL DEFAULT 1,
+    DateCreated DATETIME NOT NULL DEFAULT GETDATE(),
+    DateModification DATETIME NOT NULL DEFAULT GETDATE();
+
+UPDATE Schedule
+SET DateCreated = '2025-02-08',  -- Puedes definir una fecha adecuada
+    DateModification = '2025-02-08';
 
 -- Agregar las nuevas columnas EntryDate y PersonalEmail
 ALTER TABLE Trainer  
 ADD 
-    EntryDate DATETIME NOT NULL,
-    PersonalEmail VARCHAR(50) NOT NULL; -- No permite valores nulos
+    EntryDate DATETIME NOT NULL DEFAULT GETDATE(),
+    PersonalEmail VARCHAR(50) NOT NULL DEFAULT 'sincorreo@example.com'; -- No permite valores nulos
+
+UPDATE Trainer
+SET EntryDate = '2025-02-08';  -- Puedes definir una fecha adecuada
 
 -- Modificar CommentsOrObservations para permitir valores nulos
 ALTER TABLE Trainer  
@@ -129,7 +136,7 @@ ALTER COLUMN CommentsOrObservations VARCHAR(100) NULL;
 -- Modificacion en tabla Student
 ALTER TABLE Student 
 ADD 
-    Gender VARCHAR(20) NOT NULL DEFAULT 'Sin Asignar',
+    Gender VARCHAR(20) NOT NULL DEFAULT 'Seleccionar',
     PersonalEmail VARCHAR(50) NOT NULL DEFAULT 'sincorreo@example.com',
     CommentsOrObservations VARCHAR(100) NULL,
     RepresentativeName VARCHAR(50) NULL,
